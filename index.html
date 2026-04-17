@@ -258,6 +258,61 @@
   canvas { max-width: 100%; height: 220px !important; }
 
   .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  /* Sparknotes */
+  .spark-chapters { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 18px; }
+  .spark-chip {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+    border-radius: 999px; padding: 6px 14px; font-size: 12px; cursor: pointer;
+    transition: all .15s ease; white-space: nowrap;
+  }
+  .spark-chip:hover { color: var(--text); border-color: var(--accent); }
+  .spark-chip.active { background: var(--accent); color: #0b1221; border-color: var(--accent); font-weight: 600; }
+  .spark-article { max-width: 780px; margin: 0 auto; line-height: 1.6; font-size: 14px; color: var(--text); }
+  .spark-article.hidden { display: none; }
+  .spark-head { margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .spark-head .chip { margin-bottom: 10px; }
+  .spark-head h1 { margin: 0 0 6px; font-size: 24px; font-weight: 700; letter-spacing: -.3px; line-height: 1.25; }
+  .spark-head .spark-sub { margin: 0; color: var(--muted); font-size: 13px; }
+  .spark-article h2.spark-h2 {
+    margin: 28px 0 10px; font-size: 17px; font-weight: 600;
+    color: var(--text); padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+  .spark-article h3.spark-h3 {
+    margin: 18px 0 6px; font-size: 12px; font-weight: 700;
+    color: var(--accent); text-transform: uppercase; letter-spacing: .8px;
+  }
+  .spark-article p { margin: 8px 0; }
+  .spark-article b, .spark-article strong { color: var(--text); font-weight: 600; }
+  ul.spark-list, ol.spark-list { padding-left: 18px; margin: 8px 0; }
+  ul.spark-list li, ol.spark-list li { padding: 4px 0; }
+  .spark-kv {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .spark-kv > div {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .spark-kv > div b { display: block; color: var(--accent); margin-bottom: 3px; font-weight: 700; font-size: 13px; }
+  .spark-kv > div span { color: var(--muted); font-size: 12px; line-height: 1.4; display: block; }
+  .spark-formula {
+    background: linear-gradient(135deg, rgba(74,163,255,.12), rgba(102,209,168,.08));
+    border: 1px solid rgba(74,163,255,.4); border-radius: 12px;
+    padding: 14px 18px; margin: 16px 0; text-align: center;
+    font-size: 15px; font-weight: 600; letter-spacing: .3px; color: var(--text);
+  }
+  .spark-callout { border-radius: 10px; padding: 12px 14px; margin: 14px 0; font-size: 13px; line-height: 1.55; border: 1px solid var(--border); background: var(--bg-2); }
+  .spark-callout .sc-title { font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; margin-bottom: 6px; color: var(--accent); }
+  .spark-callout.info { background: rgba(74,163,255,.06); border-color: rgba(74,163,255,.3); }
+  .spark-callout.info .sc-title { color: var(--accent); }
+  .spark-callout.warn { background: rgba(255,181,71,.06); border-color: rgba(255,181,71,.3); }
+  .spark-callout.warn .sc-title { color: var(--warn); }
+  .spark-callout.good { background: rgba(61,220,132,.06); border-color: rgba(61,220,132,.3); }
+  .spark-callout.good .sc-title { color: var(--good); }
+  .spark-callout ul, .spark-callout ol { margin: 4px 0 0; padding-left: 18px; }
+  .spark-callout li { padding: 3px 0; }
+  .spark-callout p { margin: 4px 0; }
 </style>
 </head>
 <body>
@@ -285,6 +340,7 @@
   <button data-tab="milestones">Milestones</button>
   <button data-tab="homework">Homework</button>
   <button data-tab="documents">Documents</button>
+  <button data-tab="sparknotes">Sparknotes</button>
   <button data-tab="quizzes">Quizzes</button>
   <button data-tab="budget">Budget</button>
   <button data-tab="settings">Settings</button>
@@ -697,6 +753,152 @@
       <div class="card" style="margin-top:16px;">
         <h2>Homework with linked docs</h2>
         <div id="hwLinkedList" class="muted">No homework items are linked to documents yet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== SPARKNOTES ================== -->
+<section class="view" id="view-sparknotes">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:6px;">
+          <h2>Sparknotes <span class="tag" id="sparkCount">1</span></h2>
+          <div class="muted">Fast, scannable summaries of the FAA handbook chapters</div>
+        </div>
+
+        <!-- Chapter selector -->
+        <div class="spark-chapters" id="sparkChapters">
+          <button class="spark-chip active" data-spark="afh-ch3">Chapter 3: Basic Flight Maneuvers</button>
+        </div>
+
+        <!-- ========== AFH Ch. 3 ========== -->
+        <article class="spark-article" data-article="afh-ch3">
+          <header class="spark-head">
+            <span class="chip">AFH · Chapter 3</span>
+            <h1>Chapter 3: Basic Flight Maneuvers — Sparknotes</h1>
+            <p class="spark-sub">The foundation — straight-and-level, turns, climbs, descents. Everything else is a variation.</p>
+          </header>
+
+          <div class="spark-callout info">
+            <div class="sc-title">The gist — 5 bullets</div>
+            <ul>
+              <li><b>Attitude + Power = Performance.</b> Set the picture, set the power, trim, verify.</li>
+              <li><b>Outside first, inside second.</b> Use instruments to confirm, not to fly.</li>
+              <li><b>Every aileron input needs a rudder input.</b></li>
+              <li><b>Trim, trim, trim.</b> If you're pulling or pushing, you're not trimmed.</li>
+              <li><b>Small corrections.</b> Fingertips, not fists.</li>
+            </ul>
+          </div>
+
+          <h2 class="spark-h2">The Four Fundamentals</h2>
+          <p>Every maneuver you'll ever fly is a combination of these four. Master them and landings, stalls, ground reference — it's all just variation.</p>
+          <div class="spark-kv">
+            <div><b>Straight-and-level</b><span>Constant heading AND constant altitude</span></div>
+            <div><b>Turns</b><span>Horizontal component of lift turns the airplane</span></div>
+            <div><b>Climbs</b><span>Pitch up + add power</span></div>
+            <div><b>Descents</b><span>Reduce power or pitch down to lose altitude</span></div>
+          </div>
+
+          <h2 class="spark-h2">Core Concepts</h2>
+
+          <h3 class="spark-h3">Flight controls</h3>
+          <ul class="spark-list">
+            <li><b>Ailerons</b> — roll</li>
+            <li><b>Elevator</b> — pitch</li>
+            <li><b>Rudder</b> — yaw</li>
+            <li><b>Throttle</b> — power; with pitch, determines performance</li>
+            <li><b>Trim</b> — relieves control pressure; doesn't replace the input</li>
+          </ul>
+
+          <div class="spark-formula">Attitude + Power = Performance</div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">Set a known pitch and bank at a known power setting → known performance. This is the whole game.</p>
+
+          <h3 class="spark-h3">Feel of the airplane</h3>
+          <p>Recognize airplane state through sight, sound (airflow, engine note), and kinesthetic feel (control pressures, seat-of-the-pants). Don't fixate on instruments — develop outside awareness first.</p>
+
+          <h3 class="spark-h3">Integrated flight instruction</h3>
+          <p>From day one, use both outside visual references AND instrument cross-check. Builds habits for instrument training later.</p>
+
+          <h2 class="spark-h2">Straight-and-Level Flight</h2>
+          <p>Constant heading AND constant altitude. Reference point: the natural horizon against a consistent spot on the cowling or glareshield.</p>
+          <ul class="spark-list">
+            <li><b>Level pitch</b> — consistent cowling-to-horizon reference</li>
+            <li><b>Wings level</b> — wingtips equidistant from the horizon</li>
+            <li><b>Coordination</b> — ball centered; rudder offsets torque and P-factor</li>
+            <li><b>Trim</b> — always trim <em>after</em> establishing attitude, never before</li>
+          </ul>
+          <p><b>Scan:</b> ~90% outside, ~10% instruments. The altimeter, heading, and VSI confirm what your eyes already told you.</p>
+
+          <h2 class="spark-h2">Level Turns</h2>
+          <p>Turns are banked — the horizontal component of lift turns the airplane.</p>
+          <div class="spark-kv">
+            <div><b>Shallow (&lt;20°)</b><span>Airplane tends to roll wings level on its own</span></div>
+            <div><b>Medium (20–45°)</b><span>Neutral — bank stays where you put it</span></div>
+            <div><b>Steep (&gt;45°)</b><span>Overbanking — hold opposite aileron to stop the roll</span></div>
+          </div>
+
+          <h3 class="spark-h3">Key issues</h3>
+          <ul class="spark-list">
+            <li><b>Adverse yaw</b> — up-going aileron creates extra drag, yawing the nose opposite the turn. Correct with rudder <em>into</em> the turn on roll-in.</li>
+            <li><b>Load factor</b> — lift must increase to hold altitude in a bank. Add back-pressure and a touch of power in steeper banks. Stall speed rises with bank angle.</li>
+            <li><b>Overbanking</b> — at &gt;45°, the outside wing travels faster and lifts more. Hold opposite aileron.</li>
+            <li><b>Rollout</b> — lead by about half the bank angle (30° bank → start rollout ~15° before target heading).</li>
+            <li><b>Coordination</b> — ball centered. Slipping (too little rudder) and skidding (too much rudder) are both dangerous, especially at low altitude.</li>
+          </ul>
+
+          <h2 class="spark-h2">Climbs and Climbing Turns</h2>
+          <p>Increasing altitude. Pitch up AND add power.</p>
+          <div class="spark-kv">
+            <div><b>V<sub>y</sub></b><span>Best <em>rate</em> of climb — most altitude per unit time. Normal climb.</span></div>
+            <div><b>V<sub>x</sub></b><span>Best <em>angle</em> of climb — most altitude per unit distance. Obstacle clearance.</span></div>
+            <div><b>Cruise climb</b><span>Lower pitch, higher airspeed, better engine cooling and visibility.</span></div>
+          </div>
+          <p><b>Procedure:</b> raise the nose to the climb attitude → apply climb power → trim → verify airspeed.</p>
+
+          <div class="spark-callout good">
+            <div class="sc-title">Watch for</div>
+            <p>Torque and P-factor are strongest at low airspeed + high power → expect right-rudder need. In climbing turns, use shallow bank (≤20°) — steep banks rob climb performance.</p>
+          </div>
+
+          <h2 class="spark-h2">Descents and Descending Turns</h2>
+          <p>Three flavors, each with a purpose:</p>
+          <ul class="spark-list">
+            <li><b>Partial-power (cruise) descent</b> — reduce power, maintain cruise airspeed, ~500 fpm typical. Standard enroute descent.</li>
+            <li><b>Glide (power-off)</b> — idle power, pitch for best-glide speed. Used to simulate engine failure and practice emergency approach.</li>
+            <li><b>Minimum safe airspeed descent</b> — slow flight descent, used near obstacles.</li>
+          </ul>
+          <p><b>Key:</b> in a prolonged glide, ease the throttle up briefly every so often to clear the engine — prevents plug fouling and shock cooling. Expect left-yawing tendency to diminish at low power.</p>
+
+          <h2 class="spark-h2">Pitch and Power</h2>
+          <p>Common teaching: <b>pitch controls airspeed, power controls altitude</b> — especially on approach. In reality they're coupled; you rarely change one without the other. In steady-state cruise, trim for a pitch that gives you the airspeed you want at the power setting you chose.</p>
+
+          <h2 class="spark-h2">Common Errors</h2>
+          <div class="spark-callout warn">
+            <div class="sc-title">Watch yourself for</div>
+            <ul>
+              <li>Fixating on one instrument instead of scanning</li>
+              <li>Not trimming — fighting the airplane</li>
+              <li>Uncoordinated turns (ball off-center)</li>
+              <li>Forgetting rudder on roll-in / roll-out</li>
+              <li>Letting pitch wander during bank changes</li>
+              <li>Using ailerons instead of rudder for heading corrections</li>
+              <li>Chasing altitude with big, jerky inputs</li>
+              <li>Not leading rollouts and level-offs</li>
+            </ul>
+          </div>
+
+          <h2 class="spark-h2">Bottom-Line Takeaways</h2>
+          <ol class="spark-list">
+            <li><b>Attitude + Power = Performance.</b> Set the picture, set the power, trim, verify.</li>
+            <li><b>Outside first, inside second.</b> Use instruments to confirm, not to fly.</li>
+            <li><b>Coordinate with rudder.</b> Every aileron input needs a rudder input.</li>
+            <li><b>Trim, trim, trim.</b> If you're pulling or pushing, you're not trimmed.</li>
+            <li><b>Small corrections.</b> Fly with fingertips, not fists.</li>
+          </ol>
+        </article>
+
       </div>
     </div>
   </div>
@@ -1142,6 +1344,18 @@ document.querySelectorAll('#tabs button').forEach(btn => {
     document.getElementById(id).classList.add('active');
     if (btn.dataset.tab === 'calendar') renderCalendar();
     if (btn.dataset.tab === 'quizzes') renderQuizzes();
+  });
+});
+
+/* Sparknotes chapter chip switcher */
+document.querySelectorAll('#sparkChapters .spark-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const target = chip.dataset.spark;
+    document.querySelectorAll('#sparkChapters .spark-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    document.querySelectorAll('#view-sparknotes .spark-article').forEach(a => {
+      a.classList.toggle('hidden', a.dataset.article !== target);
+    });
   });
 });
 
