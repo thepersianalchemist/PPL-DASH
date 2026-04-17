@@ -77,6 +77,40 @@
   .doc-card .doc-actions button, .doc-card .doc-actions a { font-size: 11px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; text-decoration: none; }
   .doc-card .doc-actions a { color: var(--accent); border-color: var(--accent); }
   .doc-type { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--chip); color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  /* Quizzes */
+  .quiz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .quiz-card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .quiz-card .qz-title { font-weight: 600; font-size: 14px; color: var(--text); }
+  .quiz-card .qz-meta { font-size: 11px; color: var(--muted); }
+  .quiz-card .qz-stats { display: flex; gap: 8px; flex-wrap: wrap; font-size: 11px; }
+  .quiz-card .qz-stats .badge { padding: 2px 8px; border-radius: 10px; background: var(--chip); color: var(--muted); }
+  .quiz-card .qz-stats .badge.good { background: rgba(61,220,132,.18); color: var(--good); }
+  .quiz-card .qz-stats .badge.warn { background: rgba(255,181,71,.18); color: var(--warn); }
+  .quiz-card .qz-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+  .quiz-card .qz-actions button { font-size: 12px; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
+  .quiz-card .qz-actions .primary { background: var(--accent); color: #0b1221; border-color: var(--accent); font-weight: 600; }
+  /* Quiz runner modal (inside .modal) */
+  .qz-progress { height: 4px; background: var(--chip); border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
+  .qz-progress > div { height: 100%; background: var(--accent); transition: width .2s; }
+  .qz-question { font-size: 15px; color: var(--text); margin-bottom: 14px; line-height: 1.45; }
+  .qz-options { display: flex; flex-direction: column; gap: 8px; }
+  .qz-option { text-align: left; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); cursor: pointer; font-size: 13px; line-height: 1.35; }
+  .qz-option:hover { border-color: var(--accent); }
+  .qz-option.selected { border-color: var(--accent); background: rgba(74,163,255,.10); }
+  .qz-option.correct { border-color: var(--good); background: rgba(61,220,132,.12); color: var(--good); }
+  .qz-option.wrong { border-color: var(--warn); background: rgba(255,181,71,.10); color: var(--warn); }
+  .qz-explain { margin-top: 12px; font-size: 12px; color: var(--muted); padding: 8px 10px; border-left: 3px solid var(--accent); background: rgba(74,163,255,.06); border-radius: 0 6px 6px 0; }
+  .qz-footer { display: flex; justify-content: space-between; gap: 8px; margin-top: 16px; }
+  .qz-footer button { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-weight: 500; }
+  .qz-footer button:disabled { opacity: .4; cursor: not-allowed; }
+  .qz-footer .primary { background: var(--accent); color: #0b1221; border-color: var(--accent); }
+  .qz-review { max-height: 60vh; overflow-y: auto; }
+  .qz-review .qr-item { padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+  .qz-review .qr-item:last-child { border-bottom: 0; }
+  .qz-review .qr-q { color: var(--text); margin-bottom: 4px; }
+  .qz-review .qr-a { font-size: 12px; color: var(--muted); }
+  .qz-review .qr-a.correct { color: var(--good); }
+  .qz-review .qr-a.wrong { color: var(--warn); }
   header.top {
     padding: 18px 24px;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -251,6 +285,7 @@
   <button data-tab="milestones">Milestones</button>
   <button data-tab="homework">Homework</button>
   <button data-tab="documents">Documents</button>
+  <button data-tab="quizzes">Quizzes</button>
   <button data-tab="budget">Budget</button>
   <button data-tab="settings">Settings</button>
 </nav>
@@ -667,6 +702,27 @@
   </div>
 </section>
 
+<!-- ================== QUIZZES ================== -->
+<section class="view" id="view-quizzes">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="flex-between">
+          <h2>Lesson Quizzes <span class="tag" id="quizCount">0</span></h2>
+          <div>
+            <button class="ghost" id="quizImportBtn">⬇ Import quiz JSON</button>
+            <button class="ghost" id="quizResetBtn" title="Re-seed bundled quizzes from quizzes.json">Refresh bundled</button>
+          </div>
+        </div>
+        <div class="muted" style="margin-bottom:12px;">
+          After every lesson, a new quiz gets generated from your Fireflies transcript. Tap a quiz to take it — instant score, explanations on wrong answers, and retake as many times as you want. Best score is tracked per quiz.
+        </div>
+        <div id="quizGrid" class="quiz-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================== BUDGET ================== -->
 <section class="view" id="view-budget">
   <div class="row">
@@ -812,6 +868,29 @@
 
 <!-- Floating Quick-log button -->
 <button id="quickLogBtn" title="Quick log" aria-label="Quick log entry">+</button>
+
+<!-- Quiz runner modal -->
+<div class="modal-backdrop" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="qzTitle">
+  <div class="modal" style="max-width: 600px;">
+    <button class="close-x" id="qzClose" aria-label="Close">×</button>
+    <h3 id="qzTitle">Quiz</h3>
+    <div id="qzBody"></div>
+  </div>
+</div>
+
+<!-- Import quiz JSON modal -->
+<div class="modal-backdrop" id="quizImportModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="close-x" id="qzImportClose" aria-label="Close">×</button>
+    <h3>Import quiz JSON</h3>
+    <p class="muted" style="margin-top:0;">Paste a quiz JSON object (a single quiz) or an object with a <code>quizzes</code> array. Quizzes with a matching <code>id</code> are updated, new ones are added.</p>
+    <textarea id="qzImportText" rows="10" style="width:100%; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px;" placeholder='{ "id": "gl3-2026-04-20", "title": "...", "lessonDate": "2026-04-20", "passingScore": 80, "questions": [ ... ] }'></textarea>
+    <div class="btn-row" style="margin-top:10px;">
+      <button class="secondary" id="qzImportDo">Import</button>
+      <button class="ghost" id="qzImportCancel">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- Quick-log modal -->
 <div class="modal-backdrop" id="quickLogModal" role="dialog" aria-modal="true" aria-labelledby="qlTitle">
@@ -1027,6 +1106,8 @@ let state = {
   budget:  STORE.get('ppl_budget', []),
   homework: STORE.get('ppl_homework', []),
   documents: STORE.get('ppl_documents', []),
+  quizzes: STORE.get('ppl_quizzes', []),
+  quizAttempts: STORE.get('ppl_quiz_attempts', []),
   settings: STORE.get('ppl_settings', {
     targetDate: '', startDate: '', aircraftType: 'C172', homeAirport: '',
     cfi: '', school: '', hourlyRate: 250, cfiRate: 85, targetHours: 55, checkrideFee: 800
@@ -1041,6 +1122,8 @@ function persist() {
   STORE.set('ppl_budget', state.budget);
   STORE.set('ppl_homework', state.homework);
   STORE.set('ppl_documents', state.documents);
+  STORE.set('ppl_quizzes', state.quizzes);
+  STORE.set('ppl_quiz_attempts', state.quizAttempts);
   STORE.set('ppl_settings', state.settings);
   STORE.set('ppl_meta', state.meta);
 }
@@ -1058,6 +1141,7 @@ document.querySelectorAll('#tabs button').forEach(btn => {
     const id = 'view-' + btn.dataset.tab;
     document.getElementById(id).classList.add('active');
     if (btn.dataset.tab === 'calendar') renderCalendar();
+    if (btn.dataset.tab === 'quizzes') renderQuizzes();
   });
 });
 
@@ -1697,6 +1781,358 @@ function renderDocuments() {
 }
 
 /* ============================================================
+   QUIZZES — generated from Fireflies transcripts after each lesson
+============================================================ */
+
+// ----- Seed bundled quizzes from quizzes.json (idempotent by id) -----
+async function seedBundledQuizzes() {
+  try {
+    const res = await fetch('./quizzes.json', { cache: 'no-cache' });
+    if (!res.ok) return;
+    const data = await res.json();
+    const incoming = Array.isArray(data) ? data : (data.quizzes || []);
+    if (!incoming.length) return;
+    let changed = false;
+    incoming.forEach(qz => {
+      if (!qz || !qz.id) return;
+      const existingIdx = state.quizzes.findIndex(x => x.id === qz.id);
+      if (existingIdx === -1) {
+        state.quizzes.push({ ...qz, bundled: true });
+        changed = true;
+      } else {
+        const existing = state.quizzes[existingIdx];
+        // Only overwrite bundled copies — user-imported/custom quizzes are left alone
+        if (existing.bundled) {
+          state.quizzes[existingIdx] = { ...qz, bundled: true };
+          changed = true;
+        }
+      }
+    });
+    if (changed) { persist(); renderQuizzes(); }
+  } catch (e) {
+    // offline & never cached — OK, user can still take whatever is already seeded
+    console.warn('seedBundledQuizzes:', e);
+  }
+}
+
+// ----- Force re-seed bundled quizzes (Refresh bundled button) -----
+async function reseedBundledQuizzes() {
+  try {
+    const res = await fetch('./quizzes.json', { cache: 'reload' });
+    if (!res.ok) { alert('Could not load quizzes.json (offline and not cached?)'); return; }
+    const data = await res.json();
+    const incoming = Array.isArray(data) ? data : (data.quizzes || []);
+    incoming.forEach(qz => {
+      if (!qz || !qz.id) return;
+      const idx = state.quizzes.findIndex(x => x.id === qz.id);
+      if (idx === -1) state.quizzes.push({ ...qz, bundled: true });
+      else state.quizzes[idx] = { ...qz, bundled: true };
+    });
+    persist(); renderQuizzes();
+  } catch (e) {
+    alert('Refresh failed: ' + e.message);
+  }
+}
+
+// ----- Stats helpers -----
+function quizBestScore(quizId) {
+  const atts = state.quizAttempts.filter(a => a.quizId === quizId);
+  if (!atts.length) return null;
+  return atts.reduce((best, a) => a.scorePct > best ? a.scorePct : best, 0);
+}
+function quizAttemptCount(quizId) {
+  return state.quizAttempts.filter(a => a.quizId === quizId).length;
+}
+
+// ----- Render quiz card grid -----
+function renderQuizzes() {
+  const root = document.getElementById('quizGrid');
+  if (!root) return;
+  document.getElementById('quizCount').textContent = state.quizzes.length;
+
+  if (!state.quizzes.length) {
+    root.innerHTML = '<div class="muted" style="grid-column: 1/-1;">No quizzes yet. After a Fireflies-recorded lesson, a quiz will be generated and added here. You can also tap <strong>Import quiz JSON</strong> above to paste one in.</div>';
+    return;
+  }
+
+  const list = [...state.quizzes].sort((a,b) =>
+    (b.lessonDate || '').localeCompare(a.lessonDate || '')
+  );
+
+  root.innerHTML = list.map(qz => {
+    const best = quizBestScore(qz.id);
+    const attempts = quizAttemptCount(qz.id);
+    const pass = qz.passingScore || 80;
+    const bestClass = best === null ? '' : (best >= pass ? 'good' : 'warn');
+    const bestLabel = best === null ? 'Not taken' : `Best ${best}%`;
+    const qCount = (qz.questions || []).length;
+    return `
+      <div class="quiz-card">
+        <div class="qz-title">${escapeHtml(qz.title || qz.id)}</div>
+        <div class="qz-meta">
+          ${qz.lessonDate ? 'Lesson ' + escapeHtml(qz.lessonDate) + ' · ' : ''}${qCount} questions · pass ${pass}%
+        </div>
+        <div class="qz-stats">
+          <span class="badge ${bestClass}">${bestLabel}</span>
+          <span class="badge">${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}</span>
+          ${qz.bundled ? '<span class="badge" style="background:rgba(61,220,132,.12); color:var(--good);">bundled · offline</span>' : ''}
+        </div>
+        <div class="qz-actions">
+          <button class="primary" data-take-quiz="${qz.id}">${attempts ? 'Retake' : 'Take quiz'}</button>
+          ${attempts ? `<button data-review-quiz="${qz.id}">Review last</button>` : ''}
+          ${qz.bundled ? '' : `<button data-del-quiz="${qz.id}">Delete</button>`}
+        </div>
+      </div>`;
+  }).join('');
+
+  root.querySelectorAll('[data-take-quiz]').forEach(b =>
+    b.addEventListener('click', e => startQuiz(e.currentTarget.dataset.takeQuiz)));
+  root.querySelectorAll('[data-review-quiz]').forEach(b =>
+    b.addEventListener('click', e => reviewLastAttempt(e.currentTarget.dataset.reviewQuiz)));
+  root.querySelectorAll('[data-del-quiz]').forEach(b =>
+    b.addEventListener('click', e => {
+      const id = e.currentTarget.dataset.delQuiz;
+      if (!confirm('Delete this quiz and its attempt history?')) return;
+      state.quizzes = state.quizzes.filter(x => x.id !== id);
+      state.quizAttempts = state.quizAttempts.filter(a => a.quizId !== id);
+      persist(); renderQuizzes();
+    }));
+}
+
+// ----- Quiz runner state -----
+let currentQuiz = null;
+let currentQIdx = 0;
+let currentAnswers = []; // array of { picked: 0-3, correct: bool }
+
+function openQuizModal() { document.getElementById('quizModal').classList.add('open'); }
+function closeQuizModal() {
+  document.getElementById('quizModal').classList.remove('open');
+  currentQuiz = null; currentQIdx = 0; currentAnswers = [];
+}
+
+function startQuiz(quizId) {
+  const qz = state.quizzes.find(x => x.id === quizId);
+  if (!qz || !qz.questions || !qz.questions.length) { alert('This quiz has no questions.'); return; }
+  currentQuiz = qz;
+  currentQIdx = 0;
+  currentAnswers = new Array(qz.questions.length).fill(null);
+  document.getElementById('qzTitle').textContent = qz.title || 'Quiz';
+  openQuizModal();
+  renderCurrentQuestion();
+}
+
+function renderCurrentQuestion() {
+  const qz = currentQuiz;
+  const q = qz.questions[currentQIdx];
+  const total = qz.questions.length;
+  const picked = currentAnswers[currentQIdx];
+  const answered = picked !== null;
+
+  const body = document.getElementById('qzBody');
+  const progressPct = Math.round(((currentQIdx) / total) * 100);
+
+  body.innerHTML = `
+    <div class="qz-progress"><div style="width:${progressPct}%"></div></div>
+    <div class="muted" style="font-size:11px; margin-bottom:8px;">Question ${currentQIdx + 1} of ${total}</div>
+    <div class="qz-question">${escapeHtml(q.question)}</div>
+    <div class="qz-options">
+      ${q.options.map((opt, i) => {
+        let cls = 'qz-option';
+        if (answered) {
+          if (i === q.correct) cls += ' correct';
+          else if (i === picked.picked) cls += ' wrong';
+        }
+        return `<button class="${cls}" data-pick="${i}" ${answered ? 'disabled' : ''}>${escapeHtml(opt)}</button>`;
+      }).join('')}
+    </div>
+    ${answered && q.explanation ? `<div class="qz-explain"><strong>${picked.correct ? '✅ Correct.' : '❌ Not quite.'}</strong> ${escapeHtml(q.explanation)}</div>` : ''}
+    <div class="qz-footer">
+      <button id="qzPrev" ${currentQIdx === 0 ? 'disabled' : ''}>← Back</button>
+      ${currentQIdx < total - 1
+        ? `<button id="qzNext" class="primary" ${answered ? '' : 'disabled'}>Next →</button>`
+        : `<button id="qzFinish" class="primary" ${answered ? '' : 'disabled'}>Finish</button>`}
+    </div>
+  `;
+
+  body.querySelectorAll('[data-pick]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (currentAnswers[currentQIdx] !== null) return;
+      const pickIdx = +e.currentTarget.dataset.pick;
+      currentAnswers[currentQIdx] = { picked: pickIdx, correct: pickIdx === q.correct };
+      renderCurrentQuestion();
+    });
+  });
+  const prev = document.getElementById('qzPrev');
+  if (prev) prev.addEventListener('click', () => { if (currentQIdx > 0) { currentQIdx--; renderCurrentQuestion(); } });
+  const next = document.getElementById('qzNext');
+  if (next) next.addEventListener('click', () => { if (currentQIdx < total - 1) { currentQIdx++; renderCurrentQuestion(); } });
+  const fin = document.getElementById('qzFinish');
+  if (fin) fin.addEventListener('click', () => finishQuiz());
+}
+
+function finishQuiz() {
+  const qz = currentQuiz;
+  const total = qz.questions.length;
+  const correctN = currentAnswers.filter(a => a && a.correct).length;
+  const scorePct = Math.round((correctN / total) * 100);
+  const pass = qz.passingScore || 80;
+  const passed = scorePct >= pass;
+
+  // Save attempt
+  const attempt = {
+    id: uid(),
+    quizId: qz.id,
+    date: new Date().toISOString(),
+    scorePct,
+    correctN,
+    total,
+    passed,
+    answers: currentAnswers.map(a => a ? { picked: a.picked, correct: a.correct } : null)
+  };
+  state.quizAttempts.push(attempt);
+  persist();
+
+  // Render results + review
+  const body = document.getElementById('qzBody');
+  body.innerHTML = `
+    <div style="text-align:center; padding: 8px 0 16px;">
+      <div style="font-size:42px; font-weight:700; color:${passed ? 'var(--good)' : 'var(--warn)'};">${scorePct}%</div>
+      <div class="muted" style="font-size:12px;">${correctN} / ${total} correct · pass ${pass}%</div>
+      <div style="margin-top:6px; font-weight:600; color:${passed ? 'var(--good)' : 'var(--warn)'};">
+        ${passed ? '✅ Passed' : '📚 Keep studying'}
+      </div>
+    </div>
+    <div class="qz-review">
+      ${qz.questions.map((q, i) => {
+        const a = currentAnswers[i];
+        const ok = a && a.correct;
+        return `
+          <div class="qr-item">
+            <div class="qr-q"><strong>${i+1}.</strong> ${escapeHtml(q.question)}</div>
+            <div class="qr-a ${ok ? 'correct' : 'wrong'}">
+              ${ok ? '✓' : '✗'} Your answer: ${escapeHtml(a ? q.options[a.picked] : '(skipped)')}
+            </div>
+            ${!ok ? `<div class="qr-a correct">✓ Correct: ${escapeHtml(q.options[q.correct])}</div>` : ''}
+            ${q.explanation ? `<div class="qr-a" style="margin-top:4px; font-style:italic;">${escapeHtml(q.explanation)}</div>` : ''}
+          </div>`;
+      }).join('')}
+    </div>
+    <div class="qz-footer">
+      <button id="qzRetake">Retake</button>
+      <button id="qzDone" class="primary">Done</button>
+    </div>
+  `;
+  document.getElementById('qzRetake').addEventListener('click', () => startQuiz(qz.id));
+  document.getElementById('qzDone').addEventListener('click', () => { closeQuizModal(); renderQuizzes(); });
+}
+
+function reviewLastAttempt(quizId) {
+  const qz = state.quizzes.find(x => x.id === quizId);
+  if (!qz) return;
+  const atts = state.quizAttempts.filter(a => a.quizId === quizId);
+  if (!atts.length) return;
+  const last = atts[atts.length - 1];
+
+  currentQuiz = qz;
+  currentAnswers = last.answers.map(a => a ? { picked: a.picked, correct: a.correct } : null);
+  currentQIdx = 0;
+
+  document.getElementById('qzTitle').textContent = (qz.title || 'Quiz') + ' — last attempt';
+  openQuizModal();
+
+  const body = document.getElementById('qzBody');
+  const scorePct = last.scorePct;
+  const pass = qz.passingScore || 80;
+  const passed = last.passed;
+  body.innerHTML = `
+    <div style="text-align:center; padding: 8px 0 16px;">
+      <div style="font-size:34px; font-weight:700; color:${passed ? 'var(--good)' : 'var(--warn)'};">${scorePct}%</div>
+      <div class="muted" style="font-size:12px;">${last.correctN} / ${last.total} · ${new Date(last.date).toLocaleString()}</div>
+    </div>
+    <div class="qz-review">
+      ${qz.questions.map((q, i) => {
+        const a = last.answers[i];
+        const ok = a && a.correct;
+        return `
+          <div class="qr-item">
+            <div class="qr-q"><strong>${i+1}.</strong> ${escapeHtml(q.question)}</div>
+            <div class="qr-a ${ok ? 'correct' : 'wrong'}">
+              ${ok ? '✓' : '✗'} Your answer: ${escapeHtml(a ? q.options[a.picked] : '(skipped)')}
+            </div>
+            ${!ok ? `<div class="qr-a correct">✓ Correct: ${escapeHtml(q.options[q.correct])}</div>` : ''}
+            ${q.explanation ? `<div class="qr-a" style="margin-top:4px; font-style:italic;">${escapeHtml(q.explanation)}</div>` : ''}
+          </div>`;
+      }).join('')}
+    </div>
+    <div class="qz-footer">
+      <button id="qzRetake2">Retake</button>
+      <button id="qzDone2" class="primary">Close</button>
+    </div>
+  `;
+  document.getElementById('qzRetake2').addEventListener('click', () => startQuiz(qz.id));
+  document.getElementById('qzDone2').addEventListener('click', closeQuizModal);
+}
+
+// ----- Import quiz JSON modal -----
+function openImportQuiz() {
+  document.getElementById('qzImportText').value = '';
+  document.getElementById('quizImportModal').classList.add('open');
+}
+function closeImportQuiz() {
+  document.getElementById('quizImportModal').classList.remove('open');
+}
+function doImportQuiz() {
+  const txt = document.getElementById('qzImportText').value.trim();
+  if (!txt) { alert('Paste some JSON first.'); return; }
+  let data;
+  try { data = JSON.parse(txt); }
+  catch (e) { alert('That is not valid JSON: ' + e.message); return; }
+
+  const incoming = Array.isArray(data) ? data : (data.quizzes ? data.quizzes : [data]);
+  let added = 0, updated = 0, errors = [];
+
+  incoming.forEach((qz, idx) => {
+    if (!qz || typeof qz !== 'object') { errors.push(`Item ${idx+1}: not an object`); return; }
+    if (!qz.id) { errors.push(`Item ${idx+1}: missing "id"`); return; }
+    if (!Array.isArray(qz.questions) || !qz.questions.length) { errors.push(`Item ${idx+1} (${qz.id}): missing "questions" array`); return; }
+    // Validate each question
+    for (let i = 0; i < qz.questions.length; i++) {
+      const q = qz.questions[i];
+      if (!q.question || !Array.isArray(q.options) || q.options.length < 2 || typeof q.correct !== 'number') {
+        errors.push(`Item ${idx+1} (${qz.id}) question ${i+1}: needs "question", "options" (>=2), "correct" (index)`);
+        return;
+      }
+    }
+    const existingIdx = state.quizzes.findIndex(x => x.id === qz.id);
+    if (existingIdx === -1) {
+      state.quizzes.push({ ...qz, bundled: false });
+      added++;
+    } else {
+      state.quizzes[existingIdx] = { ...qz, bundled: state.quizzes[existingIdx].bundled || false };
+      updated++;
+    }
+  });
+
+  if (errors.length) { alert('Import errors:\n\n' + errors.join('\n')); return; }
+  persist(); renderQuizzes(); closeImportQuiz();
+  alert(`Imported: ${added} added, ${updated} updated.`);
+}
+
+// ----- Quiz event wiring -----
+document.getElementById('quizImportBtn').addEventListener('click', openImportQuiz);
+document.getElementById('quizResetBtn').addEventListener('click', () => {
+  if (confirm('Re-seed bundled quizzes from quizzes.json? Your attempt history is kept; any edits you made to bundled quizzes will be overwritten.')) {
+    reseedBundledQuizzes();
+  }
+});
+document.getElementById('qzClose').addEventListener('click', closeQuizModal);
+document.getElementById('quizModal').addEventListener('click', e => { if (e.target.id === 'quizModal') closeQuizModal(); });
+document.getElementById('qzImportClose').addEventListener('click', closeImportQuiz);
+document.getElementById('qzImportCancel').addEventListener('click', closeImportQuiz);
+document.getElementById('qzImportDo').addEventListener('click', doImportQuiz);
+document.getElementById('quizImportModal').addEventListener('click', e => { if (e.target.id === 'quizImportModal') closeImportQuiz(); });
+
+/* ============================================================
    BUDGET
 ============================================================ */
 document.getElementById('expenseForm').addEventListener('submit', e => {
@@ -1924,6 +2360,7 @@ function renderAll() {
   renderHomework();
   renderBudget();
   renderDocuments();
+  renderQuizzes();
 }
 
 /* ============================================================
@@ -2127,6 +2564,8 @@ seedIfFirstRun();
 seedBundledDocs();
 fillSettingsForm();
 renderAll();
+// Pull the bundled quizzes.json after first paint (async, idempotent)
+seedBundledQuizzes();
 
 /* ============================================================
    PRE-FLIGHT CHECKLIST (I'M SAFE / PAVE)

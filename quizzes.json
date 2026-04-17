@@ -1,0 +1,310 @@
+{
+  "quizzes": [
+    {
+      "id": "gl1-2026-04-14",
+      "title": "Ground Lesson 1 \u2014 Orientation, Training Resources & Pre-flight",
+      "lessonDate": "2026-04-14",
+      "source": "Fireflies: Ground Lesson 1",
+      "passingScore": 80,
+      "questions": [
+        {
+          "id": "q1",
+          "question": "When you set up ACH (Automated Clearing House) payment for your lessons, what is the processing fee charged compared to credit card payment?",
+          "options": [
+            "ACH has no processing fee, unlike credit card which does",
+            "ACH and credit card have the same fee",
+            "ACH has a higher fee than credit card",
+            "The instructor hasn't decided which fee structure to use yet"
+          ],
+          "correct": 0,
+          "explanation": "Desire\u00e9 explained that ACH payments are free, while credit card payments incur a fee. She didn't specify the exact credit card fee amount, but confirmed that ACH is the fee-free option."
+        },
+        {
+          "id": "q2",
+          "question": "In Flight Circle, when do you get charged for your flight time?",
+          "options": [
+            "At a randomly scheduled time within the week",
+            "Immediately when the flight ends, after entering the Hobbs time",
+            "At the end of the month with a billing summary",
+            "You never get charged immediately; charges are disputed and resolved later"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 stated: 'We land, clean up the plane, go in the hangar, I input the HOBBS intake time... We put it in Flight Circle, it spits out how long we flew and you get charged right there too.' Billing is instant and immediate."
+        },
+        {
+          "id": "q3",
+          "question": "What happens to your lesson reservation if you need to cancel or switch days with less than full notice?",
+          "options": [
+            "You forfeit the entire lesson cost with no refund",
+            "You don't get charged, but you have to wait 30 days before rebooking",
+            "You don't get charged if you cancel or switch days",
+            "You get a partial refund after administrative processing"
+          ],
+          "correct": 2,
+          "explanation": "Desire\u00e9 explained the cancellation policy: 'If we need to cancel anything... if we had to, like, say on Thursday, we, like, cancel or you switch days or something, you don't get any charge.' There is no charge for cancellations or schedule changes."
+        },
+        {
+          "id": "q4",
+          "question": "According to Desire\u00e9, at what Sporty's practice test score should you schedule your official written test with the FAA?",
+          "options": [
+            "When you consistently score in the 80s",
+            "When you consistently score in the 90s",
+            "When you reach a single score of 85 or higher",
+            "When you've completed all 50 practice questions at least once"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 said: 'When you get to around like 90s, inconsistent 90s, we'll sign you up to go take your written test.' This is the target score before scheduling the official FAA test."
+        },
+        {
+          "id": "q5",
+          "question": "What does the acronym 'ACS' stand for in the context of your Private Pilot training?",
+          "options": [
+            "Aircraft Certification Standards",
+            "Airman Certification Standards",
+            "Aviation Crew Safety",
+            "Approved Checkride Subjects"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 directly stated: 'ACS stands for Airman Certification Standards. Basically it's what your check ride is going to be on.' The ACS contains all the knowledge and skills you'll be tested on."
+        },
+        {
+          "id": "q6",
+          "question": "Which of these is NOT one of the primary training resources Desire\u00e9 assigned you to study from?",
+          "options": [
+            "PHAK (Pilot's Handbook of Aeronautical Knowledge)",
+            "Airplane Flying Handbook",
+            "Bold Method YouTube videos",
+            "ForeFlight Premium subscription materials"
+          ],
+          "correct": 3,
+          "explanation": "Desire\u00e9 assigned PHAK, Airplane Flying Handbook, Bold Method, and Free Pilot Training as study resources. While she mentioned ForeFlight for flight planning and navigation, she did not assign ForeFlight Premium subscription materials as a training resource."
+        },
+        {
+          "id": "q7",
+          "question": "Why does your flight school's checklist differ from generic 'Google version' checklists for aircraft?",
+          "options": [
+            "The school checklists are simpler and faster to use in flight",
+            "They're tailored to the specific aircraft model and avionics you'll use",
+            "Generic checklists are not approved by the FAA",
+            "School checklists don't require you to verify as many items"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 explained: 'Our school is just a little bit more detailed and we tailor it to every airplane because they're all a little different. Different avionics and different things you need to check.' Each checklist is customized to the specific aircraft and its equipment."
+        },
+        {
+          "id": "q8",
+          "question": "When performing a preflight walkaround, what does checking for NOTAMs as part of your pre-flight action help you verify?",
+          "options": [
+            "The condition of the aircraft's exterior paint and windscreen",
+            "Weather, ATC delays, runway lights, and operations at your home airport",
+            "The fuel type and quantity required for your flight",
+            "The correct calibration of the airspeed indicator"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 described NOTAM checks as covering: 'weather, ACC delays, Runway links, flying out of our home airport.' NOTAMs (Notices to Airmen) alert you to operational hazards and restrictions relevant to your flight."
+        },
+        {
+          "id": "q9",
+          "question": "According to Desire\u00e9's explanation, what is the primary effect of using flaps during landing?",
+          "options": [
+            "Flaps reduce lift and drag equally, keeping the plane stable",
+            "Flaps increase lift but also increase drag, allowing slower landing speed",
+            "Flaps only increase drag without changing lift",
+            "Flaps are only used for emergency procedures, not normal landings"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 stated: 'Flaps, that's kind of like our lift component, but with flaps, you get more lift but more drag. So you kind of use flaps when you're coming into land.' The combined effect allows you to descend at a slower airspeed during landing."
+        },
+        {
+          "id": "q10",
+          "question": "What is the function of the trim system in the aircraft, and where is it physically located?",
+          "options": [
+            "Trim adjusts engine power and is located on the throttle quadrant",
+            "Trim prevents spin recovery and is mounted on the fuselage",
+            "Trim alleviates control pressure so the pilot can fly with minimal force, and it's located on the right elevator",
+            "Trim is a backup flight control system located in the tail section"
+          ],
+          "correct": 2,
+          "explanation": "Desire\u00e9 explained: 'The trim wheel is inside the plane... the actual trim is located on your right elevator. It basically alleviates pressure so you're not constantly fighting when you fly.' Trim makes flying easier by reducing the control forces needed."
+        },
+        {
+          "id": "q11",
+          "question": "Desire\u00e9 recommended two specific online learning resources (besides PHAK and the Airplane Flying Handbook) to help break down principles of flight. One is Bold Method. What is the other?",
+          "options": [
+            "Sporty's Flight Training (YouTube channel)",
+            "Free Pilot Training (YouTube channel)",
+            "FlightAware educational series",
+            "FAA's official online ground school"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 said: 'So Bold Method... And then on YouTube there's a guy called Free pilot training that I love. He has really good stuff.' These provide abbreviated, visual explanations versus long textbook chapters."
+        },
+        {
+          "id": "q12",
+          "question": "What is the purpose of dispatching your flight (or ground lesson) in Flight Circle, and what happens on the system when you do?",
+          "options": [
+            "Dispatch submits a flight plan to ATC before every flight",
+            "Dispatch signals to the flight school that the lesson has started and turns the reservation a different color (green) in the system",
+            "Dispatch is only required for flights exceeding 2 hours in duration",
+            "Dispatch generates an automatic weather briefing for your route"
+          ],
+          "correct": 1,
+          "explanation": "Desire\u00e9 explained: 'So basically what we do before flight, your ground lesson, you hit dispatch... you'll see it turns a different color green and they just know that the ground lesson already started.' Dispatch is the school's confirmation that the lesson/flight is underway."
+        }
+      ]
+    },
+    {
+      "id": "gl2-2026-04-16",
+      "title": "Ground Lesson 2 \u2014 Principles of Flight & Aerodynamics",
+      "lessonDate": "2026-04-16",
+      "source": "Fireflies: Principles of Flight (Ground 2)",
+      "passingScore": 80,
+      "questions": [
+        {
+          "id": "q1",
+          "question": "What are the four forces acting on an aircraft during flight?",
+          "options": [
+            "Lift, thrust, drag, and weight",
+            "Lift, pitch, roll, and yaw",
+            "Thrust, altitude, speed, and pressure",
+            "Lift, control forces, torque, and gyroscopic effects"
+          ],
+          "correct": 0,
+          "explanation": "The four fundamental forces of flight are lift (upward force from airflow), thrust (forward force from engine), drag (resistance to motion), and weight (gravitational force). These form the foundation of aerodynamics principles."
+        },
+        {
+          "id": "q2",
+          "question": "What are the two main types of drag that act on an aircraft?",
+          "options": [
+            "Horizontal drag and vertical drag",
+            "Parasite drag and induced drag",
+            "Static drag and dynamic drag",
+            "Form drag and lift drag"
+          ],
+          "correct": 1,
+          "explanation": "Parasite drag includes form drag, skin friction, and interference drag caused by the aircraft's shape. Induced drag is created as a byproduct of generating lift and is related to wingtip vortices."
+        },
+        {
+          "id": "q3",
+          "question": "According to the lesson, what are the four left-turning tendencies mentioned?",
+          "options": [
+            "Spiraling slipstream, gyroscopic precession, P-factor, and torque",
+            "Torque, weight shift, centrifugal force, and magnetic declination",
+            "Roll tendency, pitch tendency, yaw tendency, and bank tendency",
+            "Lift unbalance, thrust line offset, weight bias, and fuel shift"
+          ],
+          "correct": 0,
+          "explanation": "The four left-turning tendencies are: spiraling slipstream (propeller wash over vertical stabilizer), gyroscopic precession (when the propeller-engine acts as a gyroscope), P-factor (propeller factor\u2014blade entering different relative wind), and torque (engine rotation reaction)."
+        },
+        {
+          "id": "q4",
+          "question": "What physical phenomena at the aircraft wingtips create induced drag?",
+          "options": [
+            "Ground effect interference patterns",
+            "Wingtip vortices formed by pressure differential between wing upper and lower surfaces",
+            "Shock waves from high-speed airflow",
+            "Friction between air molecules and wing surface material"
+          ],
+          "correct": 1,
+          "explanation": "Wingtip vortices form because higher pressure air underneath the wing rolls around the wingtip to the lower-pressure area above. These vortices trail behind the aircraft and create induced drag, which is an unavoidable consequence of generating lift."
+        },
+        {
+          "id": "q5",
+          "question": "How do Bernoulli's principle and Newton's third law both contribute to lift generation?",
+          "options": [
+            "Bernoulli explains pressure difference; Newton's law explains reaction forces",
+            "They are competing theories; only one actually generates lift",
+            "Bernoulli applies only at high speeds; Newton applies only at low speeds",
+            "Both describe the same phenomenon but with different terminology"
+          ],
+          "correct": 0,
+          "explanation": "Bernoulli's principle describes how faster-moving air over the curved upper wing surface creates lower pressure. Newton's third law explains the reaction force\u2014air is deflected downward by the wing, and the wing experiences an equal and opposite upward force (lift)."
+        },
+        {
+          "id": "q6",
+          "question": "Why must you apply right rudder during takeoff in most single-engine aircraft?",
+          "options": [
+            "To align the nose with the runway centerline",
+            "To counteract the left-turning tendency caused by spiraling slipstream, torque, and P-factor",
+            "To increase airspeed before rotation",
+            "To prevent the nose wheel from locking"
+          ],
+          "correct": 1,
+          "explanation": "During takeoff, spiraling slipstream deflects air over the vertical stabilizer (pushing the nose left), engine torque rolls the aircraft left, and P-factor (high angle of attack) creates unequal blade lift. Right rudder input is needed to compensate and maintain directional control."
+        },
+        {
+          "id": "q7",
+          "question": "In a banked turn, how does the horizontal component of lift affect the aircraft's behavior if pitch and throttle are not adjusted?",
+          "options": [
+            "The aircraft maintains altitude and speed with no additional effect",
+            "The aircraft climbs slightly due to extra lift",
+            "The aircraft loses altitude and the pilot experiences increased G-forces",
+            "The aircraft accelerates horizontally without changing altitude"
+          ],
+          "correct": 2,
+          "explanation": "When you bank the aircraft, total lift is now split between a vertical component (to support weight) and a horizontal component (to turn). If you don't adjust pitch or throttle, the vertical component decreases, causing descent, and you feel increased G-forces (load factor)."
+        },
+        {
+          "id": "q8",
+          "question": "What is the relationship between angle of attack, induced drag, and required thrust at lower airspeeds?",
+          "options": [
+            "Higher angle of attack decreases induced drag and requires less thrust",
+            "Higher angle of attack increases induced drag and requires more thrust to maintain airspeed",
+            "Angle of attack and induced drag are unrelated",
+            "Induced drag decreases as airspeed decreases, regardless of angle of attack"
+          ],
+          "correct": 1,
+          "explanation": "At lower airspeeds, you must pitch up to higher angles of attack to maintain lift. Higher angle of attack increases induced drag significantly. This increased drag requires more thrust to maintain the same airspeed."
+        },
+        {
+          "id": "q9",
+          "question": "How do wingtip vortices behave when the aircraft is near the ground (ground effect)?",
+          "options": [
+            "Vortices strengthen and increase induced drag",
+            "Vortices dissipate immediately and have no effect",
+            "Vortices hit the runway and are blocked from fully developing, reducing induced drag",
+            "Vortices change direction toward the fuselage"
+          ],
+          "correct": 2,
+          "explanation": "In ground effect (near the runway), wingtip vortices cannot fully develop because they hit the runway surface. This disruption gives a small reduction in induced drag and provides a cushion effect\u2014explaining why some aircraft seem to float near the ground during landing."
+        },
+        {
+          "id": "q10",
+          "question": "You're climbing at a slower airspeed with a high angle of attack. Based on what you learned about induced drag, why might you need more throttle than in a shallow climb at higher airspeed?",
+          "options": [
+            "The engine loses power in thin air",
+            "The high angle of attack generates large induced drag, requiring more thrust to overcome it",
+            "Slow climbing damages engine efficiency",
+            "The propeller becomes inefficient at steep pitch angles"
+          ],
+          "correct": 1,
+          "explanation": "Higher angles of attack (needed at low airspeeds to generate lift) create large induced drag. This drag multiplies with the angle of attack, requiring significantly more thrust to maintain a constant slow airspeed and climb rate. This principle is critical for short-field operations."
+        },
+        {
+          "id": "q11",
+          "question": "You're entering a steep turn (30\u00b0 bank) without adjusting pitch or throttle. Predict what happens and why.",
+          "options": [
+            "The aircraft maintains altitude because the horizontal component of lift helps",
+            "The aircraft climbs because total lift increases with bank angle",
+            "The aircraft descends because the vertical lift component decreases, and load factor increases",
+            "The aircraft flies straight due to gyroscopic stability"
+          ],
+          "correct": 2,
+          "explanation": "When you bank without adjusting pitch/throttle, the total lift vector tilts. The vertical component (which supports weight) decreases while a horizontal component develops (needed for turning). Insufficient vertical lift causes descent. The load factor (feeling of G's) increases because total lift is shared between vertical and horizontal components."
+        },
+        {
+          "id": "q12",
+          "question": "What study resources did your instructor recommend for deeply understanding principles of flight?",
+          "options": [
+            "Only the FAA's official online ground school",
+            "PHAK, Airplane Flying Handbook, Bold Method, and Free Pilot Training (YouTube)",
+            "Sporty's practice tests exclusively",
+            "The ACS and checkride prep guides"
+          ],
+          "correct": 1,
+          "explanation": "Your instructor emphasized using multiple resources: PHAK (Pilot's Handbook of Aeronautical Knowledge) Chapters 4\u20135, the Airplane Flying Handbook, Bold Method videos, and Free Pilot Training (YouTube) to see these concepts broken down visually. Different sources help tie concepts together."
+        }
+      ]
+    }
+  ]
+}
