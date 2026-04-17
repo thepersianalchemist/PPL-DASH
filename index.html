@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>PPL Training Dashboard — Aryan</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#0b1221" />
+<meta name="description" content="Private Pilot License training tracker — hours, milestones, homework, budget." />
+
+<!-- iOS home-screen / standalone -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PPL" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<style>
+  :root {
+    --bg: #0b1221;
+    --bg-2: #111a30;
+    --panel: #162038;
+    --panel-2: #1b2744;
+    --border: #243357;
+    --text: #e6edf7;
+    --muted: #8ea2c6;
+    --accent: #4aa3ff;
+    --accent-2: #66d1a8;
+    --warn: #ffb547;
+    --danger: #ff6b6b;
+    --good: #3ddc84;
+    --chip: #23314f;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: radial-gradient(ellipse at top, #152243 0%, var(--bg) 60%) fixed; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Arial, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }
+  body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+  /* PWA update toast */
+  #updateToast { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: var(--panel); border: 1px solid var(--accent); color: var(--text); padding: 10px 14px; border-radius: 10px; box-shadow: var(--shadow); display: none; z-index: 50; gap: 10px; align-items: center; }
+  #updateToast button { background: var(--accent); color: #0b1221; border: 0; padding: 6px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+  /* Floating Quick-log button */
+  #quickLogBtn {
+    position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); right: 24px; z-index: 40;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #0b1221; border: 0; box-shadow: 0 8px 20px rgba(74,163,255,.35);
+    font-size: 28px; font-weight: 600; cursor: pointer;
+    display: grid; place-items: center; line-height: 1;
+  }
+  #quickLogBtn:hover { transform: translateY(-2px); }
+  /* Modal */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; z-index: 45; align-items: center; justify-content: center; padding: 16px; }
+  .modal-backdrop.open { display: flex; }
+  .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+  .modal h3 { margin: 0 0 14px; font-size: 16px; }
+  .modal .chooser { display: flex; gap: 6px; margin-bottom: 14px; }
+  .modal .chooser button { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--muted); cursor: pointer; font-weight: 500; }
+  .modal .chooser button.active { background: var(--accent); color: #0b1221; border-color: var(--accent); }
+  .modal .close-x { float: right; background: transparent; border: 0; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1; }
+  /* Preflight widget */
+  .preflight { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 700px) { .preflight { grid-template-columns: 1fr; } }
+  .checkbox-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; font-size: 13px; color: var(--text); border-bottom: 1px dashed var(--border); }
+  .checkbox-row:last-child { border-bottom: 0; }
+  .checkbox-row input[type=checkbox] { margin-top: 2px; flex-shrink: 0; }
+  .checkbox-row strong { color: var(--accent); display: inline-block; min-width: 24px; }
+  .preflight-reset { font-size: 11px; background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+  /* Documents */
+  .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .doc-card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .doc-card .doc-title { font-weight: 600; word-break: break-word; }
+  .doc-card .doc-meta { font-size: 11px; color: var(--muted); }
+  .doc-card .doc-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .doc-card .doc-actions button, .doc-card .doc-actions a { font-size: 11px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; text-decoration: none; }
+  .doc-card .doc-actions a { color: var(--accent); border-color: var(--accent); }
+  .doc-type { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--chip); color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  header.top {
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(74,163,255,.08), transparent);
+    position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px);
+  }
+  header.top h1 { font-size: 18px; margin: 0; font-weight: 600; letter-spacing: .3px; }
+  header.top .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-badge {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #7b5cff);
+    display: grid; place-items: center; font-size: 18px;
+  }
+  nav.tabs { display: flex; gap: 4px; padding: 8px 16px; background: var(--bg-2); border-bottom: 1px solid var(--border); overflow-x: auto; position: sticky; top: 63px; z-index: 19; }
+  nav.tabs button {
+    background: transparent; color: var(--muted); border: 0; padding: 10px 14px;
+    border-radius: 8px; cursor: pointer; font-size: 13px; white-space: nowrap;
+    transition: all .15s ease;
+  }
+  nav.tabs button:hover { color: var(--text); background: rgba(255,255,255,.04); }
+  nav.tabs button.active { background: var(--accent); color: #0b1221; font-weight: 600; }
+  main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  section.view { display: none; }
+  section.view.active { display: block; animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .col-12 { grid-column: span 12; } .col-6 { grid-column: span 6; } .col-4 { grid-column: span 4; } .col-3 { grid-column: span 3; } .col-8 { grid-column: span 8; }
+  @media (max-width: 900px) { .col-6,.col-4,.col-3,.col-8 { grid-column: span 12; } }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow); }
+  .card h2 { margin: 0 0 12px 0; font-size: 15px; color: var(--text); font-weight: 600; letter-spacing: .2px; display: flex; align-items: center; gap: 8px; }
+  .card h2 .tag { font-size: 11px; padding: 3px 8px; background: var(--chip); border-radius: 6px; color: var(--muted); font-weight: 500; }
+  .stat { font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
+  .stat .unit { font-size: 13px; color: var(--muted); font-weight: 500; margin-left: 4px; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .kpi { display: flex; justify-content: space-between; align-items: flex-end; }
+
+  /* Progress bar */
+  .req { margin-bottom: 12px; }
+  .req-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; font-size: 13px; }
+  .req-head .name { color: var(--text); }
+  .req-head .nums { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 12px; }
+  .bar { background: var(--bg-2); height: 10px; border-radius: 999px; overflow: hidden; border: 1px solid var(--border); }
+  .bar > .fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .4s ease; }
+  .bar.done > .fill { background: linear-gradient(90deg, var(--good), var(--accent-2)); }
+  .bar.over > .fill { background: linear-gradient(90deg, var(--warn), var(--danger)); }
+
+  /* Forms */
+  form .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+  form label { display: flex; flex-direction: column; font-size: 12px; color: var(--muted); gap: 4px; }
+  form label.full { grid-column: span 12; }
+  form label.half { grid-column: span 6; }
+  form label.third { grid-column: span 4; }
+  form label.quarter { grid-column: span 3; }
+  form label.sixth { grid-column: span 2; }
+  @media (max-width: 900px) { form label.half,form label.third,form label.quarter,form label.sixth { grid-column: span 12; } }
+  input, select, textarea, button {
+    font: inherit; color: var(--text); background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 10px; outline: none; transition: border-color .15s ease;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  textarea { min-height: 72px; resize: vertical; }
+  button { cursor: pointer; background: var(--accent); color: #0b1221; border: 0; font-weight: 600; }
+  button.secondary { background: var(--chip); color: var(--text); }
+  button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  button.danger { background: var(--danger); color: #1a0709; }
+  button:hover { filter: brightness(1.1); }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; background: var(--bg-2); position: sticky; top: 0; }
+  tr:hover td { background: rgba(255,255,255,.02); }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  td .del { color: var(--muted); cursor: pointer; padding: 2px 6px; border-radius: 4px; background: transparent; border: 1px solid var(--border); font-size: 11px; }
+  td .del:hover { color: var(--danger); border-color: var(--danger); }
+  .table-wrap { max-height: 500px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; letter-spacing: .3px; }
+  .badge.good { background: rgba(61,220,132,.15); color: var(--good); }
+  .badge.warn { background: rgba(255,181,71,.15); color: var(--warn); }
+  .badge.danger { background: rgba(255,107,107,.15); color: var(--danger); }
+  .badge.muted { background: var(--chip); color: var(--muted); }
+
+  /* Milestones */
+  .milestone {
+    display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border);
+    border-radius: 10px; background: var(--bg-2); margin-bottom: 8px;
+  }
+  .milestone input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
+  .milestone .m-body { flex: 1; }
+  .milestone .m-title { font-size: 13px; font-weight: 600; }
+  .milestone .m-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .milestone input[type="date"] { max-width: 160px; }
+  .milestone.done { opacity: .65; }
+  .milestone.done .m-title { text-decoration: line-through; }
+
+  /* Homework */
+  .hw { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-2); margin-bottom: 6px; }
+  .hw input[type="checkbox"] { margin-top: 2px; }
+  .hw.done { opacity: .5; }
+  .hw.done .hw-text { text-decoration: line-through; }
+  .hw-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* Calendar */
+  .cal-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-head { font-size: 11px; color: var(--muted); text-align: center; padding: 4px 0; font-weight: 600; letter-spacing: .5px; }
+  .cal-day {
+    border: 1px solid var(--border); border-radius: 8px; min-height: 90px; padding: 6px; background: var(--bg-2);
+    font-size: 11px; position: relative; overflow: hidden;
+  }
+  .cal-day.other { opacity: .35; }
+  .cal-day.today { border-color: var(--accent); background: rgba(74,163,255,.08); }
+  .cal-day .day-num { font-weight: 600; font-size: 12px; margin-bottom: 4px; }
+  .cal-entry { background: var(--chip); padding: 3px 5px; border-radius: 4px; margin-bottom: 2px; font-size: 10.5px; line-height: 1.3; }
+  .cal-entry.flight { background: rgba(74,163,255,.2); color: #9fc8ff; border-left: 2px solid var(--accent); }
+  .cal-entry.ground { background: rgba(102,209,168,.18); color: #a1e7cc; border-left: 2px solid var(--accent-2); }
+
+  /* Checklist style lists */
+  ul.clean { list-style: none; padding: 0; margin: 0; }
+  ul.clean li { padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 13px; display: flex; justify-content: space-between; gap: 8px; }
+  ul.clean li:last-child { border-bottom: 0; }
+
+  /* Pacing */
+  .pacing { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 700px) { .pacing { grid-template-columns: 1fr; } }
+  .pacing .box { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .pacing .box .big { font-size: 22px; font-weight: 700; margin-top: 4px; }
+
+  .footer-note { color: var(--muted); font-size: 11px; text-align: center; padding: 24px; }
+  .hidden { display: none !important; }
+
+  .chip { display: inline-block; padding: 2px 8px; background: var(--chip); color: var(--muted); border-radius: 999px; font-size: 11px; }
+
+  details.section-toggle { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--bg-2); margin-bottom: 10px; }
+  details.section-toggle > summary { cursor: pointer; font-weight: 600; font-size: 13px; outline: none; }
+  details.section-toggle[open] > summary { margin-bottom: 10px; }
+
+  canvas { max-width: 100%; height: 220px !important; }
+
+  .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div class="brand-badge">✈︎</div>
+    <div>
+      <h1>Private Pilot License — Training Dashboard</h1>
+      <div class="sub" id="headerSub">Part 61 · Aryan · Ground Lesson 2 complete · Lesson 3 tomorrow (first flight)</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button class="ghost" id="exportBtn">⬇ Export</button>
+    <button class="ghost" id="importBtn">⬆ Import</button>
+    <input type="file" id="importFile" accept="application/json" class="hidden" />
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="overview" class="active">Overview</button>
+  <button data-tab="requirements">FAR Requirements</button>
+  <button data-tab="log">Flight &amp; Ground Log</button>
+  <button data-tab="calendar">Learning Calendar</button>
+  <button data-tab="milestones">Milestones</button>
+  <button data-tab="homework">Homework</button>
+  <button data-tab="documents">Documents</button>
+  <button data-tab="budget">Budget</button>
+  <button data-tab="settings">Settings</button>
+</nav>
+
+<div id="updateToast" role="status" aria-live="polite">
+  <span>A new version of the dashboard is available.</span>
+  <button id="reloadForUpdate">Reload</button>
+</div>
+
+<main>
+
+<!-- ================== OVERVIEW ================== -->
+<section class="view active" id="view-overview">
+  <div class="row">
+    <div class="col-3">
+      <div class="card">
+        <h2>Total Flight Hours</h2>
+        <div class="kpi">
+          <div class="stat" id="kpiTotal">0.0<span class="unit">/ 40 hrs</span></div>
+          <span class="badge muted" id="kpiTotalPct">0%</span>
+        </div>
+        <div class="bar" style="margin-top:10px;"><div class="fill" id="kpiTotalBar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <h2>Target Checkride</h2>
+        <div class="stat" id="kpiTarget">—</div>
+        <div class="muted" id="kpiTargetSub">Set a target date in Settings</div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <h2>Pace Required</h2>
+        <div class="stat" id="kpiPace">—</div>
+        <div class="muted" id="kpiPaceSub">hours per week to stay on track</div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <h2>Total Spent</h2>
+        <div class="stat" id="kpiSpent">$0</div>
+        <div class="muted" id="kpiSpentSub">Across lessons, gear, exams</div>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <div class="card">
+        <h2>Pacing vs Target</h2>
+        <div class="pacing">
+          <div class="box">
+            <div class="muted">Hours logged</div>
+            <div class="big" id="paceLogged">0.0</div>
+          </div>
+          <div class="box">
+            <div class="muted">Hours remaining (to 40)</div>
+            <div class="big" id="paceRemain">40.0</div>
+          </div>
+          <div class="box">
+            <div class="muted">Status</div>
+            <div class="big" id="paceStatus"><span class="badge muted">Not set</span></div>
+          </div>
+        </div>
+        <div class="muted" id="paceNarrative" style="margin-top:12px;"></div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <h2>Next Milestones</h2>
+        <ul class="clean" id="nextMilestones"><li class="muted">Loading…</li></ul>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card" style="background: linear-gradient(135deg, rgba(74,163,255,.14), rgba(102,209,168,.10)); border-color: var(--accent);">
+        <div class="flex-between">
+          <h2>✈ C172P Checklist (Project ACES v3.0)</h2>
+          <div>
+            <a href="C172P-Checklist.pdf" target="_blank" rel="noopener" style="background: var(--accent); color: #0b1221; padding: 8px 14px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px; display: inline-block;">📋 Open checklist</a>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:6px;">Pre-flight · Before Start · Engine Start · Run-up · Takeoff · Climb · Cruise · Descent · Landing · Shutdown · Post-flight. Tap to open full-screen; works offline after first load.</div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <div class="flex-between">
+          <h2>Pre-flight self-assessment <span class="tag" id="preflightStatus">—</span></h2>
+          <button class="preflight-reset" id="preflightReset">Reset for today</button>
+        </div>
+        <div class="muted" style="margin-bottom:10px;">Runs alongside the aircraft checklist above. <strong>I'M SAFE</strong> = pilot fitness · <strong>PAVE</strong> = flight risk. Both must pass before the GO/NO-GO call.</div>
+        <div class="preflight">
+          <div>
+            <div class="muted" style="font-weight:600; color:var(--accent); margin-bottom:6px;">I'M SAFE (pilot fitness)</div>
+            <div id="preflightImSafe"></div>
+          </div>
+          <div>
+            <div class="muted" style="font-weight:600; color:var(--accent); margin-bottom:6px;">PAVE (risk assessment)</div>
+            <div id="preflightPave"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <h2>Active Homework</h2>
+        <div id="activeHomeworkList"><div class="muted">No active homework. Add items from the Homework tab or when you log a lesson.</div></div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <h2>Recent Lessons</h2>
+        <div id="recentLessons"><div class="muted">Your last 5 flight or ground lessons will appear here.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FAR REQUIREMENTS ================== -->
+<section class="view" id="view-requirements">
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <h2>FAR §61.109(a) — PPL Airplane Single-Engine Land <span class="tag">Part 61</span></h2>
+        <div class="muted" style="margin-bottom:12px;">Progress bars fill automatically from your flight log. These are minimums — most students need 60–75 hours.</div>
+        <div id="reqList"></div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <h2>Specific Required Flights</h2>
+        <ul class="clean" id="specificFlights">
+          <li><span>Dual XC day flight &gt;100 NM</span><span id="sf1" class="badge muted">Pending</span></li>
+          <li><span>Dual night XC &gt;100 NM total</span><span id="sf2" class="badge muted">Pending</span></li>
+          <li><span>10 night T&amp;L to full stop at controlled airport</span><span id="sf3" class="badge muted">0 / 10</span></li>
+          <li><span>Solo XC ≥150 NM, 3 full-stop, 1 leg ≥50 NM</span><span id="sf4" class="badge muted">Pending</span></li>
+          <li><span>3 solo T&amp;L at towered airport</span><span id="sf5" class="badge muted">0 / 3</span></li>
+          <li><span>3 hrs test prep within 2 mo of checkride</span><span id="sf6" class="badge muted">Pending</span></li>
+        </ul>
+        <div class="muted" style="margin-top:12px;">Tag these on flight entries using the "Flags" field (xc100, night_xc, night_tl, solo_xc_150, solo_tl_tower, test_prep).</div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h2>Pre-Checkride Readiness</h2>
+        <ul class="clean" id="readiness"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== LOG ================== -->
+<section class="view" id="view-log">
+  <div class="row">
+    <div class="col-12">
+      <details class="section-toggle" open>
+        <summary>➕ Log a new flight lesson</summary>
+        <form id="flightForm">
+          <div class="grid">
+            <label class="quarter">Date<input type="date" name="date" required /></label>
+            <label class="quarter">Lesson #<input type="number" name="lesson" min="1" placeholder="e.g. 3" /></label>
+            <label class="quarter">Aircraft (tail)<input type="text" name="tail" placeholder="N12345" /></label>
+            <label class="quarter">Aircraft type<input type="text" name="type" placeholder="C172 / PA-28" /></label>
+
+            <label class="third">From (ICAO)<input type="text" name="from" placeholder="KSBA" /></label>
+            <label class="third">To (ICAO)<input type="text" name="to" placeholder="KSBA" /></label>
+            <label class="third">Route / waypoints<input type="text" name="route" placeholder="Local / KSBA-KSZP-KSBA" /></label>
+
+            <label class="sixth">Total hrs<input type="number" step="0.1" name="total" required placeholder="1.2" /></label>
+            <label class="sixth">Dual<input type="number" step="0.1" name="dual" placeholder="1.2" /></label>
+            <label class="sixth">Solo<input type="number" step="0.1" name="solo" placeholder="0" /></label>
+            <label class="sixth">Cross-country<input type="number" step="0.1" name="xc" placeholder="0" /></label>
+            <label class="sixth">Night<input type="number" step="0.1" name="night" placeholder="0" /></label>
+            <label class="sixth">Instrument (hood)<input type="number" step="0.1" name="hood" placeholder="0" /></label>
+
+            <label class="quarter">Day landings<input type="number" name="daylandings" placeholder="0" /></label>
+            <label class="quarter">Night landings<input type="number" name="nightlandings" placeholder="0" /></label>
+            <label class="quarter">Cost ($)<input type="number" step="0.01" name="cost" placeholder="0" /></label>
+            <label class="quarter">Flags (comma-sep)<input type="text" name="flags" placeholder="xc100, test_prep" /></label>
+
+            <label class="half">Maneuvers / topics covered<textarea name="maneuvers" placeholder="Straight & level, climbs, descents, turns, ground reference..."></textarea></label>
+            <label class="half">What went well / to improve<textarea name="notes" placeholder="Radio work still rough; flare height getting better"></textarea></label>
+
+            <label class="full">Homework / action items (one per line — auto-added to Homework tab)<textarea name="homework" placeholder="Review §4 POH limitations\nPractice radio phraseology with ATC Chatter"></textarea></label>
+          </div>
+          <div class="btn-row">
+            <button type="submit">Save flight entry</button>
+            <button type="reset" class="ghost">Reset</button>
+          </div>
+        </form>
+      </details>
+
+      <details class="section-toggle">
+        <summary>📖 Log a ground lesson</summary>
+        <form id="groundForm">
+          <div class="grid">
+            <label class="quarter">Date<input type="date" name="date" required /></label>
+            <label class="quarter">Lesson #<input type="number" name="lesson" min="1" placeholder="2" /></label>
+            <label class="quarter">Duration (hrs)<input type="number" step="0.25" name="duration" placeholder="1.5" /></label>
+            <label class="quarter">Cost ($)<input type="number" step="0.01" name="cost" placeholder="0" /></label>
+
+            <label class="full">Topics covered<textarea name="topics" placeholder="Airspace, sectional chart basics, weight & balance..."></textarea></label>
+            <label class="half">Notes / what I learned<textarea name="notes" placeholder="Key takeaways"></textarea></label>
+            <label class="half">Homework / action items (one per line)<textarea name="homework" placeholder="Chapter 3 of Rod Machado\nReview METAR decoding"></textarea></label>
+          </div>
+          <div class="btn-row">
+            <button type="submit">Save ground lesson</button>
+            <button type="reset" class="ghost">Reset</button>
+          </div>
+        </form>
+      </details>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <h2>Flight Log <span class="tag" id="flightCount">0 entries</span></h2>
+        <div class="table-wrap">
+          <table id="flightTable">
+            <thead>
+              <tr>
+                <th>Date</th><th>L#</th><th>Route</th><th>Aircraft</th>
+                <th class="num">Total</th><th class="num">Dual</th><th class="num">Solo</th>
+                <th class="num">XC</th><th class="num">Night</th><th class="num">Hood</th>
+                <th class="num">Day L</th><th class="num">Night L</th><th class="num">$</th>
+                <th>Notes</th><th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h2>Ground Lesson Log <span class="tag" id="groundCount">0 entries</span></h2>
+        <div class="table-wrap">
+          <table id="groundTable">
+            <thead>
+              <tr><th>Date</th><th>L#</th><th class="num">Hrs</th><th>Topics</th><th>Notes</th><th class="num">$</th><th></th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== CALENDAR ================== -->
+<section class="view" id="view-calendar">
+  <div class="card">
+    <div class="cal-controls">
+      <button class="ghost" id="calPrev">‹ Prev</button>
+      <h2 id="calMonth" style="margin:0;">—</h2>
+      <button class="ghost" id="calNext">Next ›</button>
+      <button class="secondary" id="calToday">Today</button>
+      <span class="chip" style="background:rgba(74,163,255,.2); color:#9fc8ff;">Flight</span>
+      <span class="chip" style="background:rgba(102,209,168,.18); color:#a1e7cc;">Ground</span>
+    </div>
+    <div class="cal-grid" id="calHeaders"></div>
+    <div class="cal-grid" id="calBody"></div>
+    <div class="muted" style="margin-top:10px;">Click any day to see all lessons on that date.</div>
+  </div>
+</section>
+
+<!-- ================== MILESTONES ================== -->
+<section class="view" id="view-milestones">
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <h2>Training Milestones</h2>
+        <div id="milestoneList"></div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <h2>Written Exam &amp; Checkride Prep</h2>
+        <ul class="clean">
+          <li><strong>FAA Knowledge Test (PAR)</strong><span class="badge muted">60 Q, 70% to pass, 2.5 hrs</span></li>
+          <li>Recommended score: 90%+ to avoid deficiency focus on checkride</li>
+          <li>Good prep: Sporty's, King Schools, Sheppard Air, or Rod Machado</li>
+          <li><strong>Checkride (Practical Test)</strong><span class="badge muted">ACS-based</span></li>
+          <li>Oral ~2 hrs · Flight ~1.5 hrs with DPE</li>
+          <li>Endorsements required: §61.39(a)(6)(i) &amp; (ii), §61.105 knowledge, §61.107 proficiency, §61.109 aeronautical experience</li>
+        </ul>
+        <div class="muted" style="margin-top:8px;">Check milestones off as you complete them — dates are saved automatically.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== HOMEWORK ================== -->
+<section class="view" id="view-homework">
+  <div class="card">
+    <div class="flex-between">
+      <h2>Homework &amp; Action Items</h2>
+      <div>
+        <button class="ghost" id="hwShowDone">Toggle completed</button>
+        <button class="ghost" id="hwClearDone">Clear completed</button>
+      </div>
+    </div>
+
+    <form id="hwForm" style="margin:12px 0 16px;">
+      <div class="grid">
+        <label class="half">New item<input type="text" name="text" placeholder="e.g. Memorize V-speeds for C172" required /></label>
+        <label class="quarter">Due<input type="date" name="due" /></label>
+        <label class="quarter">Tag<select name="tag">
+          <option value="general">General</option>
+          <option value="reading">Reading</option>
+          <option value="memorize">Memorize</option>
+          <option value="practice">Practice</option>
+          <option value="written">Written exam</option>
+          <option value="maneuver">Maneuver</option>
+        </select></label>
+        <label class="full">Link to document (optional)<select name="docId" id="hwDocSelect"><option value="">— none —</option></select></label>
+      </div>
+      <div class="btn-row"><button type="submit">Add</button></div>
+    </form>
+
+    <div id="hwList"></div>
+  </div>
+</section>
+
+<!-- ================== DOCUMENTS ================== -->
+<section class="view" id="view-documents">
+  <div class="row">
+    <div class="col-8">
+      <div class="card">
+        <div class="flex-between">
+          <h2>Document Library <span class="tag" id="docCount">0</span></h2>
+          <div>
+            <button class="ghost" id="docBulkBtn">📂 Bulk import folder</button>
+            <input type="file" id="docBulkInput" webkitdirectory directory multiple class="hidden" />
+            <button class="ghost" id="docRefreshBtn">Refresh</button>
+          </div>
+        </div>
+        <div class="muted" style="margin-bottom:12px;">
+          Add links to your iPad PDF folder, POH, FAR/AIM, school handouts, Sporty's videos, etc.
+          Links work across iPad + iPhone + Macbook as long as the destination (iCloud link, Google Drive link, etc.) is accessible on that device.
+        </div>
+
+        <form id="docForm" style="margin-bottom:16px;">
+          <div class="grid">
+            <label class="half">Title<input type="text" name="title" placeholder="e.g. Cessna 172S POH" required /></label>
+            <label class="quarter">Type<select name="type">
+              <option value="poh">POH / AFM</option>
+              <option value="far_aim">FAR/AIM</option>
+              <option value="handbook">FAA Handbook</option>
+              <option value="syllabus">Syllabus / Lesson Plan</option>
+              <option value="checklist">Checklist</option>
+              <option value="chart">Chart / Plate</option>
+              <option value="video">Video</option>
+              <option value="notes">Notes / Handout</option>
+              <option value="other">Other</option>
+            </select></label>
+            <label class="quarter">Tag<select name="tag">
+              <option value="reference">Reference</option>
+              <option value="study">Study</option>
+              <option value="preflight">Preflight</option>
+              <option value="inflight">In-flight</option>
+              <option value="written">Written exam</option>
+              <option value="checkride">Checkride</option>
+            </select></label>
+            <label class="full">URL or file link<input type="url" name="url" placeholder="https://… (iCloud share link, Drive, Dropbox, Files.app link, etc.)" required /></label>
+            <label class="full">Notes<input type="text" name="notes" placeholder="Optional — e.g. Chapters 1-4 required for Ground Lesson 3" /></label>
+          </div>
+          <div class="btn-row"><button type="submit">Add document</button></div>
+        </form>
+
+        <div style="margin-bottom:10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <select id="docFilterType" class="ghost" style="padding:6px 10px; background:var(--panel-2); border:1px solid var(--border); color:var(--text); border-radius:6px;">
+            <option value="">All types</option>
+            <option value="poh">POH / AFM</option>
+            <option value="far_aim">FAR/AIM</option>
+            <option value="handbook">FAA Handbook</option>
+            <option value="syllabus">Syllabus</option>
+            <option value="checklist">Checklist</option>
+            <option value="chart">Charts</option>
+            <option value="video">Videos</option>
+            <option value="notes">Notes</option>
+            <option value="other">Other</option>
+          </select>
+          <input type="text" id="docSearch" placeholder="Search title / notes…" style="flex:1; min-width:160px; padding:6px 10px; background:var(--panel-2); border:1px solid var(--border); color:var(--text); border-radius:6px;" />
+        </div>
+
+        <div class="doc-grid" id="docGrid"></div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <h2>How to link iPad PDFs</h2>
+        <ol style="margin:0; padding-left:18px; line-height:1.6; color:var(--text);">
+          <li>Open the PDF in the <strong>Files</strong> app on iPad.</li>
+          <li>Long-press the file → <strong>Share</strong> → <strong>Copy Link</strong> (iCloud Drive link).</li>
+          <li>Paste into the URL field here.</li>
+          <li>On your Mac / iPhone, same iCloud link will open the same file.</li>
+        </ol>
+        <div class="muted" style="margin-top:10px;">
+          For non-iCloud files: upload to Google Drive or Dropbox and use the share link instead. Anything with an https:// URL works.
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h2>Homework with linked docs</h2>
+        <div id="hwLinkedList" class="muted">No homework items are linked to documents yet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== BUDGET ================== -->
+<section class="view" id="view-budget">
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <h2>Total Spent</h2>
+        <div class="stat" id="budgetTotal">$0</div>
+        <div class="muted" id="budgetTotalSub">Across all categories</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <h2>Projected Total Cost</h2>
+        <div class="stat" id="budgetProjected">—</div>
+        <div class="muted">Based on hourly rate × remaining hours + pending exam/checkride costs</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <h2>Average Cost/Hour</h2>
+        <div class="stat" id="budgetAvgHr">—</div>
+        <div class="muted">Total spent ÷ total flight hours</div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <h2>Add Expense (beyond lesson costs)</h2>
+        <form id="expenseForm">
+          <div class="grid">
+            <label class="quarter">Date<input type="date" name="date" required /></label>
+            <label class="quarter">Amount ($)<input type="number" step="0.01" name="amount" required /></label>
+            <label class="half">Category<select name="category">
+              <option>Lesson / Flight</option>
+              <option>Ground instruction</option>
+              <option>Gear / Headset</option>
+              <option>iPad / ForeFlight</option>
+              <option>Written test prep</option>
+              <option>Written test fee</option>
+              <option>Medical exam</option>
+              <option>Checkride fee (DPE)</option>
+              <option>Books / charts</option>
+              <option>Other</option>
+            </select></label>
+            <label class="full">Description<input type="text" name="description" placeholder="Bose A20 headset" /></label>
+          </div>
+          <div class="btn-row"><button type="submit">Add expense</button></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <h2>Spend by Category</h2>
+        <div id="categoryBreakdown"></div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <h2>All Expenses <span class="tag" id="expenseCount">0</span></h2>
+        <div class="table-wrap">
+          <table id="expenseTable">
+            <thead><tr><th>Date</th><th>Category</th><th>Description</th><th class="num">Amount</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== SETTINGS ================== -->
+<section class="view" id="view-settings">
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <h2>Training Setup</h2>
+        <form id="settingsForm">
+          <div class="grid">
+            <label class="half">Target checkride date<input type="date" name="targetDate" /></label>
+            <label class="half">Training start date<input type="date" name="startDate" /></label>
+            <label class="half">Aircraft type (primary)<input type="text" name="aircraftType" placeholder="C172" /></label>
+            <label class="half">Home airport (ICAO)<input type="text" name="homeAirport" placeholder="KSBA" /></label>
+            <label class="half">CFI name<input type="text" name="cfi" placeholder="Instructor name" /></label>
+            <label class="half">Flight school<input type="text" name="school" placeholder="School / club name" /></label>
+            <label class="half">Est. hourly rental rate ($)<input type="number" step="0.01" name="hourlyRate" placeholder="250" /></label>
+            <label class="half">Est. instructor rate ($/hr)<input type="number" step="0.01" name="cfiRate" placeholder="85" /></label>
+            <label class="half">Target total hours<input type="number" name="targetHours" placeholder="60" /></label>
+            <label class="half">Est. checkride fee ($)<input type="number" step="0.01" name="checkrideFee" placeholder="800" /></label>
+          </div>
+          <div class="btn-row"><button type="submit">Save settings</button></div>
+        </form>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <h2>Data Management</h2>
+        <p class="muted">All data is stored locally in your browser (localStorage). To preserve it, back up regularly with Export. To move it between devices, Export → Import.</p>
+        <div class="btn-row">
+          <button class="secondary" id="exportBtn2">Export JSON backup</button>
+          <button class="secondary" id="importBtn2">Import JSON backup</button>
+          <button class="danger" id="resetAll">⚠ Reset all data</button>
+        </div>
+        <p class="muted" style="margin-top:16px;">This is the hosted web-app version — bookmark the URL, or install it via the card on the right to get a home-screen / dock icon.</p>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h2>Install on iPhone / iPad / Mac</h2>
+        <p class="muted" style="margin-top:0;">Works as a full-screen app across devices once deployed.</p>
+        <ol style="margin:0; padding-left:18px; line-height:1.7;">
+          <li><strong>iPad / iPhone:</strong> open in Safari → Share → <em>Add to Home Screen</em>.</li>
+          <li><strong>Mac:</strong> open in Safari → File → <em>Add to Dock</em> (macOS Sonoma+) or Chrome → install icon in the address bar.</li>
+          <li>Opens like a native app, works offline after first load.</li>
+        </ol>
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="secondary" onclick="if(window.showInstallPrompt) window.showInstallPrompt(); else alert('On iPhone/iPad: Safari → Share → Add to Home Screen. On Mac: Safari → File → Add to Dock, or Chrome install icon in URL bar.');">Install app</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h2>Sync across devices</h2>
+        <p class="muted" style="margin-top:0;">Data lives in each device's browser. To move entries between iPad / Mac / iPhone:</p>
+        <ol style="margin:0; padding-left:18px; line-height:1.7;">
+          <li>On the device with latest data → <strong>Export JSON backup</strong>.</li>
+          <li>Save the file to iCloud Drive (or AirDrop it).</li>
+          <li>On the other device → <strong>Import JSON backup</strong> and pick the file.</li>
+        </ol>
+        <p class="muted" style="margin-top:12px;">Tip: after every lesson, export and drop the file into an <strong>iCloud Drive/PPL/Backups/</strong> folder so all devices see it.</p>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h2>About this dashboard</h2>
+        <p class="muted">Tracks progress against FAR §61.109(a) for Private Pilot Airplane Single-Engine Land. Automatically aggregates hours from your flight log, flags required specific flights, shows target-date pacing, and records homework per lesson so nothing slips between lessons.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-note">Built for Aryan · PPL Part 61 · Data is private to this browser · v1.0</div>
+
+</main>
+
+<!-- Floating Quick-log button -->
+<button id="quickLogBtn" title="Quick log" aria-label="Quick log entry">+</button>
+
+<!-- Quick-log modal -->
+<div class="modal-backdrop" id="quickLogModal" role="dialog" aria-modal="true" aria-labelledby="qlTitle">
+  <div class="modal">
+    <button class="close-x" id="qlClose" aria-label="Close">×</button>
+    <h3 id="qlTitle">Quick log</h3>
+    <div class="chooser">
+      <button type="button" data-ql-kind="flight" class="active">✈ Flight</button>
+      <button type="button" data-ql-kind="ground">📖 Ground</button>
+      <button type="button" data-ql-kind="homework">📝 Homework</button>
+      <button type="button" data-ql-kind="expense">💵 Expense</button>
+    </div>
+
+    <!-- Flight form -->
+    <form id="qlFlightForm" class="ql-form">
+      <div class="grid">
+        <label class="half">Date<input type="date" name="date" required /></label>
+        <label class="half">Hours<input type="number" step="0.1" min="0" name="hours" placeholder="1.5" required /></label>
+        <label class="half">Aircraft<input type="text" name="aircraft" placeholder="C172 N12345" /></label>
+        <label class="half">Route / airport<input type="text" name="route" placeholder="KSBA-KSMX" /></label>
+        <label class="full">Type<select name="kind">
+          <option value="dual">Dual (with CFI)</option>
+          <option value="solo">Solo</option>
+          <option value="xc_dual">Dual cross-country</option>
+          <option value="xc_solo">Solo cross-country</option>
+          <option value="night_dual">Night dual</option>
+          <option value="sim">Simulator</option>
+        </select></label>
+        <label class="full">Notes<input type="text" name="notes" placeholder="Maneuvers, takeaways…" /></label>
+      </div>
+      <div class="btn-row"><button type="submit">Log flight</button></div>
+    </form>
+
+    <!-- Ground form -->
+    <form id="qlGroundForm" class="ql-form" style="display:none;">
+      <div class="grid">
+        <label class="half">Date<input type="date" name="date" required /></label>
+        <label class="half">Hours<input type="number" step="0.1" min="0" name="hours" placeholder="1.0" required /></label>
+        <label class="full">Topic<input type="text" name="topic" placeholder="e.g. Weather theory" required /></label>
+        <label class="full">Notes / key points<input type="text" name="notes" placeholder="Takeaways, concepts covered…" /></label>
+      </div>
+      <div class="btn-row"><button type="submit">Log ground lesson</button></div>
+    </form>
+
+    <!-- Homework form -->
+    <form id="qlHwForm" class="ql-form" style="display:none;">
+      <div class="grid">
+        <label class="full">Item<input type="text" name="text" placeholder="e.g. Memorize V-speeds" required /></label>
+        <label class="half">Due<input type="date" name="due" /></label>
+        <label class="half">Tag<select name="tag">
+          <option value="general">General</option>
+          <option value="reading">Reading</option>
+          <option value="memorize">Memorize</option>
+          <option value="practice">Practice</option>
+          <option value="written">Written exam</option>
+          <option value="maneuver">Maneuver</option>
+        </select></label>
+      </div>
+      <div class="btn-row"><button type="submit">Add homework</button></div>
+    </form>
+
+    <!-- Expense form -->
+    <form id="qlExpenseForm" class="ql-form" style="display:none;">
+      <div class="grid">
+        <label class="half">Date<input type="date" name="date" required /></label>
+        <label class="half">Amount ($)<input type="number" step="0.01" min="0" name="amount" required /></label>
+        <label class="full">Category<select name="category">
+          <option value="rental">Aircraft rental</option>
+          <option value="instructor">Instructor</option>
+          <option value="ground">Ground school</option>
+          <option value="medical">Medical</option>
+          <option value="books">Books / materials</option>
+          <option value="written">Written exam</option>
+          <option value="checkride">Checkride / DPE</option>
+          <option value="other">Other</option>
+        </select></label>
+        <label class="full">Description<input type="text" name="description" placeholder="Details" /></label>
+      </div>
+      <div class="btn-row"><button type="submit">Log expense</button></div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA LAYER — localStorage with in-memory fallback
+============================================================ */
+const STORE = (() => {
+  const mem = {};
+  const hasLS = (() => {
+    try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return true; }
+    catch(e) { return false; }
+  })();
+  return {
+    get(k, def) {
+      try {
+        const raw = hasLS ? localStorage.getItem(k) : mem[k];
+        if (raw == null) return def;
+        return JSON.parse(raw);
+      } catch(e) { return def; }
+    },
+    set(k, v) {
+      const raw = JSON.stringify(v);
+      if (hasLS) localStorage.setItem(k, raw);
+      else mem[k] = raw;
+    },
+    clear() {
+      if (hasLS) {
+        ['ppl_flights','ppl_ground','ppl_milestones','ppl_budget','ppl_homework','ppl_settings','ppl_meta']
+          .forEach(k => localStorage.removeItem(k));
+      } else {
+        Object.keys(mem).forEach(k => delete mem[k]);
+      }
+    }
+  };
+})();
+
+const DEFAULT_MILESTONES = [
+  { key:'medical',  title:'3rd Class Medical Certificate (or BasicMed eligibility)', desc:'Required before solo. Visit an AME (aviation medical examiner). Valid 5 yrs if under 40, 2 yrs if 40+.' },
+  { key:'student',  title:'Student Pilot Certificate',       desc:'Apply via IACRA. Required before solo flight. No expiration, but tied to medical.' },
+  { key:'presolo',  title:'Pre-solo written exam (CFI-administered)', desc:'Covers FAR 91 applicable to solo, airport/local area info, aircraft POH.' },
+  { key:'solo',     title:'Solo endorsement (§61.87)',       desc:'Valid 90 days, renewable. CFI must endorse logbook and student certificate.' },
+  { key:'firstsolo',title:'First solo flight 🎉',             desc:'Three takeoffs and landings to full stop. A rite of passage.' },
+  { key:'xcsolo',   title:'Cross-country solo endorsement (§61.93)', desc:'Per-flight endorsement for specific XC, or a standing endorsement for repeat flights.' },
+  { key:'written',  title:'FAA Knowledge Test (PAR) — passed', desc:'60 multiple choice, 70% to pass. Valid 24 calendar months.' },
+  { key:'xc150',    title:'Solo XC ≥150 NM completed',        desc:'One solo cross-country with 3 full-stop landings and a leg ≥50 NM.' },
+  { key:'checkridePrep', title:'Pre-checkride readiness check with CFI', desc:'All ACS tasks proficient. CFI endorses §61.39 and §61.107.' },
+  { key:'checkride', title:'Checkride passed 🏆',             desc:'With Designated Pilot Examiner (DPE). Temporary airman certificate issued on the spot.' }
+];
+
+let state = {
+  flights: STORE.get('ppl_flights', []),
+  ground:  STORE.get('ppl_ground', []),
+  milestones: STORE.get('ppl_milestones', {}),
+  budget:  STORE.get('ppl_budget', []),
+  homework: STORE.get('ppl_homework', []),
+  documents: STORE.get('ppl_documents', []),
+  settings: STORE.get('ppl_settings', {
+    targetDate: '', startDate: '', aircraftType: 'C172', homeAirport: '',
+    cfi: '', school: '', hourlyRate: 250, cfiRate: 85, targetHours: 55, checkrideFee: 800
+  }),
+  meta: STORE.get('ppl_meta', { showDoneHw: true, calMonth: null, docFilterType: '', docSearch: '' })
+};
+
+function persist() {
+  STORE.set('ppl_flights', state.flights);
+  STORE.set('ppl_ground', state.ground);
+  STORE.set('ppl_milestones', state.milestones);
+  STORE.set('ppl_budget', state.budget);
+  STORE.set('ppl_homework', state.homework);
+  STORE.set('ppl_documents', state.documents);
+  STORE.set('ppl_settings', state.settings);
+  STORE.set('ppl_meta', state.meta);
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+/* ============================================================
+   TABS
+============================================================ */
+document.querySelectorAll('#tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    const id = 'view-' + btn.dataset.tab;
+    document.getElementById(id).classList.add('active');
+    if (btn.dataset.tab === 'calendar') renderCalendar();
+  });
+});
+
+/* ============================================================
+   AGGREGATION
+============================================================ */
+function sum(arr, f) { return arr.reduce((a,b) => a + (Number(f(b)) || 0), 0); }
+
+function totals() {
+  const f = state.flights;
+  return {
+    total: sum(f, x => x.total),
+    dual:  sum(f, x => x.dual),
+    solo:  sum(f, x => x.solo),
+    xc:    sum(f, x => x.xc),
+    night: sum(f, x => x.night),
+    hood:  sum(f, x => x.hood),
+    dayLandings:   sum(f, x => x.daylandings),
+    nightLandings: sum(f, x => x.nightlandings),
+    // derived — dual subsets (treat xc/night/hood as part of dual unless solo > 0)
+    dualXc:   sum(f, x => x.solo > 0 ? 0 : x.xc),
+    dualNight:sum(f, x => x.solo > 0 ? 0 : x.night),
+    dualHood: sum(f, x => x.solo > 0 ? 0 : x.hood),
+    soloXc:   sum(f, x => x.solo > 0 ? x.xc : 0),
+    // specific-flight flags
+    hasXc100:   f.some(x => (x.flags||'').match(/xc100/i)),
+    hasNightXc: f.some(x => (x.flags||'').match(/night_xc/i)),
+    nightTl:    sum(f, x => (x.flags||'').match(/night_tl/i) ? (x.nightlandings || 0) : 0),
+    hasSoloXc150: f.some(x => (x.flags||'').match(/solo_xc_150/i)),
+    soloTlTower:  sum(f, x => (x.flags||'').match(/solo_tl_tower/i) ? ((x.daylandings||0)+(x.nightlandings||0)) : 0),
+    hasTestPrep: f.some(x => (x.flags||'').match(/test_prep/i))
+  };
+}
+
+function budgetTotal() {
+  return sum(state.flights, x=>x.cost) + sum(state.ground, x=>x.cost) + sum(state.budget, x=>x.amount);
+}
+
+/* ============================================================
+   REQUIREMENTS — FAR §61.109(a)
+============================================================ */
+const REQUIREMENTS = [
+  { key:'total', name:'Total flight time',             min:40, get:t=>t.total },
+  { key:'dual',  name:'Dual instruction (with CFI)',   min:20, get:t=>t.dual },
+  { key:'dualXc',name:'   — Dual cross-country',        min:3,  get:t=>t.dualXc },
+  { key:'dualNight',name:'   — Dual night',             min:3,  get:t=>t.dualNight },
+  { key:'dualHood',name:'   — Dual instrument (hood)',  min:3,  get:t=>t.dualHood },
+  { key:'solo',  name:'Solo flight time',              min:10, get:t=>t.solo },
+  { key:'soloXc',name:'   — Solo cross-country',        min:5,  get:t=>t.soloXc }
+];
+
+function renderRequirements() {
+  const t = totals();
+  const root = document.getElementById('reqList');
+  root.innerHTML = REQUIREMENTS.map(r => {
+    const v = r.get(t);
+    const pct = Math.min(100, (v / r.min) * 100);
+    const cls = v >= r.min ? 'done' : '';
+    return `
+      <div class="req">
+        <div class="req-head">
+          <span class="name">${r.name}</span>
+          <span class="nums">${v.toFixed(1)} / ${r.min} hrs</span>
+        </div>
+        <div class="bar ${cls}"><div class="fill" style="width:${pct}%"></div></div>
+      </div>`;
+  }).join('');
+
+  // Specific flights
+  document.getElementById('sf1').innerHTML = t.hasXc100 ? '<span class="badge good">Done</span>' : '<span class="badge muted">Pending</span>';
+  document.getElementById('sf2').innerHTML = t.hasNightXc ? '<span class="badge good">Done</span>' : '<span class="badge muted">Pending</span>';
+  document.getElementById('sf3').innerHTML = `<span class="badge ${t.nightTl>=10?'good':'muted'}">${t.nightTl} / 10</span>`;
+  document.getElementById('sf4').innerHTML = t.hasSoloXc150 ? '<span class="badge good">Done</span>' : '<span class="badge muted">Pending</span>';
+  document.getElementById('sf5').innerHTML = `<span class="badge ${t.soloTlTower>=3?'good':'muted'}">${t.soloTlTower} / 3</span>`;
+  document.getElementById('sf6').innerHTML = t.hasTestPrep ? '<span class="badge good">Done</span>' : '<span class="badge muted">Pending</span>';
+
+  // Readiness checklist
+  const m = state.milestones;
+  const items = [
+    { ok: t.total >= 40, label: 'Total ≥ 40 hrs' },
+    { ok: t.dual >= 20, label: 'Dual ≥ 20 hrs' },
+    { ok: t.solo >= 10, label: 'Solo ≥ 10 hrs' },
+    { ok: t.dualXc >= 3 && t.dualNight >= 3 && t.dualHood >= 3, label: 'All dual sub-requirements met' },
+    { ok: t.soloXc >= 5 && t.hasSoloXc150 && t.soloTlTower >= 3, label: 'All solo sub-requirements met' },
+    { ok: !!m.medical?.done, label: '3rd Class Medical' },
+    { ok: !!m.student?.done, label: 'Student Pilot Certificate' },
+    { ok: !!m.written?.done, label: 'FAA Written Test passed' },
+    { ok: !!m.checkridePrep?.done, label: 'CFI pre-checkride signoff' },
+  ];
+  document.getElementById('readiness').innerHTML = items.map(i =>
+    `<li><span>${i.label}</span><span class="badge ${i.ok?'good':'muted'}">${i.ok?'Ready':'—'}</span></li>`
+  ).join('');
+}
+
+/* ============================================================
+   OVERVIEW
+============================================================ */
+function renderOverview() {
+  const t = totals();
+  const target = state.settings.targetHours || 40;
+
+  // KPIs
+  document.getElementById('kpiTotal').innerHTML = `${t.total.toFixed(1)}<span class="unit">/ ${target} hrs</span>`;
+  const pct = Math.min(100, (t.total/target)*100);
+  document.getElementById('kpiTotalPct').textContent = pct.toFixed(0) + '%';
+  document.getElementById('kpiTotalBar').style.width = pct + '%';
+
+  document.getElementById('kpiSpent').textContent = '$' + budgetTotal().toLocaleString(undefined,{maximumFractionDigits:0});
+
+  // Target + pacing
+  const td = state.settings.targetDate;
+  if (td) {
+    const dt = new Date(td);
+    const today = new Date(); today.setHours(0,0,0,0);
+    const daysLeft = Math.round((dt - today)/86400000);
+    const weeksLeft = Math.max(daysLeft/7, 0.1);
+    const remaining = Math.max(0, target - t.total);
+    const hrsPerWeek = remaining / weeksLeft;
+    document.getElementById('kpiTarget').textContent = dt.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+    document.getElementById('kpiTargetSub').textContent = daysLeft >= 0 ? `${daysLeft} days away` : `${-daysLeft} days past`;
+    document.getElementById('kpiPace').innerHTML = `${hrsPerWeek.toFixed(1)}<span class="unit">hrs/wk</span>`;
+    document.getElementById('kpiPaceSub').textContent = `${remaining.toFixed(1)} hrs remaining across ${weeksLeft.toFixed(1)} wks`;
+
+    document.getElementById('paceLogged').textContent = t.total.toFixed(1);
+    document.getElementById('paceRemain').textContent = remaining.toFixed(1);
+
+    // Status
+    let status, narrative;
+    if (t.total >= target) {
+      status = '<span class="badge good">Hours complete</span>';
+      narrative = 'You have logged enough hours. Focus on specific required flights, checkride prep, and written test.';
+    } else if (hrsPerWeek <= 2) {
+      status = '<span class="badge good">Comfortable pace</span>';
+      narrative = `At ${hrsPerWeek.toFixed(1)} hrs/wk you are well-positioned. Aim for 2–3 flights per week for best retention.`;
+    } else if (hrsPerWeek <= 4) {
+      status = '<span class="badge warn">On-pace, be consistent</span>';
+      narrative = `You need ${hrsPerWeek.toFixed(1)} hrs/wk. Consistency matters more than long gaps — try to fly twice weekly minimum.`;
+    } else if (hrsPerWeek <= 8) {
+      status = '<span class="badge warn">Aggressive</span>';
+      narrative = `${hrsPerWeek.toFixed(1)} hrs/wk is achievable but demanding. Consider a scheduling block or accelerated course.`;
+    } else {
+      status = '<span class="badge danger">Unrealistic</span>';
+      narrative = `${hrsPerWeek.toFixed(1)} hrs/wk exceeds what most students can sustain while retaining material. Consider extending your target by 4–8 weeks.`;
+    }
+    document.getElementById('paceStatus').innerHTML = status;
+    document.getElementById('paceNarrative').textContent = narrative;
+  } else {
+    document.getElementById('kpiTarget').textContent = '—';
+    document.getElementById('kpiTargetSub').textContent = 'Set a target date in Settings';
+    document.getElementById('kpiPace').textContent = '—';
+    document.getElementById('kpiPaceSub').textContent = 'hours per week to stay on track';
+    document.getElementById('paceLogged').textContent = t.total.toFixed(1);
+    document.getElementById('paceRemain').textContent = Math.max(0, target - t.total).toFixed(1);
+    document.getElementById('paceStatus').innerHTML = '<span class="badge muted">Set target date</span>';
+    document.getElementById('paceNarrative').textContent = '';
+  }
+
+  // Header subtitle
+  const totalSessions = state.flights.length + state.ground.length;
+  const gCount = state.ground.length, fCount = state.flights.length;
+  const latest = [...state.flights.map(x=>({...x, kind:'Flight'})), ...state.ground.map(x=>({...x, kind:'Ground'}))]
+    .sort((a,b)=> (b.date||'').localeCompare(a.date||''))[0];
+  const parts = [`Part 61`, `Aryan`];
+  if (gCount) parts.push(`${gCount} ground lesson${gCount>1?'s':''}`);
+  if (fCount) parts.push(`${fCount} flight${fCount>1?'s':''} · ${t.total.toFixed(1)} hrs`);
+  if (latest) parts.push(`latest: ${latest.kind} ${latest.date}`);
+  document.getElementById('headerSub').textContent = parts.join(' · ');
+
+  // Next milestones
+  const pending = DEFAULT_MILESTONES
+    .filter(m => !state.milestones[m.key]?.done)
+    .slice(0,5)
+    .map(m => `<li><span>${m.title}</span><span class="badge muted">Pending</span></li>`).join('');
+  document.getElementById('nextMilestones').innerHTML = pending || '<li><span class="badge good">All milestones complete! 🎉</span></li>';
+
+  // Active homework
+  const active = state.homework.filter(h => !h.done).sort((a,b)=> (a.due||'').localeCompare(b.due||''));
+  const hwRoot = document.getElementById('activeHomeworkList');
+  if (!active.length) {
+    hwRoot.innerHTML = '<div class="muted">No active homework.</div>';
+  } else {
+    hwRoot.innerHTML = active.slice(0,6).map(h => `
+      <div class="hw">
+        <input type="checkbox" ${h.done?'checked':''} data-hw="${h.id}" />
+        <div style="flex:1;">
+          <div class="hw-text">${escapeHtml(h.text)}</div>
+          <div class="hw-meta">${h.tag?`<span class="chip">${h.tag}</span> `:''}${h.due?'Due '+h.due:''}</div>
+        </div>
+      </div>`).join('');
+    hwRoot.querySelectorAll('input[data-hw]').forEach(cb => cb.addEventListener('change', e => toggleHw(e.target.dataset.hw)));
+  }
+
+  // Recent lessons
+  const all = [
+    ...state.flights.map(x=>({...x, kind:'Flight', summary: `${x.total||0} hr · ${x.route||x.to||'local'}`})),
+    ...state.ground.map(x=>({...x, kind:'Ground', summary: `${x.duration||0} hr · ${(x.topics||'').slice(0,50)}${x.topics&&x.topics.length>50?'…':''}`}))
+  ].sort((a,b)=> (b.date||'').localeCompare(a.date||'')).slice(0,5);
+  document.getElementById('recentLessons').innerHTML = all.length
+    ? all.map(x => `
+        <div style="padding:8px 0; border-bottom:1px dashed var(--border);">
+          <div style="display:flex; justify-content:space-between;">
+            <strong>${x.kind} L${x.lesson||'?'}</strong>
+            <span class="muted">${x.date||''}</span>
+          </div>
+          <div class="muted" style="font-size:12px;">${escapeHtml(x.summary)}</div>
+        </div>`).join('')
+    : '<div class="muted">Log your first lesson to see it here.</div>';
+}
+
+/* ============================================================
+   FLIGHT & GROUND LOG
+============================================================ */
+document.getElementById('flightForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const entry = {
+    id: uid(),
+    date: fd.get('date'),
+    lesson: +fd.get('lesson') || null,
+    tail: fd.get('tail'), type: fd.get('type'),
+    from: fd.get('from'), to: fd.get('to'), route: fd.get('route'),
+    total: +fd.get('total')||0, dual: +fd.get('dual')||0, solo: +fd.get('solo')||0,
+    xc: +fd.get('xc')||0, night: +fd.get('night')||0, hood: +fd.get('hood')||0,
+    daylandings: +fd.get('daylandings')||0, nightlandings: +fd.get('nightlandings')||0,
+    cost: +fd.get('cost')||0, flags: fd.get('flags')||'',
+    maneuvers: fd.get('maneuvers')||'', notes: fd.get('notes')||'',
+    homework: fd.get('homework')||''
+  };
+  state.flights.push(entry);
+  // Auto-add homework lines
+  (entry.homework||'').split('\n').map(s=>s.trim()).filter(Boolean).forEach(text => {
+    state.homework.push({ id: uid(), text, tag:'practice', due:'', done:false, source:`Flight ${entry.date}` });
+  });
+  persist(); renderAll(); e.target.reset();
+});
+
+document.getElementById('groundForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const entry = {
+    id: uid(),
+    date: fd.get('date'),
+    lesson: +fd.get('lesson') || null,
+    duration: +fd.get('duration')||0, cost: +fd.get('cost')||0,
+    topics: fd.get('topics')||'', notes: fd.get('notes')||'', homework: fd.get('homework')||''
+  };
+  state.ground.push(entry);
+  (entry.homework||'').split('\n').map(s=>s.trim()).filter(Boolean).forEach(text => {
+    state.homework.push({ id: uid(), text, tag:'reading', due:'', done:false, source:`Ground ${entry.date}` });
+  });
+  persist(); renderAll(); e.target.reset();
+});
+
+function renderLogTables() {
+  const ft = document.querySelector('#flightTable tbody');
+  const flights = [...state.flights].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  ft.innerHTML = flights.map(f => `
+    <tr>
+      <td>${f.date||''}</td>
+      <td>${f.lesson||''}</td>
+      <td>${escapeHtml(f.route || [f.from,f.to].filter(Boolean).join('→') || 'local')}</td>
+      <td>${escapeHtml([f.tail, f.type].filter(Boolean).join(' '))}</td>
+      <td class="num">${(f.total||0).toFixed(1)}</td>
+      <td class="num">${(f.dual||0).toFixed(1)}</td>
+      <td class="num">${(f.solo||0).toFixed(1)}</td>
+      <td class="num">${(f.xc||0).toFixed(1)}</td>
+      <td class="num">${(f.night||0).toFixed(1)}</td>
+      <td class="num">${(f.hood||0).toFixed(1)}</td>
+      <td class="num">${f.daylandings||0}</td>
+      <td class="num">${f.nightlandings||0}</td>
+      <td class="num">$${(f.cost||0).toFixed(0)}</td>
+      <td><span title="${escapeHtml(f.notes||'')}">${escapeHtml((f.maneuvers||'').slice(0,60))}${(f.maneuvers||'').length>60?'…':''}</span></td>
+      <td><button class="del" data-del-flight="${f.id}">✕</button></td>
+    </tr>`).join('') || `<tr><td colspan="15" class="muted" style="text-align:center; padding:24px;">No flights logged yet.</td></tr>`;
+  document.getElementById('flightCount').textContent = `${flights.length} entries`;
+  ft.querySelectorAll('[data-del-flight]').forEach(b => b.addEventListener('click', e => {
+    const id = e.target.dataset.delFlight;
+    if (confirm('Delete this flight entry?')) { state.flights = state.flights.filter(x=>x.id!==id); persist(); renderAll(); }
+  }));
+
+  const gt = document.querySelector('#groundTable tbody');
+  const ground = [...state.ground].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  gt.innerHTML = ground.map(g => `
+    <tr>
+      <td>${g.date||''}${g.fireflies_id?' <span class="chip" title="Sourced from Fireflies" style="background:rgba(102,209,168,.18); color:#a1e7cc;">FF</span>':''}</td>
+      <td>${g.lesson||''}</td>
+      <td class="num">${(g.duration||0).toFixed(2)}</td>
+      <td title="${escapeHtml(g.topics||'')}" style="cursor:help;">${escapeHtml((g.topics||'').slice(0,80))}${(g.topics||'').length>80?'…':''}</td>
+      <td title="${escapeHtml(g.notes||'')}" style="cursor:help;">${escapeHtml((g.notes||'').slice(0,60))}${(g.notes||'').length>60?'…':''}</td>
+      <td class="num">$${(g.cost||0).toFixed(0)}</td>
+      <td>
+        <button class="del" data-view-ground="${g.id}" title="View full entry">👁</button>
+        <button class="del" data-del-ground="${g.id}" title="Delete">✕</button>
+      </td>
+    </tr>`).join('') || `<tr><td colspan="7" class="muted" style="text-align:center; padding:24px;">No ground lessons logged yet.</td></tr>`;
+  gt.querySelectorAll('[data-view-ground]').forEach(b => b.addEventListener('click', e => {
+    const id = e.target.dataset.viewGround;
+    const g = state.ground.find(x => x.id === id);
+    if (g) {
+      const hw = (g.homework||'').split('\n').filter(Boolean).map(h=>'  • '+h).join('\n');
+      alert(`Ground Lesson ${g.lesson||''} · ${g.date}\nDuration: ${g.duration} hrs · Cost: $${g.cost||0}\n${g.fireflies_id?`Fireflies ID: ${g.fireflies_id}\n`:''}\n— TOPICS —\n${g.topics||'(none)'}\n\n— NOTES —\n${g.notes||'(none)'}\n\n— HOMEWORK —\n${hw||'(none)'}`);
+    }
+  }));
+  document.getElementById('groundCount').textContent = `${ground.length} entries`;
+  gt.querySelectorAll('[data-del-ground]').forEach(b => b.addEventListener('click', e => {
+    const id = e.target.dataset.delGround;
+    if (confirm('Delete this ground lesson?')) { state.ground = state.ground.filter(x=>x.id!==id); persist(); renderAll(); }
+  }));
+}
+
+/* ============================================================
+   MILESTONES
+============================================================ */
+function renderMilestones() {
+  const root = document.getElementById('milestoneList');
+  root.innerHTML = DEFAULT_MILESTONES.map(m => {
+    const s = state.milestones[m.key] || { done:false, date:'' };
+    return `
+      <div class="milestone ${s.done?'done':''}">
+        <input type="checkbox" data-ms="${m.key}" ${s.done?'checked':''} />
+        <div class="m-body">
+          <div class="m-title">${m.title}</div>
+          <div class="m-desc">${m.desc}</div>
+        </div>
+        <input type="date" data-ms-date="${m.key}" value="${s.date||''}" title="Completion date" />
+      </div>`;
+  }).join('');
+  root.querySelectorAll('[data-ms]').forEach(cb => cb.addEventListener('change', e => {
+    const k = e.target.dataset.ms;
+    state.milestones[k] = state.milestones[k] || {};
+    state.milestones[k].done = e.target.checked;
+    if (e.target.checked && !state.milestones[k].date) state.milestones[k].date = new Date().toISOString().slice(0,10);
+    persist(); renderAll();
+  }));
+  root.querySelectorAll('[data-ms-date]').forEach(inp => inp.addEventListener('change', e => {
+    const k = e.target.dataset.msDate;
+    state.milestones[k] = state.milestones[k] || {};
+    state.milestones[k].date = e.target.value;
+    persist();
+  }));
+}
+
+/* ============================================================
+   HOMEWORK
+============================================================ */
+document.getElementById('hwForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  state.homework.push({ id: uid(), text: fd.get('text'), due: fd.get('due')||'', tag: fd.get('tag')||'general', docId: fd.get('docId')||'', done:false });
+  persist(); renderAll(); e.target.reset();
+});
+
+function toggleHw(id) {
+  const h = state.homework.find(x=>x.id===id);
+  if (h) { h.done = !h.done; persist(); renderAll(); }
+}
+
+document.getElementById('hwShowDone').addEventListener('click', () => {
+  state.meta.showDoneHw = !state.meta.showDoneHw;
+  persist(); renderHomework();
+});
+document.getElementById('hwClearDone').addEventListener('click', () => {
+  if (confirm('Clear all completed homework items?')) {
+    state.homework = state.homework.filter(h => !h.done);
+    persist(); renderAll();
+  }
+});
+
+function renderHomework() {
+  // Refresh the doc selector in the form so new docs appear
+  const sel = document.getElementById('hwDocSelect');
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— none —</option>' +
+      state.documents.map(d => `<option value="${d.id}">${escapeHtml(d.title)}</option>`).join('');
+    sel.value = cur;
+  }
+
+  const root = document.getElementById('hwList');
+  let list = [...state.homework];
+  if (!state.meta.showDoneHw) list = list.filter(h => !h.done);
+  list.sort((a,b)=> Number(a.done) - Number(b.done) || (a.due||'').localeCompare(b.due||''));
+  root.innerHTML = list.length ? list.map(h => {
+    const doc = h.docId ? state.documents.find(d => d.id === h.docId) : null;
+    const docLink = doc ? `<a href="${escapeHtml(doc.url)}" target="_blank" rel="noopener" class="chip" style="color:var(--accent); text-decoration:none;">📄 ${escapeHtml(doc.title)}</a>` : '';
+    return `
+    <div class="hw ${h.done?'done':''}">
+      <input type="checkbox" ${h.done?'checked':''} data-hw="${h.id}" />
+      <div style="flex:1;">
+        <div class="hw-text">${escapeHtml(h.text)}</div>
+        <div class="hw-meta">${h.tag?`<span class="chip">${h.tag}</span> `:''}${h.due?`Due ${h.due} · `:''}${h.source?`from ${escapeHtml(h.source)} · `:''}${docLink}</div>
+      </div>
+      <button class="del" data-del-hw="${h.id}">✕</button>
+    </div>`;
+  }).join('') : '<div class="muted">Nothing here. Add an item above.</div>';
+  root.querySelectorAll('[data-hw]').forEach(cb => cb.addEventListener('change', e => toggleHw(e.target.dataset.hw)));
+  root.querySelectorAll('[data-del-hw]').forEach(b => b.addEventListener('click', e => {
+    const id = e.target.dataset.delHw;
+    state.homework = state.homework.filter(x => x.id !== id);
+    persist(); renderAll();
+  }));
+}
+
+/* ============================================================
+   DOCUMENTS
+============================================================ */
+const DOC_TYPE_LABELS = {
+  poh: 'POH', far_aim: 'FAR/AIM', handbook: 'Handbook', syllabus: 'Syllabus',
+  checklist: 'Checklist', chart: 'Chart', video: 'Video', notes: 'Notes', other: 'Other'
+};
+
+document.getElementById('docForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const url = (fd.get('url')||'').trim();
+  if (!url) return;
+  state.documents.push({
+    id: uid(),
+    title: (fd.get('title')||'Untitled').trim(),
+    type: fd.get('type')||'other',
+    tag: fd.get('tag')||'reference',
+    url,
+    notes: (fd.get('notes')||'').trim(),
+    added: iso(new Date())
+  });
+  persist(); renderAll(); e.target.reset();
+});
+
+document.getElementById('docFilterType').addEventListener('change', e => {
+  state.meta.docFilterType = e.target.value;
+  persist(); renderDocuments();
+});
+document.getElementById('docSearch').addEventListener('input', e => {
+  state.meta.docSearch = e.target.value;
+  renderDocuments();
+});
+document.getElementById('docRefreshBtn').addEventListener('click', () => renderDocuments());
+
+// Bulk import from a folder (works on Mac/PC/iPad once user picks the folder)
+document.getElementById('docBulkBtn').addEventListener('click', () => {
+  document.getElementById('docBulkInput').click();
+});
+document.getElementById('docBulkInput').addEventListener('change', e => {
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  const typeFor = name => {
+    const n = name.toLowerCase();
+    if (n.includes('poh') || n.includes('afm')) return 'poh';
+    if (n.includes('far') || n.includes('aim')) return 'far_aim';
+    if (n.includes('handbook') || n.includes('phak') || n.includes('afh')) return 'handbook';
+    if (n.includes('syllabus') || n.includes('lesson')) return 'syllabus';
+    if (n.includes('checklist')) return 'checklist';
+    if (n.includes('chart') || n.includes('sectional') || n.includes('plate') || n.includes('approach')) return 'chart';
+    if (n.endsWith('.mp4') || n.endsWith('.mov') || n.endsWith('.m4v')) return 'video';
+    if (n.endsWith('.pdf') || n.endsWith('.txt') || n.endsWith('.md') || n.endsWith('.doc') || n.endsWith('.docx')) return 'notes';
+    return 'other';
+  };
+  const existingTitles = new Set(state.documents.map(d => d.title.toLowerCase()));
+  let added = 0;
+  files.forEach(f => {
+    // Skip dotfiles and macOS .DS_Store
+    if (!f.name || f.name.startsWith('.')) return;
+    const bare = f.name.replace(/\.[^.]+$/, '');
+    if (existingTitles.has(bare.toLowerCase()) || existingTitles.has(f.name.toLowerCase())) return;
+    state.documents.push({
+      id: uid(),
+      title: bare,
+      type: typeFor(f.name),
+      tag: 'reference',
+      url: '',
+      notes: `📌 Paste iCloud share link for: ${f.webkitRelativePath || f.name}`,
+      added: iso(new Date())
+    });
+    added++;
+  });
+  persist(); renderAll();
+  alert(`Imported ${added} file${added===1?'':'s'}. Each entry has an empty URL — open the file in iPad's Files app, Share → Copy Link, and paste into the URL field.`);
+  e.target.value = '';
+});
+
+function deleteDoc(id) {
+  if (!confirm('Remove this document? Homework items linked to it will lose their link but stay.')) return;
+  state.documents = state.documents.filter(d => d.id !== id);
+  state.homework.forEach(h => { if (h.docId === id) h.docId = ''; });
+  persist(); renderAll();
+}
+
+function renderDocuments() {
+  const root = document.getElementById('docGrid');
+  if (!root) return;
+  const filterType = state.meta.docFilterType || '';
+  const q = (state.meta.docSearch || '').toLowerCase().trim();
+  let list = [...state.documents];
+  if (filterType) list = list.filter(d => d.type === filterType);
+  if (q) list = list.filter(d => (d.title + ' ' + (d.notes||'') + ' ' + (d.tag||'')).toLowerCase().includes(q));
+  list.sort((a,b)=> (a.title||'').localeCompare(b.title||''));
+
+  document.getElementById('docCount').textContent = state.documents.length;
+
+  // Restore current filter UI state
+  const ft = document.getElementById('docFilterType'); if (ft) ft.value = filterType;
+  const sr = document.getElementById('docSearch'); if (sr && sr.value !== (state.meta.docSearch||'')) sr.value = state.meta.docSearch||'';
+
+  root.innerHTML = list.length ? list.map(d => {
+    const hasUrl = !!d.url;
+    return `
+    <div class="doc-card" ${hasUrl?'':'style="border-color:var(--warn);"'}${d.bundled?' style="border-color:var(--accent);"':''}>
+      <div>
+        <span class="doc-type">${DOC_TYPE_LABELS[d.type]||d.type}</span>
+        ${d.tag?`<span class="doc-type" style="background:rgba(74,163,255,.15); color:var(--accent);">${escapeHtml(d.tag)}</span>`:''}
+        ${d.bundled?'<span class="doc-type" style="background:rgba(61,220,132,.15); color:var(--good);">bundled · offline</span>':''}
+        ${hasUrl&&!d.bundled?'':(hasUrl?'':'<span class="doc-type" style="background:rgba(255,181,71,.15); color:var(--warn);">needs link</span>')}
+      </div>
+      <div class="doc-title">${escapeHtml(d.title)}</div>
+      ${d.notes?`<div class="doc-meta">${escapeHtml(d.notes)}</div>`:''}
+      <div class="doc-meta">${d.added?`Added ${d.added}`:''}</div>
+      <div class="doc-actions">
+        ${hasUrl?`<a href="${escapeHtml(d.url)}" target="_blank" rel="noopener">Open</a>`:''}
+        <button data-edit-doc="${d.id}">${hasUrl?'Edit URL':'Paste URL'}</button>
+        ${hasUrl?`<button data-copy-doc="${escapeHtml(d.url)}">Copy link</button>`:''}
+        <button data-del-doc="${d.id}">Delete</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="muted" style="grid-column: 1/-1;">No documents yet. Add your POH, FAR/AIM, school handouts, or paste iCloud share links above.</div>';
+
+  root.querySelectorAll('[data-del-doc]').forEach(b => b.addEventListener('click', e => deleteDoc(e.currentTarget.dataset.delDoc)));
+  root.querySelectorAll('[data-edit-doc]').forEach(b => b.addEventListener('click', e => {
+    const id = e.currentTarget.dataset.editDoc;
+    const d = state.documents.find(x => x.id === id);
+    if (!d) return;
+    const newUrl = prompt(`URL for "${d.title}"\n(iCloud share link, Drive link, etc.)`, d.url || '');
+    if (newUrl === null) return;
+    d.url = newUrl.trim();
+    persist(); renderAll();
+  }));
+  root.querySelectorAll('[data-copy-doc]').forEach(b => b.addEventListener('click', async e => {
+    try { await navigator.clipboard.writeText(e.currentTarget.dataset.copyDoc); e.currentTarget.textContent = 'Copied!'; setTimeout(()=> e.currentTarget.textContent='Copy link', 1200); }
+    catch { alert('Link: ' + e.currentTarget.dataset.copyDoc); }
+  }));
+
+  // Linked-homework side card
+  const linkedRoot = document.getElementById('hwLinkedList');
+  if (linkedRoot) {
+    const linked = state.homework.filter(h => h.docId);
+    linkedRoot.innerHTML = linked.length ? linked.map(h => {
+      const doc = state.documents.find(d => d.id === h.docId);
+      if (!doc) return '';
+      return `<div style="padding:8px 0; border-bottom:1px solid var(--border);">
+        <div style="color:var(--text); font-size:13px;">${h.done?'✅ ':''}${escapeHtml(h.text)}</div>
+        <div class="muted">→ <a href="${escapeHtml(doc.url)}" target="_blank" rel="noopener" style="color:var(--accent);">${escapeHtml(doc.title)}</a></div>
+      </div>`;
+    }).join('') : '<div class="muted">No homework items are linked to documents yet.</div>';
+  }
+}
+
+/* ============================================================
+   BUDGET
+============================================================ */
+document.getElementById('expenseForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  state.budget.push({ id: uid(), date: fd.get('date'), amount: +fd.get('amount')||0, category: fd.get('category'), description: fd.get('description')||'' });
+  persist(); renderAll(); e.target.reset();
+});
+
+function renderBudget() {
+  const t = totals();
+  const total = budgetTotal();
+  document.getElementById('budgetTotal').textContent = '$' + total.toLocaleString(undefined,{maximumFractionDigits:0});
+
+  // Projected
+  const s = state.settings;
+  const targetHrs = s.targetHours || 40;
+  const remaining = Math.max(0, targetHrs - t.total);
+  const projected = total + remaining * ((+s.hourlyRate||0) + (+s.cfiRate||0)) + (+s.checkrideFee||0);
+  document.getElementById('budgetProjected').textContent = projected ? '$' + projected.toLocaleString(undefined,{maximumFractionDigits:0}) : '—';
+
+  // Avg per hr
+  const avgHr = t.total > 0 ? total / t.total : 0;
+  document.getElementById('budgetAvgHr').textContent = t.total > 0 ? '$' + avgHr.toFixed(0) : '—';
+
+  // By category
+  const cats = {};
+  state.flights.forEach(f => { if (f.cost) cats['Flight lessons'] = (cats['Flight lessons']||0) + f.cost; });
+  state.ground.forEach(g => { if (g.cost) cats['Ground lessons'] = (cats['Ground lessons']||0) + g.cost; });
+  state.budget.forEach(b => { cats[b.category] = (cats[b.category]||0) + b.amount; });
+  const sortedCats = Object.entries(cats).sort((a,b)=> b[1]-a[1]);
+  const catMax = sortedCats[0]?.[1] || 1;
+  document.getElementById('categoryBreakdown').innerHTML = sortedCats.length ? sortedCats.map(([k,v]) => `
+    <div class="req">
+      <div class="req-head"><span class="name">${escapeHtml(k)}</span><span class="nums">$${v.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
+      <div class="bar"><div class="fill" style="width:${(v/catMax)*100}%"></div></div>
+    </div>`).join('') : '<div class="muted">No spending yet.</div>';
+
+  // Expense table
+  const et = document.querySelector('#expenseTable tbody');
+  const all = [
+    ...state.flights.filter(f=>f.cost).map(f => ({id:f.id, kind:'flight', date:f.date, category:'Flight lesson', description:`Flight L${f.lesson||'?'} · ${f.route||'local'}`, amount:f.cost})),
+    ...state.ground.filter(g=>g.cost).map(g => ({id:g.id, kind:'ground', date:g.date, category:'Ground lesson', description:`Ground L${g.lesson||'?'}`, amount:g.cost})),
+    ...state.budget.map(b => ({...b, kind:'budget'}))
+  ].sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+  et.innerHTML = all.map(x => `
+    <tr>
+      <td>${x.date||''}</td>
+      <td>${escapeHtml(x.category||'')}</td>
+      <td>${escapeHtml(x.description||'')}</td>
+      <td class="num">$${(x.amount||0).toFixed(2)}</td>
+      <td>${x.kind==='budget' ? `<button class="del" data-del-budget="${x.id}">✕</button>` : '<span class="muted">from log</span>'}</td>
+    </tr>`).join('') || `<tr><td colspan="5" class="muted" style="text-align:center; padding:24px;">No expenses yet.</td></tr>`;
+  document.getElementById('expenseCount').textContent = `${all.length} items`;
+  et.querySelectorAll('[data-del-budget]').forEach(b => b.addEventListener('click', e => {
+    const id = e.target.dataset.delBudget;
+    state.budget = state.budget.filter(x => x.id !== id);
+    persist(); renderAll();
+  }));
+}
+
+/* ============================================================
+   CALENDAR
+============================================================ */
+let calRef = null;
+function renderCalendar() {
+  // Ensure headers exist
+  const hd = document.getElementById('calHeaders');
+  if (!hd.children.length) {
+    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+      const el = document.createElement('div'); el.className = 'cal-head'; el.textContent = d; hd.appendChild(el);
+    });
+  }
+
+  if (!calRef) {
+    const saved = state.meta.calMonth;
+    calRef = saved ? new Date(saved+'-01') : new Date();
+  }
+  const year = calRef.getFullYear(), month = calRef.getMonth();
+  document.getElementById('calMonth').textContent = calRef.toLocaleDateString(undefined,{month:'long', year:'numeric'});
+
+  // Build grid
+  const first = new Date(year, month, 1);
+  const startOffset = first.getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const daysPrev = new Date(year, month, 0).getDate();
+  const body = document.getElementById('calBody');
+  body.innerHTML = '';
+  const today = new Date(); const todayStr = iso(today);
+
+  // Index entries by date
+  const byDate = {};
+  state.flights.forEach(f => { if (!f.date) return; (byDate[f.date] ||= []).push({kind:'flight', label:`✈ ${f.total||0}hr · L${f.lesson||'?'}`, notes:f.maneuvers||f.notes||'' }); });
+  state.ground.forEach(g => { if (!g.date) return; (byDate[g.date] ||= []).push({kind:'ground', label:`📖 ${g.duration||0}hr · L${g.lesson||'?'}`, notes:g.topics||g.notes||'' }); });
+
+  const totalCells = Math.ceil((startOffset + daysInMonth)/7)*7;
+  for (let i=0; i<totalCells; i++) {
+    const dayNum = i - startOffset + 1;
+    const cell = document.createElement('div');
+    cell.className = 'cal-day';
+    let dateObj;
+    if (dayNum < 1) {
+      cell.classList.add('other');
+      dateObj = new Date(year, month-1, daysPrev+dayNum);
+    } else if (dayNum > daysInMonth) {
+      cell.classList.add('other');
+      dateObj = new Date(year, month+1, dayNum - daysInMonth);
+    } else {
+      dateObj = new Date(year, month, dayNum);
+    }
+    const ds = iso(dateObj);
+    if (ds === todayStr) cell.classList.add('today');
+    const dn = document.createElement('div'); dn.className = 'day-num'; dn.textContent = dateObj.getDate(); cell.appendChild(dn);
+    const entries = byDate[ds] || [];
+    entries.forEach(ent => {
+      const e = document.createElement('div'); e.className = 'cal-entry ' + ent.kind;
+      e.textContent = ent.label;
+      e.title = ent.notes;
+      cell.appendChild(e);
+    });
+    cell.addEventListener('click', () => {
+      if (entries.length) {
+        const summary = entries.map(e => `• ${e.label}\n  ${(e.notes||'').slice(0,200)}`).join('\n\n');
+        alert(`${ds}\n\n${summary}`);
+      }
+    });
+    body.appendChild(cell);
+  }
+  state.meta.calMonth = `${year}-${String(month+1).padStart(2,'0')}`;
+  persist();
+}
+document.getElementById('calPrev').addEventListener('click', () => { calRef.setMonth(calRef.getMonth()-1); renderCalendar(); });
+document.getElementById('calNext').addEventListener('click', () => { calRef.setMonth(calRef.getMonth()+1); renderCalendar(); });
+document.getElementById('calToday').addEventListener('click', () => { calRef = new Date(); renderCalendar(); });
+
+/* ============================================================
+   SETTINGS
+============================================================ */
+document.getElementById('settingsForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  state.settings = {
+    ...state.settings,
+    targetDate: fd.get('targetDate'),
+    startDate: fd.get('startDate'),
+    aircraftType: fd.get('aircraftType'),
+    homeAirport: fd.get('homeAirport'),
+    cfi: fd.get('cfi'),
+    school: fd.get('school'),
+    hourlyRate: +fd.get('hourlyRate')||0,
+    cfiRate: +fd.get('cfiRate')||0,
+    targetHours: +fd.get('targetHours')||40,
+    checkrideFee: +fd.get('checkrideFee')||0
+  };
+  persist(); renderAll();
+  alert('Settings saved.');
+});
+
+function fillSettingsForm() {
+  const f = document.getElementById('settingsForm');
+  Object.entries(state.settings).forEach(([k,v]) => {
+    if (f.elements[k]) f.elements[k].value = v ?? '';
+  });
+}
+
+/* Reset & backup */
+document.getElementById('resetAll').addEventListener('click', () => {
+  if (confirm('Delete ALL data? This cannot be undone.')) {
+    STORE.clear();
+    location.reload();
+  }
+});
+function download(name, data) {
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+  URL.revokeObjectURL(url);
+}
+function exportAll() {
+  const data = JSON.stringify({
+    _v:2, exported: new Date().toISOString(),
+    flights: state.flights, ground: state.ground, milestones: state.milestones,
+    budget: state.budget, homework: state.homework, documents: state.documents, settings: state.settings
+  }, null, 2);
+  download(`ppl-backup-${iso(new Date())}.json`, data);
+}
+function handleImport(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const d = JSON.parse(reader.result);
+      if (!confirm('Import will REPLACE current data. Continue?')) return;
+      state.flights = d.flights||[]; state.ground = d.ground||[];
+      state.milestones = d.milestones||{}; state.budget = d.budget||[];
+      state.homework = d.homework||[]; state.documents = d.documents||[];
+      state.settings = {...state.settings, ...(d.settings||{})};
+      persist(); renderAll();
+      alert('Import complete.');
+    } catch(e) { alert('Invalid backup file.'); }
+  };
+  reader.readAsText(file);
+}
+document.getElementById('exportBtn').addEventListener('click', exportAll);
+document.getElementById('exportBtn2').addEventListener('click', exportAll);
+document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFile').click());
+document.getElementById('importBtn2').addEventListener('click', () => document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change', e => { if (e.target.files[0]) handleImport(e.target.files[0]); });
+
+/* ============================================================
+   UTILS
+============================================================ */
+function iso(d) { return d.toISOString().slice(0,10); }
+function escapeHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+   MAIN RENDER
+============================================================ */
+function renderAll() {
+  renderOverview();
+  renderRequirements();
+  renderLogTables();
+  renderMilestones();
+  renderHomework();
+  renderBudget();
+  renderDocuments();
+}
+
+/* ============================================================
+   BOOTSTRAP — seed with Fireflies-extracted ground lessons
+============================================================ */
+function guessTag(text) {
+  const t = text.toLowerCase();
+  if (t.includes('memorize') || t.includes('v-speed') || t.includes('verbatim') || t.includes('phrasing')) return 'memorize';
+  if (t.includes('sporty') || t.includes('written test') || t.includes('faa written')) return 'written';
+  if (t.includes('watch') || t.includes('read') || t.includes('study') || t.includes('chapter') || t.includes('handbook') || t.includes('review ') || t.includes('prepare for')) return 'reading';
+  if (t.includes('familiarize') || t.includes('verbalize') || t.includes('practice')) return 'practice';
+  return 'general';
+}
+
+function seedIfFirstRun() {
+  // v2 seed: includes real Fireflies-extracted ground lesson content.
+  if (STORE.get('ppl_seeded_v2')) return;
+
+  // Remove v1 placeholder entries (topics === 'Ground Lesson 1' or 'Ground Lesson 2 (today)' with 0 duration)
+  state.ground = state.ground.filter(g => !(
+    (g.topics === 'Ground Lesson 1' || g.topics === 'Ground Lesson 2 (today)') && (g.duration === 0 || !g.duration)
+  ));
+
+  // Skip if a Fireflies-sourced entry already exists (user's own edits protected)
+  const hasFF = id => state.ground.some(g => g.fireflies_id === id);
+
+  /* ===== Ground Lesson 1 — 2026-04-14 — Program orientation ===== */
+  if (!hasFF('01KP7B07K7D4CW1EGK485SWA8T')) {
+    const gl1Topics = `PROGRAM ORIENTATION & SYSTEMS SETUP (1 hr 18 min)
+
+• Flight Circle (00:00–11:00) — dispatching lessons, scheduling, aircraft booking, ACH vs credit card backup payment, immediate charge on lesson completion, SMS/email notification settings, 3-day advance cancellation window.
+
+• Ground Lesson Plans & ACS Introduction (11:00–23:00) — onboarding syllabus, lesson sequencing, Airman Certification Standards (ACS) for Private Pilot, oral + practical test components, "comprehensive pilot" focus beyond just passing the checkride.
+
+• Written Test Preparation (22:00–30:00) — Sporty's online prep (target consistent 90%+ before scheduling FAA written), FAA-approved physical calculator required, FAA advisory circulars, Pilot's Handbook of Aeronautical Knowledge (PHAK).
+
+• ForeFlight & Flight Planning (28:00–36:00) — sectional maps, VFR chart mode, weather, airport data, NOTAMs, school-discounted subscription. iPad Mini or larger recommended.
+
+• Preflight & Startup Procedures (29:00–41:00) — checklists customized per aircraft, SPARROW mnemonic, verbalize every step during aircraft operation, Pilot Operating Handbook (POH) covers engine types/limitations/procedures.
+
+• Flight Controls & Aircraft Systems (55:00–01:08:00) — primary controls: aileron (roll), elevator (pitch), rudder (yaw). Secondary: flaps (staged during landing), trim (reduces control pressure). Mechanical cables & bellcranks — no electrical. Airframe sections: wings, fuselage, empennage, powerplant.
+
+• Flight Instruments & Coordination (01:08:00–01:15:00) — six-pack: altimeter, VSI, airspeed indicator, attitude indicator, heading indicator, turn coordinator. Keep the ball centered. Rotate at 55 kt, best rate of climb (Vy) at 76 kt. Yoke vs helicopter cyclic.
+
+KEY REGULATORY MINIMUMS MENTIONED: 40 hrs total · 10 solo · 3 XC · 1 XC >100 NM · FAR Part 61.
+
+KEYWORDS: Flight Circle · ForeFlight · Private Pilot ACS · Pilot Operating Handbook · Flight Controls · Preflight Checklist · I'M SAFE · PAVE.`;
+
+    const gl1Notes = `Overview: Program orientation covering flight operations, scheduling, billing, training resources, safety protocols, and regulatory knowledge for pilot competence and decision-making.
+
+Flight Operations: Dispatching is done by instructor. Ground lessons marked "ground only" with green indicator. Weather-independent at this stage.
+
+Payment: Backup credit card OR ACH on file (ACH preferred — no fee). Charged immediately upon lesson completion. Transparent billing, no random/delayed charges.
+
+Notifications: SMS preferred for immediacy. Reservations, cancellations, 24-hr reminders. Subscribe to specific aircraft for outage alerts.
+
+Cancellation Policy: Flexible rescheduling, no hidden fees, discuss changes with instructor.
+
+Curriculum: Syllabi include ground + flight integration. Lesson duration varies with skill acquisition, not fixed timelines. ACS sets checkride expectations — no surprises.
+
+Safety Emphasis: I'M SAFE (personal readiness) + PAVE (risk assessment) checklists daily. Vocalize checklist items — builds CRM habits. Instructor verifies student-led walkarounds for situational awareness.
+
+Checkride Strategy: Don't over-answer on oral — avoid "digging a hole." Partial credit: on a failed first attempt, recheck focuses only on incomplete areas.
+
+Source: Fireflies meeting transcript — "Ground Lesson 1 Apr 14, 06:09 PM" (78 min).`;
+
+    const gl1Homework = [
+      'Add backup credit card or ACH payment info in Flight Circle; set ACH as primary payment method',
+      'Study syllabus and assigned reading: PHAK, Airplane Flying Handbook, school checklist documents',
+      'Watch Free Pilot Training YouTube + review Bold Method for principles of flight',
+      "Continue Sporty's written test practice — target consistent 90%+ before scheduling FAA written exam",
+      'Purchase physical FAA-approved calculator for written test',
+      'Prepare for Principles of Flight ground lesson (reading + video study)',
+      'Familiarize with preflight and start-up checklists — verbalize every step during aircraft operation'
+    ];
+
+    state.ground.push({
+      id: uid(),
+      date: '2026-04-14',
+      lesson: 1,
+      duration: 1.3,
+      cost: 0,
+      topics: gl1Topics,
+      notes: gl1Notes,
+      homework: gl1Homework.join('\n'),
+      fireflies_id: '01KP7B07K7D4CW1EGK485SWA8T'
+    });
+
+    gl1Homework.forEach(text => {
+      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source: 'Ground L1 · 2026-04-14' });
+    });
+  }
+
+  /* ===== Ground Lesson 2 — 2026-04-16 — Principles of Flight ===== */
+  if (!hasFF('01KPCDHWXVY7VAVJ6BREZX3VFR')) {
+    const gl2Topics = `PRINCIPLES OF FLIGHT & AERODYNAMICS (2 hr 13 min)
+
+• Flight Experience & Prep (00:04–07:24) — participant background, instructional materials setup.
+
+• Four Forces of Flight (07:25–27:15) — LIFT, THRUST, DRAG, WEIGHT. Lift generated by Bernoulli's principle (velocity ↑, pressure ↓) AND Newton's 3rd law (air deflected down → reaction force up). Venturi effect analogy. Airfoil terms: leading edge, trailing edge, chord line, mean camber, upper/lower camber. Relative wind = parallel and opposite to flight path.
+
+• Drag Types: PARASITE (skin-friction, form, interference) — increases with speed. Fairings reduce interference drag. INDUCED drag — decreases with speed, caused by wingtip vortices tilting the lift vector backward. Winglets (FedEx, Southwest) mitigate vortices.
+
+• Left-Turning Tendencies (27:16–54:00) — FOUR CAUSES, all strongest at high AoA + low airspeed + high RPM (takeoff):
+   1. SPIRALING SLIPSTREAM — prop wash corkscrews, hits left side of vertical stab → yaws nose LEFT.
+   2. TORQUE — propeller spins clockwise (from pilot view) → Newton's 3rd → aircraft rolls LEFT.
+   3. P-FACTOR — descending (right) prop blade has higher AoA → asymmetric thrust → yaw LEFT.
+   4. GYROSCOPIC PRECESSION — force applied to rotating prop felt 90° ahead in direction of rotation. Most relevant to TAILWHEEL aircraft during rotation/tail-raise.
+   → All countered with RIGHT RUDDER (and aileron as needed) during takeoff, climb, stall recovery.
+
+• Teaching Techniques (54:01–01:03:31) — Newton's 3rd restated for memorization. Visual aids, wind tunnel analogies.
+
+• Weight & Lift Dynamics (01:13:31–01:28:57) — Weight = gravity. Wingtip vortex rotation (inward, upward, downward). GROUND EFFECT: close to runway, vortices blocked → induced drag reduced → aircraft "floats" on landing, affects climb performance.
+
+• Angles & Flight Attitudes (01:37:46–01:40:22) — ANGLE OF ATTACK (AoA) = angle between chord line and relative wind. High AoA increases lift but risks stall past critical angle. Distinguish PITCH ATTITUDE vs FLIGHT PATH vs AoA — an aircraft can fly level at high pitch angle.
+
+• Lift in Turns (53:00) — In 45°–60° banks, lift vector splits into vertical (supports weight) and horizontal (centripetal) components. Resultant load factor ↑ → pitch & power adjustments needed to hold altitude and airspeed. Know structural limits.
+
+• Checkride Prep & FAA Resources (01:48:21–02:13:05) — Oral + practical, typically 2–3 hrs total. Oral is open-book — KNOW WHERE TO FIND ANSWERS. Use PHAK, Airplane Flying Handbook, ACS. Practice standardized phrasing (Newton's 3rd verbatim).
+
+NEXT FLIGHT LESSON: Turns, climbs, descents, heading practice at ACI south location.
+
+KEYWORDS: Bernoulli's principle · Newton's 3rd law · Left-turning tendencies · Induced drag · Wingtip vortices · Angle of attack · Ground effect · FAA checkride.`;
+
+    const gl2Notes = `Overview: Deep dive on fundamental forces and aerodynamic principles — practical flying and oral-exam applications.
+
+Four Forces: Lift / thrust / drag / weight. Lift = Bernoulli (fluid velocity ↑, pressure ↓) + Newton's 3rd (air pushed down, wing pushed up). Instructor used hand-out-car-window and water-flow analogies.
+
+Aerodynamic Terminology (required for oral): leading edge, trailing edge, chord line, mean camber line, upper/lower camber, relative wind. Memorize these for inspection and checkride questions.
+
+Drag Types: Parasite (skin, form, interference) increases with speed. Induced decreases with speed, caused by wingtip vortices creating downwash that tilts the lift vector rearward. Cessna 172 vs fighter jet contrast.
+
+Left-Turning Tendencies — the Big Four: spiraling slipstream, torque, P-factor, gyroscopic precession. All most pronounced at high AoA + low airspeed + high RPM (i.e., TAKEOFF). Counter with right rudder. Instructor stressed MEMORIZING Newton's 3rd verbatim — checkride DPEs expect exact phrasing.
+
+Lift in Turns: Steep turns (45°–60°) → lift splits into vertical + horizontal components → increased load factor → must add pitch & power. Structural limits matter.
+
+Angle of Attack: Between chord line and relative wind. High AoA = more lift BUT risk of stall past critical angle. Pitch attitude ≠ flight path angle ≠ AoA — aircraft can fly level with nose pitched up.
+
+Ground Effect: Within ~1 wingspan of runway, wingtip vortices are blocked → induced drag reduced → float on landing, decreased climb performance just after liftoff.
+
+Checkride: Oral is OPEN-BOOK — know where to find answers fast. Bring PHAK, Airplane Flying Handbook, ACS (digital or printed). Total typically 2–3 hrs. Partial credit: failed areas can be rechecked alone.
+
+Teaching Feedback: Pacing and sequencing discussed. Students encouraged to switch instructors for a concept if one explanation isn't clicking.
+
+Source: Fireflies meeting transcript — "Principles of Flight Apr 16, 05:30 PM Ground 2" (133 min).`;
+
+    const gl2Homework = [
+      'Study Chapter 3 of the Airplane Flying Handbook — prep for next flight lesson (turns, climbs, descents, heading practice at ACI south)',
+      'Memorize the 4 left-turning tendencies: spiraling slipstream, torque, P-factor, gyroscopic precession',
+      "Memorize Newton's 3rd law verbatim — DPEs expect exact phrasing on checkride oral",
+      'Review Bernoulli\'s principle and how lift is generated (velocity ↑ → pressure ↓)',
+      'Review airfoil terminology for oral exam: leading edge, trailing edge, chord line, mean camber, relative wind',
+      'Review drag types (parasite vs induced) and wingtip vortices → induced drag relationship',
+      'Review angle of attack vs pitch attitude vs flight path — know the distinctions',
+      'Review ground effect and its impact on takeoff/landing performance',
+      'Memorize V-speeds for training aircraft (rotate 55 kt, Vy 76 kt for C172)'
+    ];
+
+    state.ground.push({
+      id: uid(),
+      date: '2026-04-16',
+      lesson: 2,
+      duration: 2.2,
+      cost: 0,
+      topics: gl2Topics,
+      notes: gl2Notes,
+      homework: gl2Homework.join('\n'),
+      fireflies_id: '01KPCDHWXVY7VAVJ6BREZX3VFR'
+    });
+
+    gl2Homework.forEach(text => {
+      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source: 'Ground L2 · 2026-04-16' });
+    });
+  }
+
+  STORE.set('ppl_seeded_v2', true);
+  persist();
+}
+
+function seedBundledDocs() {
+  // Ensures the bundled C172P checklist always exists as a doc entry.
+  // Safe to run every load — checks for an existing entry by special id.
+  const CHECKLIST_ID = 'bundled-c172p-checklist';
+  const exists = state.documents.some(d => d.id === CHECKLIST_ID);
+  if (!exists) {
+    state.documents.unshift({
+      id: CHECKLIST_ID,
+      title: 'C172P Checklist — Project ACES v3.0',
+      type: 'checklist',
+      tag: 'preflight',
+      url: 'C172P-Checklist.pdf',
+      notes: 'Official Project ACES Cessna 172P checklist (AV-30-C / GPSMAP 696). Bundled with the app — works offline.',
+      added: iso(new Date()),
+      bundled: true
+    });
+    persist();
+  }
+}
+
+seedIfFirstRun();
+seedBundledDocs();
+fillSettingsForm();
+renderAll();
+
+/* ============================================================
+   PRE-FLIGHT CHECKLIST (I'M SAFE / PAVE)
+============================================================ */
+const IM_SAFE = [
+  { k: 'I', label: 'Illness',     desc: 'No cold, flu, headache, GI issues, or anything medicating-worthy.' },
+  { k: 'M', label: 'Medication',  desc: 'No Rx or OTC meds that could impair (antihistamines, opioids, etc.).' },
+  { k: 'S', label: 'Stress',      desc: 'Work, school, family, money stress — at manageable levels.' },
+  { k: 'A', label: 'Alcohol',     desc: '≥ 8 hours bottle-to-throttle (FAR 91.17); better at 12+.' },
+  { k: 'F', label: 'Fatigue',     desc: 'Well rested, not running on adrenaline alone.' },
+  { k: 'E', label: 'Emotion / Eating', desc: 'Emotionally steady; not flying hungry or dehydrated.' }
+];
+const PAVE = [
+  { k: 'P', label: 'Pilot',        desc: 'Current, proficient, legal for this flight. Endorsements in order.' },
+  { k: 'A', label: 'Aircraft',     desc: 'Airworthy, fueled, W&B in envelope, inspections current, squawks known.' },
+  { k: 'V', label: 'enVironment',  desc: 'Weather (METAR/TAF/SIGMETs), airport/terrain, daylight, NOTAMs.' },
+  { k: 'E', label: 'External pressures', desc: 'Passengers, schedule, ego, "get-there-itis" — none driving the decision.' }
+];
+function preflightKey() { return 'ppl_preflight_' + iso(new Date()); }
+function renderPreflight() {
+  const state_pf = STORE.get(preflightKey(), {});
+  const renderList = (items, root) => {
+    root.innerHTML = items.map(it => `
+      <label class="checkbox-row">
+        <input type="checkbox" data-pf="${it.k}-${escapeHtml(it.label)}" ${state_pf[it.k+'-'+it.label]?'checked':''} />
+        <span><strong>${it.k}</strong> ${escapeHtml(it.label)} <span class="muted" style="display:block; font-size:11px;">${escapeHtml(it.desc)}</span></span>
+      </label>
+    `).join('');
+    root.querySelectorAll('[data-pf]').forEach(cb => {
+      cb.addEventListener('change', e => {
+        state_pf[e.target.dataset.pf] = e.target.checked;
+        STORE.set(preflightKey(), state_pf);
+        updatePreflightStatus();
+      });
+    });
+  };
+  const imsafeRoot = document.getElementById('preflightImSafe');
+  const paveRoot = document.getElementById('preflightPave');
+  if (imsafeRoot) renderList(IM_SAFE, imsafeRoot);
+  if (paveRoot)   renderList(PAVE, paveRoot);
+  updatePreflightStatus();
+}
+function updatePreflightStatus() {
+  const state_pf = STORE.get(preflightKey(), {});
+  const all = [...IM_SAFE, ...PAVE];
+  const checked = all.filter(it => state_pf[it.k+'-'+it.label]).length;
+  const tag = document.getElementById('preflightStatus');
+  if (!tag) return;
+  if (checked === 0)         { tag.textContent = 'not started';       tag.style.color = 'var(--muted)'; }
+  else if (checked < all.length) { tag.textContent = `${checked}/${all.length}`; tag.style.color = 'var(--warn)'; }
+  else                        { tag.textContent = `GO — ${checked}/${all.length}`; tag.style.color = 'var(--good)'; }
+}
+(function(){
+  const resetBtn = document.getElementById('preflightReset');
+  if (resetBtn) resetBtn.addEventListener('click', () => {
+    if (confirm("Reset today's pre-flight check? (Only clears today.)")) {
+      STORE.set(preflightKey(), {});
+      renderPreflight();
+    }
+  });
+  renderPreflight();
+})();
+
+/* ============================================================
+   QUICK LOG — floating + button + modal
+============================================================ */
+(function(){
+  const btn = document.getElementById('quickLogBtn');
+  const modal = document.getElementById('quickLogModal');
+  const closeBtn = document.getElementById('qlClose');
+  const chooser = modal.querySelectorAll('[data-ql-kind]');
+  const forms = {
+    flight:   document.getElementById('qlFlightForm'),
+    ground:   document.getElementById('qlGroundForm'),
+    homework: document.getElementById('qlHwForm'),
+    expense:  document.getElementById('qlExpenseForm')
+  };
+  function showKind(k) {
+    chooser.forEach(b => b.classList.toggle('active', b.dataset.qlKind === k));
+    Object.entries(forms).forEach(([key, f]) => f.style.display = (key === k ? '' : 'none'));
+  }
+  function open() {
+    const today = iso(new Date());
+    ['qlFlightForm','qlGroundForm','qlExpenseForm'].forEach(id => {
+      const d = document.querySelector(`#${id} input[name="date"]`);
+      if (d && !d.value) d.value = today;
+    });
+    modal.classList.add('open');
+    showKind('flight');
+  }
+  function close() { modal.classList.remove('open'); }
+  btn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+  chooser.forEach(b => b.addEventListener('click', e => showKind(e.currentTarget.dataset.qlKind)));
+
+  forms.flight.addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const kind = fd.get('kind');
+    const h = +fd.get('hours') || 0;
+    const isDual = kind === 'dual' || kind === 'xc_dual' || kind === 'night_dual';
+    const isSolo = kind === 'solo' || kind === 'xc_solo';
+    const isXC   = kind === 'xc_dual' || kind === 'xc_solo';
+    const isNight= kind === 'night_dual';
+    const entry = {
+      id: uid(),
+      date: fd.get('date'),
+      lesson: null,
+      tail: fd.get('aircraft') || '',
+      type: '',
+      from: '', to: '', route: fd.get('route') || '',
+      total: h,
+      dual:  isDual ? h : 0,
+      solo:  isSolo ? h : 0,
+      xc:    isXC ? h : 0,
+      night: isNight ? h : 0,
+      hood: 0,
+      daylandings: 0, nightlandings: 0,
+      cost: 0, flags: kind === 'sim' ? 'sim' : '',
+      maneuvers: '', notes: fd.get('notes') || '',
+      homework: '',
+      quick: true
+    };
+    state.flights.push(entry);
+    persist(); renderAll(); e.target.reset(); close();
+  });
+  forms.ground.addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    state.ground.push({
+      id: uid(),
+      date: fd.get('date'),
+      lesson: null,
+      duration: +fd.get('hours') || 0,
+      cost: 0,
+      topics: fd.get('topic') || '',
+      notes: fd.get('notes') || '',
+      homework: '',
+      quick: true
+    });
+    persist(); renderAll(); e.target.reset(); close();
+  });
+  forms.homework.addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    state.homework.push({ id: uid(), text: fd.get('text'), due: fd.get('due')||'', tag: fd.get('tag')||'general', docId:'', done:false });
+    persist(); renderAll(); e.target.reset(); close();
+  });
+  forms.expense.addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    state.budget.push({
+      id: uid(),
+      date: fd.get('date'),
+      amount: +fd.get('amount') || 0,
+      category: fd.get('category'),
+      description: fd.get('description') || ''
+    });
+    persist(); renderAll(); e.target.reset(); close();
+  });
+})();
+
+/* ============================================================
+   PWA — service worker + install prompt
+============================================================ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      // Listen for updates
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        if (!newWorker) return;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            const toast = document.getElementById('updateToast');
+            if (toast) toast.style.display = 'flex';
+            const reloadBtn = document.getElementById('reloadForUpdate');
+            if (reloadBtn) reloadBtn.onclick = () => {
+              newWorker.postMessage('SKIP_WAITING');
+              window.location.reload();
+            };
+          }
+        });
+      });
+    }).catch(err => console.warn('SW registration failed:', err));
+
+    // Auto-reload when a new SW takes control
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+  });
+}
+
+// Optional Android/desktop install prompt
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // A button in Settings could trigger this; expose globally:
+  window.showInstallPrompt = async () => {
+    if (!deferredInstallPrompt) return alert('Install prompt not available. On iPhone/iPad, use Safari → Share → Add to Home Screen.');
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+  };
+});
+</script>
+</body>
+</html>
