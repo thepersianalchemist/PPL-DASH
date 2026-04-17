@@ -584,14 +584,17 @@
         <div class="flex-between">
           <h2>Document Library <span class="tag" id="docCount">0</span></h2>
           <div>
-            <button class="ghost" id="docBulkBtn">📂 Bulk import folder</button>
+            <button class="ghost" id="docDeviceBtn">📱 Import from device</button>
+            <input type="file" id="docDeviceInput" multiple accept=".pdf,.doc,.docx,.epub,.txt,.md,.rtf,.jpg,.jpeg,.png,.heic,.mp4,.mov,.m4v,application/pdf,image/*,video/*" class="hidden" />
+            <button class="ghost" id="docBulkBtn">📂 Pick folder (desktop)</button>
             <input type="file" id="docBulkInput" webkitdirectory directory multiple class="hidden" />
             <button class="ghost" id="docRefreshBtn">Refresh</button>
           </div>
         </div>
         <div class="muted" style="margin-bottom:12px;">
-          Add links to your iPad PDF folder, POH, FAR/AIM, school handouts, Sporty's videos, etc.
-          Links work across iPad + iPhone + Macbook as long as the destination (iCloud link, Google Drive link, etc.) is accessible on that device.
+          <strong style="color:var(--accent);">📱 Import from device</strong> copies files into this app so they work offline on this device (iPad, iPhone, or Mac). Great for PDFs you want tap-to-open during a lesson.<br/>
+          <strong>📂 Pick folder</strong> (Chrome/desktop only) imports just filenames for pasting URLs later.<br/>
+          You can also add a single link manually below — iCloud / Drive / Dropbox share links all work.
         </div>
 
         <form id="docForm" style="margin-bottom:16px;">
@@ -925,6 +928,84 @@ const STORE = (() => {
     }
   };
 })();
+
+/* ============================================================
+   FILE STORAGE — IndexedDB for actual document content
+   Lets iPad users import PDFs once and open them offline forever.
+============================================================ */
+const FILE_DB = (() => {
+  const DB = 'ppl_files_db';
+  const STORE_NAME = 'files';
+  let dbPromise = null;
+  function open() {
+    if (dbPromise) return dbPromise;
+    dbPromise = new Promise((resolve, reject) => {
+      if (!('indexedDB' in window)) return reject(new Error('IndexedDB not supported'));
+      const req = indexedDB.open(DB, 1);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    return dbPromise;
+  }
+  return {
+    async put(id, blob, meta) {
+      const db = await open();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put({ id, blob, mime: blob.type, size: blob.size, name: meta?.name || '', added: new Date().toISOString() });
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    },
+    async get(id) {
+      const db = await open();
+      return new Promise((resolve, reject) => {
+        const req = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).get(id);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => reject(req.error);
+      });
+    },
+    async del(id) {
+      const db = await open();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(id);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    },
+    async totalSize() {
+      const db = await open();
+      return new Promise((resolve, reject) => {
+        let sum = 0;
+        const cur = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).openCursor();
+        cur.onsuccess = e => {
+          const c = e.target.result;
+          if (c) { sum += (c.value.size || 0); c.continue(); } else resolve(sum);
+        };
+        cur.onerror = () => reject(cur.error);
+      });
+    }
+  };
+})();
+
+async function openStoredDoc(id) {
+  try {
+    const rec = await FILE_DB.get(id);
+    if (!rec) { alert('This file is not stored on this device. Use "Import from device" to add it, or paste a URL.'); return; }
+    const url = URL.createObjectURL(rec.blob);
+    const win = window.open(url, '_blank');
+    // Safari on iOS sometimes blocks this; fall back to inline navigation
+    if (!win) location.href = url;
+    setTimeout(() => URL.revokeObjectURL(url), 60 * 1000);
+  } catch (e) {
+    alert('Could not open file: ' + (e.message || e));
+  }
+}
 
 const DEFAULT_MILESTONES = [
   { key:'medical',  title:'3rd Class Medical Certificate (or BasicMed eligibility)', desc:'Required before solo. Visit an AME (aviation medical examiner). Valid 5 yrs if under 40, 2 yrs if 40+.' },
@@ -1416,24 +1497,84 @@ document.getElementById('docSearch').addEventListener('input', e => {
 document.getElementById('docRefreshBtn').addEventListener('click', () => renderDocuments());
 
 // Bulk import from a folder (works on Mac/PC/iPad once user picks the folder)
+/* ---- Shared: guess doc type from filename ---- */
+function guessDocType(name) {
+  const n = (name||'').toLowerCase();
+  if (n.includes('poh') || n.includes('afm')) return 'poh';
+  if (n.includes('far') || n.includes('aim')) return 'far_aim';
+  if (n.includes('handbook') || n.includes('phak') || n.includes('afh')) return 'handbook';
+  if (n.includes('syllabus') || n.includes('lesson')) return 'syllabus';
+  if (n.includes('checklist')) return 'checklist';
+  if (n.includes('chart') || n.includes('sectional') || n.includes('plate') || n.includes('approach')) return 'chart';
+  if (n.endsWith('.mp4') || n.endsWith('.mov') || n.endsWith('.m4v')) return 'video';
+  if (n.endsWith('.pdf') || n.endsWith('.txt') || n.endsWith('.md') || n.endsWith('.doc') || n.endsWith('.docx')) return 'notes';
+  return 'other';
+}
+
+/* ---- Device picker (iPad/iPhone/Mac — stores file contents) ---- */
+document.getElementById('docDeviceBtn').addEventListener('click', () => {
+  document.getElementById('docDeviceInput').click();
+});
+document.getElementById('docDeviceInput').addEventListener('change', async e => {
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  const btn = document.getElementById('docDeviceBtn');
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = `Importing 0/${files.length}…`;
+
+  const existingTitles = new Set(state.documents.map(d => d.title.toLowerCase()));
+  let added = 0, skipped = 0, failed = 0;
+  const MAX_BYTES = 200 * 1024 * 1024; // 200 MB soft cap per file — iOS will refuse much more
+
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    btn.textContent = `Importing ${i+1}/${files.length}…`;
+    if (!f.name || f.name.startsWith('.')) { skipped++; continue; }
+    const bare = f.name.replace(/\.[^.]+$/, '');
+    if (existingTitles.has(bare.toLowerCase()) || existingTitles.has(f.name.toLowerCase())) { skipped++; continue; }
+    if (f.size > MAX_BYTES) { failed++; continue; }
+    try {
+      const id = uid();
+      await FILE_DB.put(id, f, { name: f.name });
+      state.documents.push({
+        id,
+        title: bare,
+        type: guessDocType(f.name),
+        tag: 'reference',
+        url: '',
+        notes: `Stored on this device · ${(f.size/1024/1024).toFixed(2)} MB`,
+        added: iso(new Date()),
+        stored: true,
+        filename: f.name,
+        mime: f.type || ''
+      });
+      existingTitles.add(bare.toLowerCase());
+      added++;
+    } catch (err) {
+      console.error('import failed for', f.name, err);
+      failed++;
+    }
+  }
+  persist(); renderAll();
+  btn.disabled = false;
+  btn.textContent = originalLabel;
+  e.target.value = '';
+
+  let msg = `Imported ${added} file${added===1?'':'s'} into this device.`;
+  if (skipped) msg += ` Skipped ${skipped} (duplicate or system file).`;
+  if (failed) msg += ` Failed ${failed} (too large or unreadable).`;
+  msg += `\n\nTap any document to open it — works offline.`;
+  alert(msg);
+});
+
+/* ---- Folder picker (desktop Chrome/Edge only — filenames only) ---- */
 document.getElementById('docBulkBtn').addEventListener('click', () => {
   document.getElementById('docBulkInput').click();
 });
 document.getElementById('docBulkInput').addEventListener('change', e => {
   const files = Array.from(e.target.files || []);
   if (!files.length) return;
-  const typeFor = name => {
-    const n = name.toLowerCase();
-    if (n.includes('poh') || n.includes('afm')) return 'poh';
-    if (n.includes('far') || n.includes('aim')) return 'far_aim';
-    if (n.includes('handbook') || n.includes('phak') || n.includes('afh')) return 'handbook';
-    if (n.includes('syllabus') || n.includes('lesson')) return 'syllabus';
-    if (n.includes('checklist')) return 'checklist';
-    if (n.includes('chart') || n.includes('sectional') || n.includes('plate') || n.includes('approach')) return 'chart';
-    if (n.endsWith('.mp4') || n.endsWith('.mov') || n.endsWith('.m4v')) return 'video';
-    if (n.endsWith('.pdf') || n.endsWith('.txt') || n.endsWith('.md') || n.endsWith('.doc') || n.endsWith('.docx')) return 'notes';
-    return 'other';
-  };
   const existingTitles = new Set(state.documents.map(d => d.title.toLowerCase()));
   let added = 0;
   files.forEach(f => {
@@ -1444,7 +1585,7 @@ document.getElementById('docBulkInput').addEventListener('change', e => {
     state.documents.push({
       id: uid(),
       title: bare,
-      type: typeFor(f.name),
+      type: guessDocType(f.name),
       tag: 'reference',
       url: '',
       notes: `📌 Paste iCloud share link for: ${f.webkitRelativePath || f.name}`,
@@ -1457,8 +1598,15 @@ document.getElementById('docBulkInput').addEventListener('change', e => {
   e.target.value = '';
 });
 
-function deleteDoc(id) {
-  if (!confirm('Remove this document? Homework items linked to it will lose their link but stay.')) return;
+async function deleteDoc(id) {
+  const doc = state.documents.find(d => d.id === id);
+  if (!doc) return;
+  if (doc.bundled) { alert('The bundled C172P checklist ships with the app and will re-appear on reload. It can\'t be deleted.'); return; }
+  const msg = doc.stored
+    ? 'Remove this document from your device? The file will be deleted from this device\'s storage (other devices are unaffected).'
+    : 'Remove this document? Homework items linked to it will lose their link but stay.';
+  if (!confirm(msg)) return;
+  if (doc.stored) { try { await FILE_DB.del(id); } catch(e) { console.warn('IDB delete failed', e); } }
   state.documents = state.documents.filter(d => d.id !== id);
   state.homework.forEach(h => { if (h.docId === id) h.docId = ''; });
   persist(); renderAll();
@@ -1482,26 +1630,35 @@ function renderDocuments() {
 
   root.innerHTML = list.length ? list.map(d => {
     const hasUrl = !!d.url;
+    const isOpenable = hasUrl || d.stored;
+    // Priority for border color: stored (green) > bundled (accent) > needs link (warn) > default
+    let borderStyle = '';
+    if (d.stored) borderStyle = 'border-color:var(--good);';
+    else if (d.bundled) borderStyle = 'border-color:var(--accent);';
+    else if (!hasUrl) borderStyle = 'border-color:var(--warn);';
     return `
-    <div class="doc-card" ${hasUrl?'':'style="border-color:var(--warn);"'}${d.bundled?' style="border-color:var(--accent);"':''}>
+    <div class="doc-card" style="${borderStyle}">
       <div>
         <span class="doc-type">${DOC_TYPE_LABELS[d.type]||d.type}</span>
         ${d.tag?`<span class="doc-type" style="background:rgba(74,163,255,.15); color:var(--accent);">${escapeHtml(d.tag)}</span>`:''}
+        ${d.stored?'<span class="doc-type" style="background:rgba(61,220,132,.15); color:var(--good);">stored · offline</span>':''}
         ${d.bundled?'<span class="doc-type" style="background:rgba(61,220,132,.15); color:var(--good);">bundled · offline</span>':''}
-        ${hasUrl&&!d.bundled?'':(hasUrl?'':'<span class="doc-type" style="background:rgba(255,181,71,.15); color:var(--warn);">needs link</span>')}
+        ${!isOpenable?'<span class="doc-type" style="background:rgba(255,181,71,.15); color:var(--warn);">needs link</span>':''}
       </div>
       <div class="doc-title">${escapeHtml(d.title)}</div>
       ${d.notes?`<div class="doc-meta">${escapeHtml(d.notes)}</div>`:''}
       <div class="doc-meta">${d.added?`Added ${d.added}`:''}</div>
       <div class="doc-actions">
-        ${hasUrl?`<a href="${escapeHtml(d.url)}" target="_blank" rel="noopener">Open</a>`:''}
-        <button data-edit-doc="${d.id}">${hasUrl?'Edit URL':'Paste URL'}</button>
+        ${d.stored?`<button data-open-stored="${d.id}" style="background:var(--good); color:#0b1220; border-color:var(--good);">Open</button>`:''}
+        ${hasUrl?`<a href="${escapeHtml(d.url)}" target="_blank" rel="noopener">Open link</a>`:''}
+        ${d.stored?'':`<button data-edit-doc="${d.id}">${hasUrl?'Edit URL':'Paste URL'}</button>`}
         ${hasUrl?`<button data-copy-doc="${escapeHtml(d.url)}">Copy link</button>`:''}
         <button data-del-doc="${d.id}">Delete</button>
       </div>
     </div>`;
-  }).join('') : '<div class="muted" style="grid-column: 1/-1;">No documents yet. Add your POH, FAR/AIM, school handouts, or paste iCloud share links above.</div>';
+  }).join('') : '<div class="muted" style="grid-column: 1/-1;">No documents yet. Tap <strong>📱 Import from device</strong> above to copy PDFs into this app for offline use, or paste iCloud / Drive / Dropbox share links.</div>';
 
+  root.querySelectorAll('[data-open-stored]').forEach(b => b.addEventListener('click', e => openStoredDoc(e.currentTarget.dataset.openStored)));
   root.querySelectorAll('[data-del-doc]').forEach(b => b.addEventListener('click', e => deleteDoc(e.currentTarget.dataset.delDoc)));
   root.querySelectorAll('[data-edit-doc]').forEach(b => b.addEventListener('click', e => {
     const id = e.currentTarget.dataset.editDoc;
@@ -1524,11 +1681,18 @@ function renderDocuments() {
     linkedRoot.innerHTML = linked.length ? linked.map(h => {
       const doc = state.documents.find(d => d.id === h.docId);
       if (!doc) return '';
+      const linkHtml = doc.stored
+        ? `<button class="linklike" data-open-stored="${doc.id}" style="background:none;border:none;padding:0;color:var(--accent);cursor:pointer;text-decoration:underline;">${escapeHtml(doc.title)}</button>`
+        : doc.url
+          ? `<a href="${escapeHtml(doc.url)}" target="_blank" rel="noopener" style="color:var(--accent);">${escapeHtml(doc.title)}</a>`
+          : `<span style="color:var(--warn);">${escapeHtml(doc.title)} (no link yet)</span>`;
       return `<div style="padding:8px 0; border-bottom:1px solid var(--border);">
         <div style="color:var(--text); font-size:13px;">${h.done?'✅ ':''}${escapeHtml(h.text)}</div>
-        <div class="muted">→ <a href="${escapeHtml(doc.url)}" target="_blank" rel="noopener" style="color:var(--accent);">${escapeHtml(doc.title)}</a></div>
+        <div class="muted">→ ${linkHtml}</div>
       </div>`;
     }).join('') : '<div class="muted">No homework items are linked to documents yet.</div>';
+    linkedRoot.querySelectorAll('[data-open-stored]').forEach(b =>
+      b.addEventListener('click', e => openStoredDoc(e.currentTarget.dataset.openStored)));
   }
 }
 
