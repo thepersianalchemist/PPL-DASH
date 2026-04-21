@@ -313,6 +313,62 @@
   .spark-callout ul, .spark-callout ol { margin: 4px 0 0; padding-left: 18px; }
   .spark-callout li { padding: 3px 0; }
   .spark-callout p { margin: 4px 0; }
+
+  /* Flashcards */
+  .flash-section { margin-top: 32px; padding-top: 20px; border-top: 2px solid var(--border); }
+  .flash-section .flash-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .flash-section .flash-title { display: flex; align-items: center; gap: 10px; }
+  .flash-section .flash-title h2 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: .2px; }
+  .flash-section .flash-title .tag { font-size: 11px; padding: 3px 8px; background: var(--chip); border-radius: 6px; color: var(--muted); font-weight: 500; }
+  .flash-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .flash-controls button { font-size: 12px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); cursor: pointer; font-weight: 500; }
+  .flash-controls button:hover { border-color: var(--accent); color: var(--accent); }
+  .flash-controls .flash-progress { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .flash-card {
+    perspective: 1200px; height: 190px; cursor: pointer; outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flash-card:focus-visible .flash-inner { box-shadow: 0 0 0 2px var(--accent); border-radius: 12px; }
+  .flash-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform .55s cubic-bezier(.4,.2,.2,1);
+    transform-style: preserve-3d;
+  }
+  .flash-card.flipped .flash-inner { transform: rotateY(180deg); }
+  .flash-front, .flash-back {
+    position: absolute; inset: 0;
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  }
+  .flash-front { background: var(--panel-2); }
+  .flash-back {
+    background: linear-gradient(135deg, rgba(74,163,255,.14), rgba(102,209,168,.08)), var(--panel);
+    border-color: rgba(74,163,255,.4);
+    transform: rotateY(180deg);
+  }
+  .flash-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .8px;
+    color: var(--muted); font-weight: 700; margin-bottom: 8px;
+  }
+  .flash-back .flash-label { color: var(--accent); }
+  .flash-q, .flash-a {
+    font-size: 13.5px; line-height: 1.5; flex: 1;
+    display: flex; align-items: center; color: var(--text);
+  }
+  .flash-a { font-weight: 500; }
+  .flash-hint {
+    font-size: 10.5px; color: var(--muted);
+    text-align: right; margin-top: 8px; letter-spacing: .3px;
+  }
+  .flash-card:hover .flash-front { border-color: var(--accent); }
+  @media (max-width: 600px) {
+    .flash-grid { grid-template-columns: 1fr; }
+    .flash-card { height: 170px; }
+  }
 </style>
 </head>
 <body>
@@ -897,6 +953,143 @@
             <li><b>Trim, trim, trim.</b> If you're pulling or pushing, you're not trimmed.</li>
             <li><b>Small corrections.</b> Fly with fingertips, not fists.</li>
           </ol>
+
+          <!-- Flashcards -->
+          <section class="flash-section">
+            <div class="flash-head">
+              <div class="flash-title">
+                <h2>Flashcards</h2>
+                <span class="tag">20 cards</span>
+              </div>
+              <div class="flash-controls">
+                <span class="flash-progress"></span>
+                <button class="flash-shuffle">🔀 Shuffle</button>
+                <button class="flash-reset">↺ Reset</button>
+              </div>
+            </div>
+            <div class="flash-grid">
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What are the Four Fundamentals?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Straight-and-level, turns, climbs, descents. Every maneuver is a combination of these four.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Complete the formula: Attitude + Power = ______</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Performance.</b> Set a known pitch and bank at a known power setting → known performance.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What axis do the ailerons control?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Roll</b> — the longitudinal axis.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What axis does the elevator control?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Pitch</b> — the lateral axis.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What axis does the rudder control?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Yaw</b> — the vertical axis.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What is V<sub>y</sub>?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Best rate of climb</b> — most altitude per unit of <em>time</em>. Used for normal climb.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What is V<sub>x</sub>?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Best angle of climb</b> — most altitude per unit of <em>distance</em>. Used for obstacle clearance.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What's the recommended VFR instrument scan ratio?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>~90% outside, ~10% instruments.</b> Use instruments to confirm what your eyes already told you.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">When do you trim the airplane?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>After</b> establishing the attitude — never before. Trim relieves control pressure; it doesn't replace your input.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What happens in a shallow bank (&lt;20°)?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">The airplane tends to <b>roll wings level on its own</b> due to lateral stability.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What happens in a steep bank (&gt;45°)?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Overbanking tendency</b> — the outside wing travels faster, generating more lift. Hold opposite aileron to stop the roll.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What is adverse yaw, and how do you correct it?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Up-going aileron creates more drag → nose yaws <em>opposite</em> the turn. Correct with <b>rudder INTO the turn</b> on roll-in.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">How much should you lead your rollout from a turn?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Approximately <b>half the bank angle.</b> 30° bank → start rollout ~15° before target heading.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Why does stall speed increase in a bank?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Load factor.</b> Lift must increase to maintain altitude in a bank, which increases the stall speed.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Why do you need right rudder in a climb?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Torque and P-factor</b> are strongest at low airspeed + high power, yawing the nose left. Right rudder offsets it.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Max bank angle in a climbing turn?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Shallow — around 20° or less.</b> Steep banks rob climb performance.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What's the standard climb procedure?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Pitch</b> up to climb attitude → <b>power</b> to climb setting → <b>trim</b> → <b>verify</b> airspeed.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Typical partial-power (cruise) descent rate?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>~500 fpm</b> at cruise airspeed — standard enroute descent.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Why clear the engine periodically in a prolonged glide?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Prevents <b>plug fouling and shock cooling.</b> Ease the throttle up briefly every so often.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">On approach: what does pitch control? What does power control?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Pitch controls airspeed, power controls altitude.</b> In steady-state cruise they're coupled.</div></div>
+                </div>
+              </div>
+            </div>
+          </section>
         </article>
 
       </div>
@@ -1357,6 +1550,65 @@ document.querySelectorAll('#sparkChapters .spark-chip').forEach(chip => {
       a.classList.toggle('hidden', a.dataset.article !== target);
     });
   });
+});
+
+/* Flashcards — tap to flip, keyboard, shuffle, reset, progress */
+function updateFlashProgress(section) {
+  const total = section.querySelectorAll('.flash-card').length;
+  const flipped = section.querySelectorAll('.flash-card.flipped').length;
+  const el = section.querySelector('.flash-progress');
+  if (el) el.textContent = total ? `${flipped} / ${total} revealed` : '';
+}
+
+document.querySelectorAll('.flash-section').forEach(section => {
+  const grid = section.querySelector('.flash-grid');
+  const shuffleBtn = section.querySelector('.flash-shuffle');
+  const resetBtn = section.querySelector('.flash-reset');
+
+  // Tap/click to flip
+  section.querySelectorAll('.flash-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+      updateFlashProgress(section);
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        card.classList.toggle('flipped');
+        updateFlashProgress(section);
+      }
+    });
+  });
+
+  // Shuffle — randomize DOM order of cards
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener('click', () => {
+      const cards = Array.from(grid.children);
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+      cards.forEach(c => {
+        c.classList.remove('flipped');
+        grid.appendChild(c);
+      });
+      updateFlashProgress(section);
+    });
+  }
+
+  // Reset — un-flip all cards and restore original order
+  if (resetBtn) {
+    const originalOrder = Array.from(grid.children);
+    resetBtn.addEventListener('click', () => {
+      originalOrder.forEach(c => {
+        c.classList.remove('flipped');
+        grid.appendChild(c);
+      });
+      updateFlashProgress(section);
+    });
+  }
+
+  updateFlashProgress(section);
 });
 
 /* ============================================================
