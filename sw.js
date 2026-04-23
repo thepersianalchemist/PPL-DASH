@@ -1,6 +1,6 @@
 // PPL Dashboard Service Worker
 // Bump CACHE_VERSION whenever you ship a new dashboard build.
-const CACHE_VERSION = 'ppl-dashboard-v10';
+const CACHE_VERSION = 'ppl-dashboard-v11';
 const CORE_ASSETS = [
   './',
   './index.html',
