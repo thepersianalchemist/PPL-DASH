@@ -400,46 +400,52 @@
     -webkit-tap-highlight-color: transparent;
   }
   .flash-card:focus-visible .flash-inner { box-shadow: 0 0 0 2px var(--accent); border-radius: 12px; }
-  .flash-inner { position: relative; }
-  .flash-front, .flash-back {
-    border-radius: 12px; padding: 16px;
-    display: flex; flex-direction: column; gap: 10px;
+  .flash-inner {
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: var(--panel-2);
     border: 1px solid var(--border);
     box-shadow: 0 4px 14px rgba(0,0,0,.25);
-    min-height: 190px;
-    animation: flashIn .22s ease;
+    min-height: 170px;
+    display: flex; flex-direction: column;
+    transition: background .2s, border-color .2s;
   }
-  .flash-front { background: var(--panel-2); }
-  .flash-back {
-    background: linear-gradient(135deg, rgba(74,163,255,.14), rgba(102,209,168,.08)), var(--panel);
+  .flash-card.flipped .flash-inner {
+    background: linear-gradient(135deg, rgba(74,163,255,.10), rgba(102,209,168,.06)), var(--panel);
     border-color: rgba(74,163,255,.4);
-    display: none;
   }
+  .flash-card:hover .flash-inner { border-color: var(--accent); }
+  .flash-front, .flash-back {
+    flex: 1;
+    display: flex; flex-direction: column;
+  }
+  .flash-back { display: none; }
   .flash-card.flipped .flash-front { display: none; }
   .flash-card.flipped .flash-back { display: flex; }
-  .flash-back::after {
-    content: "Tap to flip back ↻";
-    font-size: 10.5px; color: var(--muted);
-    text-align: right; letter-spacing: .3px;
-    margin-top: auto;
-  }
-  @keyframes flashIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
   .flash-label {
     font-size: 10px; text-transform: uppercase; letter-spacing: .8px;
-    color: var(--muted); font-weight: 700;
+    color: var(--muted); font-weight: 700; margin-bottom: 12px;
   }
-  .flash-back .flash-label { color: var(--accent); }
+  .flash-card.flipped .flash-label { color: var(--accent); }
+  /* CRITICAL: keep these as plain blocks. Do NOT add display:flex here —
+     it would turn each inline <b> and text node into a separate flex item
+     and lay them out as horizontal columns. */
   .flash-q, .flash-a {
-    font-size: 14px; line-height: 1.5; color: var(--text);
-    flex: 1; display: flex; align-items: center;
+    font-size: 15px; line-height: 1.55; color: var(--text);
+    flex: 1;
   }
   .flash-a { font-weight: 500; }
+  .flash-a b, .flash-q b { color: var(--accent); }
   .flash-hint {
-    font-size: 10.5px; color: var(--muted);
-    text-align: right; letter-spacing: .3px;
-    margin-top: auto;
+    font-size: 11px; color: var(--muted);
+    text-align: right; margin-top: 12px; letter-spacing: .3px;
   }
-  .flash-card:hover .flash-front { border-color: var(--accent); }
+  .flash-back::after {
+    content: "Tap to flip back ↻";
+    font-size: 11px; color: var(--muted);
+    text-align: right; margin-top: 12px; letter-spacing: .3px;
+    display: block;
+  }
   @media (max-width: 600px) {
     .flash-grid { grid-template-columns: 1fr; }
   }
