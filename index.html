@@ -916,6 +916,8 @@
         <div class="spark-chapters" id="sparkChapters">
           <button class="spark-chip active" data-spark="afh-ch3">Chapter 3: Basic Flight Maneuvers</button>
           <button class="spark-chip" data-spark="far-61113">FAR Reference · ATC Comms · KSNA Ops</button>
+          <!-- AUTO_INGEST_SPARKNOTES_CHIPS_START -->
+          <!-- AUTO_INGEST_SPARKNOTES_CHIPS_END -->
         </div>
 
         <!-- ========== AFH Ch. 3 ========== -->
@@ -1612,6 +1614,9 @@
             </div>
           </section>
         </article>
+
+        <!-- AUTO_INGEST_SPARKNOTES_ARTICLES_START -->
+        <!-- AUTO_INGEST_SPARKNOTES_ARTICLES_END -->
 
       </div>
     </div>
@@ -3293,6 +3298,36 @@ function guessTag(text) {
   return 'general';
 }
 
+/* ============================================================
+   INCREMENTAL LESSON INGESTION (auto-populated by scheduled task)
+   The scheduled Fireflies sync writes addGroundLessonOnce() calls
+   between AUTO_INGEST_LESSONS_START / END markers below. Each call
+   is idempotent — already-ingested lessons are skipped via
+   ppl_seeded_lessons localStorage array.
+============================================================ */
+function addGroundLessonOnce(lessonKey, entry, homeworkTexts, source) {
+  const seeded = STORE.get('ppl_seeded_lessons', []);
+  if (seeded.includes(lessonKey)) return;
+  // Remove any prior entry with the same fireflies_id (re-ingest safety)
+  if (entry.fireflies_id) {
+    state.ground = state.ground.filter(g => g.fireflies_id !== entry.fireflies_id);
+  }
+  state.ground.push({ id: entry.id || uid(), ...entry });
+  const existing = new Set(state.homework.map(h => h.text));
+  (homeworkTexts || []).forEach(text => {
+    if (!existing.has(text)) {
+      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source });
+    }
+  });
+  STORE.set('ppl_seeded_lessons', [...seeded, lessonKey]);
+  persist();
+}
+
+function runAutoIngestedLessons() {
+  /* AUTO_INGEST_LESSONS_START */
+  /* AUTO_INGEST_LESSONS_END */
+}
+
 function seedIfFirstRun() {
   // v4 seed: rebuilt from FULL Fireflies transcripts (not summaries) for GL1, GL2, GL3.
   if (STORE.get('ppl_seeded_v4')) return;
@@ -3904,6 +3939,7 @@ function seedBundledDocs() {
 }
 
 seedIfFirstRun();
+runAutoIngestedLessons();
 seedBundledDocs();
 fillSettingsForm();
 renderAll();

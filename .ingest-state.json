@@ -1,0 +1,9 @@
+{
+  "_doc": "State file written by the Fireflies → PPL Dash auto-ingest scheduled task. Tracks which transcripts have been processed so re-runs are idempotent. Do not edit by hand unless you know what you're doing.",
+  "schemaVersion": 1,
+  "ingestedFirefliesIds": [],
+  "ingestedLessonNumbers": [1, 2, 3],
+  "lastRun": null,
+  "lastRunStatus": null,
+  "lastRunMessage": "Initial state — GL1/GL2/GL3 already in seed block via seedIfFirstRun(). The auto-ingest task should pick up GL4 onwards."
+}
