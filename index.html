@@ -2842,65 +2842,204 @@ function guessTag(text) {
 }
 
 function seedIfFirstRun() {
-  // v3 seed: includes real Fireflies-extracted ground lesson content (GL1, GL2, GL3).
-  if (STORE.get('ppl_seeded_v3')) return;
+  // v4 seed: rebuilt from FULL Fireflies transcripts (not summaries) for GL1, GL2, GL3.
+  if (STORE.get('ppl_seeded_v4')) return;
 
   // Remove v1 placeholder entries (topics === 'Ground Lesson 1' or 'Ground Lesson 2 (today)' with 0 duration)
   state.ground = state.ground.filter(g => !(
     (g.topics === 'Ground Lesson 1' || g.topics === 'Ground Lesson 2 (today)') && (g.duration === 0 || !g.duration)
   ));
 
-  // Skip if a Fireflies-sourced entry already exists (user's own edits protected)
-  const hasFF = id => state.ground.some(g => g.fireflies_id === id);
+  // Refresh: purge any prior Fireflies-sourced entry with this id, then push the new one.
+  // User's manually-added ground entries (no fireflies_id) are protected.
+  const purgeFF = id => { state.ground = state.ground.filter(g => g.fireflies_id !== id); };
 
-  /* ===== Ground Lesson 1 — 2026-04-14 — Program orientation ===== */
-  if (!hasFF('01KP7B07K7D4CW1EGK485SWA8T')) {
-    const gl1Topics = `PROGRAM ORIENTATION & SYSTEMS SETUP (1 hr 18 min)
+  // Push homework only if not already present (by text). Preserves user's checked items.
+  const addHomeworkOnce = (texts, source) => {
+    const existing = new Set(state.homework.map(h => h.text));
+    texts.forEach(text => {
+      if (!existing.has(text)) {
+        state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source });
+      }
+    });
+  };
 
-• Flight Circle (00:00–11:00) — dispatching lessons, scheduling, aircraft booking, ACH vs credit card backup payment, immediate charge on lesson completion, SMS/email notification settings, 3-day advance cancellation window.
+  /* ===== Ground Lesson 1 — 2026-04-14 — Program orientation (CFI: Desireé) ===== */
+  {
+    const FF_ID_GL1 = '01KP7B07K7D4CW1EGK485SWA8T';
+    purgeFF(FF_ID_GL1);
+    const gl1Topics = `PROGRAM ORIENTATION, SYSTEMS, AIRCRAFT WALKTHROUGH — Cessna 172 N840 (CFI Desireé) (1 hr 18 min)
 
-• Ground Lesson Plans & ACS Introduction (11:00–23:00) — onboarding syllabus, lesson sequencing, Airman Certification Standards (ACS) for Private Pilot, oral + practical test components, "comprehensive pilot" focus beyond just passing the checkride.
+• FLIGHT CIRCLE — scheduling & billing (00:00–15:00)
+  - "Dispatch" button starts the ground lesson clock (turns green when active). HOBBS time entered after each flight determines actual flight charges.
+  - Payment: keep a backup credit card on file but USE ACH — credit card has a fee, ACH is fee-free. Set auto-pay to daily, full balance, so charges post immediately after lessons.
+  - Notifications: SMS > email (email gets buried). Subscribe to N840 to get outage/maintenance alerts.
+  - Cancellation: 3-day advance window standard, but flexible — text Desireé directly, no hidden fees.
+  - Personal documents (driver's license, passport, medical) all stored in your Flight Circle profile.
+  - Add Flight Circle to iPhone home screen as a web app for fast access.
 
-• Written Test Preparation (22:00–30:00) — Sporty's online prep (target consistent 90%+ before scheduling FAA written), FAA-approved physical calculator required, FAA advisory circulars, Pilot's Handbook of Aeronautical Knowledge (PHAK).
+• FOREFLIGHT — the industry standard EFB (15:00–35:00)
+  - $300–500/yr; the school has a discount. Aryan's account email: aryan.zain@me.com.
+  - Loads the school's POH and syllabus PDFs into your library automatically.
+  - FAA Advisory Circulars are FREE on the FAA website — search "pilots handbook" in the FAA section to get every official handbook digitally at no cost.
+  - Set the Maps page to VFR chart mode — that's the sectional view you'll use for planning.
+  - Aviation Weather (aviationweather.gov) is the morning go/no-go reference; ForeFlight's weather is integrated into the same page as flight planning.
 
-• ForeFlight & Flight Planning (28:00–36:00) — sectional maps, VFR chart mode, weather, airport data, NOTAMs, school-discounted subscription. iPad Mini or larger recommended.
+• ACS, FAR/AIM, AND CHECKRIDE FRAMEWORK (35:00–45:00)
+  - ACS (Airman Certification Standards) lists EVERYTHING that's testable on the checkride — knowledge, risk management, skills. Read it cover to cover; there are zero surprises if you do.
+  - Failed checkride? You get credit for the parts you passed. Desireé's own recheck was a 30-min flight (one takeoff + one landing) after passing the oral. Don't over-answer on the oral — Desireé's words: "don't dig a hole."
+  - FAR/AIM: the regulations bible. Buy the $20 electronic version that auto-updates rather than the $20 physical book that needs replacing every year.
+  - Specific FAR Part 61 sections to know cold for the oral: 61.3, 61.5, 61.7, 61.9. Part 61 eligibility: minimum age 17, must read/write/speak English, 40 hrs total time including 10 solo and 3 cross-country, plus one solo XC > 100 NM.
 
-• Preflight & Startup Procedures (29:00–41:00) — checklists customized per aircraft, SPARROW mnemonic, verbalize every step during aircraft operation, Pilot Operating Handbook (POH) covers engine types/limitations/procedures.
+• SPORTY'S & THE WRITTEN TEST (35:00–45:00)
+  - Desireé has already added Aryan to Sporty's. Video module = 100% complete.
+  - Strategy: get to consistent 90s on practice quizzes BEFORE scheduling the FAA written. Don't sign up before the score is reliable.
+  - Sporty's calculator math chapter = PHAK Chapter 5; the test math format LOOKS DIFFERENT than real-world flying math, so practice in the test format.
+  - Sergio gave a hard "do it before first lesson" message; Desireé clarified the timeline is flexible. The real reason to do Sporty's early is terminology — unfamiliar aviation lingo will confuse you mid-lesson.
+  - CX-3 calculator app exists ($20) but you CAN'T use the app on the actual FAA written. Buy a physical FAA-approved calculator (~$100) — you can return it after the test.
 
-• Flight Controls & Aircraft Systems (55:00–01:08:00) — primary controls: aileron (roll), elevator (pitch), rudder (yaw). Secondary: flaps (staged during landing), trim (reduces control pressure). Mechanical cables & bellcranks — no electrical. Airframe sections: wings, fuselage, empennage, powerplant.
+• LEARNING RESOURCES — what to actually use (45:00–55:00)
+  - PHAK = primary text, dense but free.
+  - Airplane Flying Handbook = companion to PHAK, focused on flight maneuvers.
+  - Bold Method (boldmethod.com) = visual breakdowns of concepts in 1–2 pages instead of 20.
+  - Free Pilot Training (YouTube) = full PPL playlist: principles of lift, turning tendencies, load factor, control authority. Desireé's CFI examiner explicitly approved this channel as supplemental.
+  - Mix formats — use whatever clicks. Aryan said he learns best visual + auditory, so Sporty's + YT first, PHAK as reference.
 
-• Flight Instruments & Coordination (01:08:00–01:15:00) — six-pack: altimeter, VSI, airspeed indicator, attitude indicator, heading indicator, turn coordinator. Keep the ball centered. Rotate at 55 kt, best rate of climb (Vy) at 76 kt. Yoke vs helicopter cyclic.
+• CHECKLIST CULTURE — "we live, breathe, and encourage checklists" (55:00–75:00)
+  - Checklists are AIRCRAFT-SPECIFIC at this school (not generic) because each plane's avionics and systems differ.
+  - Sequence: pre-flight → before-start → engine-start → after-start → before-taxi → run-up → climb → cruise → descent → after-landing → shutdown.
+  - Pre-flight uses the SPARROW mnemonic during walkaround.
+  - Pre-flight weather/NOTAMs: abbreviated for the local El Toro practice area (near Mission Viejo / Irvine); fully expanded for cross-country.
+  - I'M SAFE = personal readiness (Illness, Medication, Stress, Alcohol, Fatigue, Eating). PAVE = risk assessment (Pilot, Aircraft, enVironment, External pressures). Used every flight day to build PIC authority to cancel.
+  - SAY checklist items OUT LOUD ("Master switch on", "Throttle cracked"). Stops you from saying you did it without doing it. Builds CRM discipline.
+  - Pilot documents you must carry once issued: student pilot certificate (mailed after application), photo ID, medical certificate, logbook. Sign your logbook AFTER EVERY FLIGHT. Never trust an instructor who says "I'll sign it later."
+  - POH (Pilot Operating Handbook) = study front-to-back. Available digitally in ForeFlight or in the aircraft. DPE will reference POH specs (fuel capacity, carbureted vs fuel-injected, etc.) on the oral.
+  - Walkaround sequence: Desireé walks Aryan through it first, then he does it solo while she observes. Builds confidence; ensures he understands what he's looking for, not just following someone.
 
-KEY REGULATORY MINIMUMS MENTIONED: 40 hrs total · 10 solo · 3 XC · 1 XC >100 NM · FAR Part 61.
+• AIRPLANE STRUCTURE & FLIGHT CONTROLS (75:00–130:00)
+  - Three axes of motion: PITCH (nose up/down), BANK/ROLL (wing low), YAW (nose left/right).
+  - Primary controls (one per axis):
+      • Elevator → pitch (yoke fwd/back)
+      • Aileron → bank (yoke L/R)
+      • Rudder → yaw (foot pedals)
+  - Secondary controls: flaps, trim. Cessna 172 has NO leading-edge devices.
+  - Trim: alleviates control pressure so you can "fly with fingertips." Trim wheel inside cockpit; trim tab is on the right elevator. Rudder trim is also available — useful in the climb where right rudder is constant.
+  - Control linkage on the 172: mechanical cables and bellcranks, NOT electrical (fly-by-wire). Important for understanding what fails when.
+  - Airframe parts: fuselage (main body, baggage in tail), wings (with flaps + ailerons), powerplant (engine + propeller), empennage (vertical stabilizer + horizontal stabilizers + rudder + elevator).
+  - This specific aircraft (N840) was formerly a SEAPLANE — note the unique history.
 
-KEYWORDS: Flight Circle · ForeFlight · Private Pilot ACS · Pilot Operating Handbook · Flight Controls · Preflight Checklist · I'M SAFE · PAVE.`;
+• THE SIX-PACK & ENGINE INSTRUMENTS (130:00–170:00)
+  - Six-pack:
+      • Altimeter — altitude. Kollsman window for barometric pressure adjustment (29.92 = standard).
+      • Vertical Speed Indicator (VSI) — feet per minute. Target 500 fpm climb/descent for normal ops.
+      • Attitude Indicator / Artificial Horizon — pitch + bank. Blue = sky, brown = ground. Normal climb pitch ~10°; max useful pitch 30–45°.
+      • Heading Indicator — magnetic heading. ATC gives you headings (e.g., "fly heading 080"); use the heading bug to track assigned heading. Should match the magnetic compass.
+      • Airspeed Indicator — KNOTS, never mph.
+      • Turn Coordinator — small airplane silhouette + ball. Ball off-center? "Step on the ball" — add rudder in the direction the ball is offset to re-center. Coordination = good pilot.
+  - Magnetic compass sits on top of dash. Less reliable than HI in turns/accelerations.
+  - Tachometer (RPM) and fuel gauges are NOT part of the six-pack but are critical engine instruments.
 
-    const gl1Notes = `Overview: Program orientation covering flight operations, scheduling, billing, training resources, safety protocols, and regulatory knowledge for pilot competence and decision-making.
+• V-SPEEDS FOR CESSNA 172 N840 — MEMORIZE THESE
+  - Vr (rotation) = 55 kt
+  - Vy (best RATE of climb, max altitude per unit time) = 76 kt
+  - Vx (best ANGLE of climb, max altitude per unit distance — for obstacle clearance) = 60 kt
+  - Best glide = 65 kt
+  - Vy gets you HIGH FAST; Vx gets you HIGH OVER OBSTACLES.
 
-Flight Operations: Dispatching is done by instructor. Ground lessons marked "ground only" with green indicator. Weather-independent at this stage.
+• FLAP LIMITATIONS (170:00–185:00)
+  - Available settings: 0°, 10°, 20°, 30°, 40° (40° usable but 30° is normal landing).
+  - Speed limits: 10° flaps below 110 kt; 20° or more flaps below 85 kt. Past 10°, the limit drops to 85 kt and stays there.
+  - Always land with 30° flaps as a beginner. As you progress: "flaps as needed" — 0/10/20° in gusty conditions (less drag, faster, more wind tolerance).
+  - Gusty/windy = LESS flaps. More flaps = slower = closer to stall = harder gust recovery.
 
-Payment: Backup credit card OR ACH on file (ACH preferred — no fee). Charged immediately upon lesson completion. Transparent billing, no random/delayed charges.
+• YOKE TECHNIQUE (185:00–200:00)
+  - Left seat: yoke in left hand, throttle in right. Right knee forward.
+  - Bank right = turn yoke right; bank left = turn yoke left.
+  - Light touch — the airplane is naturally stable, you can fly hands-off briefly. Death grip = bad habit.
+  - Different from Aryan's helicopter time (Aryan flew right seat in helo; cyclic was reversed). Here, left seat, yoke not cyclic.
+  - Coordinated turns: lead with rudder, follow with aileron — yoke and pedals together.
 
-Notifications: SMS preferred for immediacy. Reservations, cancellations, 24-hr reminders. Subscribe to specific aircraft for outage alerts.
+• EQUIPMENT & ACCESSORIES (210:00–225:00)
+  - iPad: Mini is fine; larger is nice for instrument training but eats lap space. Always bring it.
+  - iPad case: cheap Amazon case is fine — Desireé's has survived 3 yrs of drops with only screen-protector scratches.
+  - Knee board: Sporty's basic Velcro knee board (~$20–30) is plenty for now. $300–450 versions exist (some include charging) but unnecessary as a beginner.
+  - Always bring iPad + paper. Take rough notes during the flight; write the proper debrief afterward.
 
-Cancellation Policy: Flexible rescheduling, no hidden fees, discuss changes with instructor.
+• NEXT LESSONS (225:00–240:00)
+  - Thursday (next): Principles of Flight ground lesson, full 3-hr block, co-taught with another CFI for Desireé's CFI practice. Desireé will text the room location.
+  - Friday: first actual flight.
+  - Walkaround on first flight: Desireé leads, Aryan observes; subsequent flights flip — Aryan leads, Desireé observes.
+  - Lessons charge per minute used (not the full 3-hr block).
 
-Curriculum: Syllabi include ground + flight integration. Lesson duration varies with skill acquisition, not fixed timelines. ACS sets checkride expectations — no surprises.
+KEYWORDS: Flight Circle · ACH payment · ForeFlight · ACS · FAR/AIM · FAR 61.3/5/7/9 · Sporty's · CX-3 calculator · PHAK · Airplane Flying Handbook · Bold Method · Free Pilot Training YT · Checklist culture · I'M SAFE · PAVE · SPARROW · POH · Cessna 172 N840 (former seaplane) · Three axes · Primary/secondary controls · Six-pack · Vr 55 / Vy 76 / Vx 60 / Best glide 65 · Flap limits 110/85 · Coordinated flight.`;
 
-Safety Emphasis: I'M SAFE (personal readiness) + PAVE (risk assessment) checklists daily. Vocalize checklist items — builds CRM habits. Instructor verifies student-led walkarounds for situational awareness.
+    const gl1Notes = `**Overview**
+First ground lesson with Desireé — equal parts admin onboarding (Flight Circle, ForeFlight, payment, study tools) and substantive aircraft systems orientation (Cessna 172 N840 walkthrough, six-pack instruments, V-speeds, flap limits, basic yoke handling).
 
-Checkride Strategy: Don't over-answer on oral — avoid "digging a hole." Partial credit: on a failed first attempt, recheck focuses only on incomplete areas.
+**Flight Circle & money**
+The big practical decision was payment. Set up ACH (no fee) and keep a credit card as backup only — Aryan completed this during the lesson. Auto-pay daily, full balance. Charges post immediately after lessons end (HOBBS time = real). All personal documents (DL, passport, medical) live in the profile. SMS notifications, subscribe to N840 specifically.
 
-Source: Fireflies meeting transcript — "Ground Lesson 1 Apr 14, 06:09 PM" (78 min).`;
+**Study system**
+Desireé reframed the written test deadline. Sergio had implied "do Sporty's BEFORE first lesson" — Desireé clarified the timeline is flexible; the real benefit of doing Sporty's early is terminology familiarity, not a hard deadline. Strategy: hit consistent 90s on practice quizzes BEFORE scheduling the FAA written. Don't pay $175 to fail.
+
+She layered four resources: PHAK (free, dense, primary text), Airplane Flying Handbook (free, maneuvers focus), Bold Method (visual 1-page summaries), and the Free Pilot Training YouTube channel (her own DPE explicitly approved it for her CFI checkride). Aryan said he learns visual + auditory, so YT + Sporty's first, PHAK as reference.
+
+**ACS framing**
+The ACS document literally lists everything you'll be tested on — knowledge, risk management, skills. Read it cover to cover. The school's pedagogical bias is that there should be ZERO surprises on the checkride. Failed first attempt = partial credit; recheck only covers what you missed. Desireé's recheck was a 30-min flight after one bad oral question. Her advice on the oral: don't over-answer, don't "dig a hole."
+
+**Checklist culture**
+Drilled hard: this school lives and breathes checklists. Aircraft-specific (because avionics differ). Always say items out loud. Builds discipline AND prevents the trap of "I said it but didn't do it." Pre-flight uses SPARROW. Decision frameworks: I'M SAFE (personal) and PAVE (risk) every single flight day.
+
+**Aircraft anatomy & controls**
+Walked through the three axes (pitch/bank/yaw) and matched each to a primary control (elevator/aileron/rudder). Emphasized that the 172 uses MECHANICAL cables and bellcranks, NOT electrical — important for failure modes. Secondary controls: flaps, trim. The 172 has no leading-edge devices. Trim alleviates control pressure so you can "fly with fingertips" instead of fighting the yoke; rudder trim is also available and useful in the climb.
+
+Fun specific detail: N840 was previously a SEAPLANE.
+
+**Six-pack + V-speeds**
+Six-pack instruments and what they do. The turn coordinator's ball is the coordination check — "step on the ball" means add rudder toward the offset. ATC will give heading commands ("heading 080"), so use the HI's heading bug to track them.
+
+V-speeds for THIS plane (memorize cold): rotate 55, Vy 76, Vx 60, glide 65. The Vy/Vx distinction is checkride bait — Vy = max altitude per minute, Vx = max altitude per mile (for obstacle clearance after a short-field takeoff).
+
+**Flap limits**
+10° flaps allowed below 110 kt; 20°+ flaps below 85 kt. Always land with 30° flaps initially; "flaps as needed" later (less flap in gusty conditions because more flap = slower = closer to stall = bad gust recovery).
+
+**Yoke handling**
+Light touch. The 172 is naturally stable. Death grip = bad habit. Aryan's helicopter time was right-seat with reversed cyclic — here it's left-seat with a yoke. Coordinated turns: lead with rudder, follow with aileron.
+
+**Aryan-specific context**
+Aryan came in with helicopter background (right-seat experience) and was visibly anxious about the Sergio-imposed written deadline. Desireé deliberately defused that pressure. He asked informed questions about V-speeds, turn coordination, and flap configuration logic. His takeaway plan: hit Sporty's at 90+, use YT/Bold Method to reinforce, bring iPad Thursday, don't try to memorize everything Day 1.
+
+**Equipment**
+Don't overspend on a knee board. Sporty's $20–30 basic Velcro is fine. Cheap Amazon iPad case is fine. Always bring iPad + paper.
+
+**Next**
+Thursday = Principles of Flight ground (full 3-hr block, co-taught for Desireé's CFI practice). Friday = first flight. Walkaround on first flight: Desireé leads, Aryan observes; flip on subsequent flights.
+
+Source: Fireflies meeting transcript — "Ground Lesson 1 Apr 14, 06:09 PM" (78 min), CFI Desireé, AeroStar / KSNA, aircraft N840 (Cessna 172, former seaplane).`;
 
     const gl1Homework = [
-      'Add backup credit card or ACH payment info in Flight Circle; set ACH as primary payment method',
-      'Study syllabus and assigned reading: PHAK, Airplane Flying Handbook, school checklist documents',
-      'Watch Free Pilot Training YouTube + review Bold Method for principles of flight',
-      "Continue Sporty's written test practice — target consistent 90%+ before scheduling FAA written exam",
-      'Purchase physical FAA-approved calculator for written test',
-      'Prepare for Principles of Flight ground lesson (reading + video study)',
-      'Familiarize with preflight and start-up checklists — verbalize every step during aircraft operation'
+      'Set ACH as primary payment in Flight Circle; keep credit card as backup only (auto-pay daily, full balance)',
+      'Add Flight Circle as web app to iPhone home screen for fast access',
+      'Subscribe to aircraft N840 in Flight Circle for outage/maintenance notifications',
+      "Continue Sporty's practice quizzes — target consistent 90s before scheduling the FAA written",
+      'Practice Sporty\'s calculator math (PHAK Chapter 5) in the test format — it differs from real-world math',
+      'Buy a physical FAA-approved calculator (~$100, returnable after written test) — the CX-3 app cannot be used on the actual exam',
+      'Buy the FAR/AIM electronic version ($20, auto-updates) instead of the physical book',
+      'Read FAR Part 61.3, 61.5, 61.7, 61.9 — eligibility/document requirements (memorize: age 17, English, 40 hr total / 10 solo / 3 XC / 1 solo XC >100 NM)',
+      'Read PHAK principles-of-flight section before Thursday\'s ground lesson',
+      'Watch Free Pilot Training YouTube — principles of lift, turning tendencies, load factor, control authority',
+      'Skim Bold Method articles on principles of flight as visual reinforcement',
+      'Read Cessna 172 POH Section 2 (Limitations) and Section 4 (Normal Operations) for flap limits, V-speeds, and procedures',
+      'Memorize V-speeds for N840: Vr 55 kt, Vy 76 kt, Vx 60 kt, best glide 65 kt',
+      'Memorize 172 flap speed limits: 10° below 110 kt, 20°+ below 85 kt',
+      'Memorize SPARROW preflight mnemonic, I\'M SAFE personal readiness check, and PAVE risk assessment',
+      'Set ForeFlight Maps page to VFR chart mode and confirm the school\'s POH/syllabus loaded into your library',
+      'Bookmark aviationweather.gov for morning go/no-go weather checks',
+      'Read the ACS (Airman Certification Standards) for Private Pilot cover to cover — that is exactly what the DPE will test',
+      'Buy a basic Sporty\'s Velcro knee board (~$20–30); skip the $300+ versions for now',
+      'Bring iPad + paper to every lesson; take rough notes in flight, write proper debrief after',
+      'Confirm student pilot certificate application is in progress; carry it (plus ID + medical) once it arrives',
+      'Sign logbook AFTER every flight — never trust "I\'ll sign it later"'
     ];
 
     state.ground.push({
@@ -2912,77 +3051,189 @@ Source: Fireflies meeting transcript — "Ground Lesson 1 Apr 14, 06:09 PM" (78 
       topics: gl1Topics,
       notes: gl1Notes,
       homework: gl1Homework.join('\n'),
-      fireflies_id: '01KP7B07K7D4CW1EGK485SWA8T'
+      fireflies_id: FF_ID_GL1
     });
 
-    gl1Homework.forEach(text => {
-      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source: 'Ground L1 · 2026-04-14' });
-    });
+    addHomeworkOnce(gl1Homework, 'Ground L1 · 2026-04-14');
   }
 
-  /* ===== Ground Lesson 2 — 2026-04-16 — Principles of Flight ===== */
-  if (!hasFF('01KPCDHWXVY7VAVJ6BREZX3VFR')) {
-    const gl2Topics = `PRINCIPLES OF FLIGHT & AERODYNAMICS (2 hr 13 min)
+  /* ===== Ground Lesson 2 — 2026-04-16 — Principles of Flight (CFI: Desireé, co-attended by Josh) ===== */
+  {
+    const FF_ID_GL2 = '01KPCDHWXVY7VAVJ6BREZX3VFR';
+    purgeFF(FF_ID_GL2);
+    const gl2Topics = `PRINCIPLES OF FLIGHT & AERODYNAMICS — full-block ground (CFI Desireé, with Josh present) (2 hr 13 min)
 
-• Flight Experience & Prep (00:04–07:24) — participant background, instructional materials setup.
+• THE FOUR FORCES (00:30–15:00)
+  - Lift, Thrust, Drag, Weight — the cardinal four. Lift opposes weight; thrust opposes drag.
+  - Lift generated by TWO co-acting principles:
+      • BERNOULLI'S PRINCIPLE — as fluid velocity ↑, pressure ↓. Air over the curved upper camber travels farther/faster, lower pressure on top, higher pressure below → wing is pushed UP.
+      • NEWTON'S 3RD LAW — air deflected DOWN by the airfoil → equal and opposite reaction pushes wing UP.
+  - Analogies Desireé used: water-bottle Venturi pinch (constrain flow → speed jumps, pressure drops), perfume-bottle bulb pump, hand-out-the-car-window (angle the hand → air lifts it).
+  - Pressure equalization is the underlying physics ("high pressure always seeks low pressure"). Aryan asked WHY — instructor: that's beyond checkride scope, DPEs want the principle + aviation application + cockpit effect.
 
-• Four Forces of Flight (07:25–27:15) — LIFT, THRUST, DRAG, WEIGHT. Lift generated by Bernoulli's principle (velocity ↑, pressure ↓) AND Newton's 3rd law (air deflected down → reaction force up). Venturi effect analogy. Airfoil terms: leading edge, trailing edge, chord line, mean camber, upper/lower camber. Relative wind = parallel and opposite to flight path.
+• AIRFOIL TERMINOLOGY — non-negotiable for the oral (10:00–20:00)
+  - LEADING EDGE — front of wing
+  - TRAILING EDGE — back of wing
+  - CHORD LINE — imaginary straight line connecting leading edge to trailing edge
+  - MEAN CAMBER LINE — average curvature of the airfoil
+  - UPPER CAMBER / LOWER CAMBER — top and bottom surfaces of the wing
+  - RELATIVE WIND — air moving PARALLEL and OPPOSITE to the flight path (NOT necessarily horizontal)
+  - "If you see a gash on the trailing edge, you need to know what that is" — DPEs will probe terminology on the walkaround.
 
-• Drag Types: PARASITE (skin-friction, form, interference) — increases with speed. Fairings reduce interference drag. INDUCED drag — decreases with speed, caused by wingtip vortices tilting the lift vector backward. Winglets (FedEx, Southwest) mitigate vortices.
+• DRAG — three flavors of parasite + induced (15:00–40:00)
+  - PARASITE DRAG (everything that isn't lift-related):
+      • SKIN drag — molecular bumps, paint chips, dents create surface friction.
+      • FORM drag — depends on the shape of the airframe.
+      • INTERFERENCE drag — sharp 90° angles where airflows meet (wing struts to fuselage). River analogy: maximum turbulence at the confluence.
+  - FAIRINGS — smooth coverings (wheel pants, strut fairings) that reduce interference drag.
+  - INDUCED DRAG — a BYPRODUCT of lift itself. High pressure under the wing leaks around the wingtip up to the low-pressure top → WINGTIP VORTICES.
+  - Wingtip vortices cause DOWNWASH; downwash tilts the lift vector backward → induced drag.
+  - "Heavy, clean, and slow" airplane = strongest vortices. Big jets on parallel runways can flip a small training plane that flies into their wake — wake-turbulence offset rules exist for this reason.
+  - GROUND EFFECT — within ~1 wingspan of the runway, vortices can't fully form → induced drag reduced → cushion on landing, but degraded climb in the same regime.
+  - At high AoA + low airspeed (takeoff/short final) you fight more induced drag and need more thrust to hold speed — practical takeaway for power-on stalls and slow flight.
 
-• Left-Turning Tendencies (27:16–54:00) — FOUR CAUSES, all strongest at high AoA + low airspeed + high RPM (takeoff):
-   1. SPIRALING SLIPSTREAM — prop wash corkscrews, hits left side of vertical stab → yaws nose LEFT.
-   2. TORQUE — propeller spins clockwise (from pilot view) → Newton's 3rd → aircraft rolls LEFT.
-   3. P-FACTOR — descending (right) prop blade has higher AoA → asymmetric thrust → yaw LEFT.
-   4. GYROSCOPIC PRECESSION — force applied to rotating prop felt 90° ahead in direction of rotation. Most relevant to TAILWHEEL aircraft during rotation/tail-raise.
-   → All countered with RIGHT RUDDER (and aileron as needed) during takeoff, climb, stall recovery.
+• LEFT-TURNING TENDENCIES — the BIG FOUR (40:00–01:30:00)
+  All strongest at HIGH ANGLE OF ATTACK + HIGH RPM + LOW AIRSPEED — i.e., TAKEOFF. All countered with RIGHT RUDDER.
 
-• Teaching Techniques (54:01–01:03:31) — Newton's 3rd restated for memorization. Visual aids, wind tunnel analogies.
+  1) TORQUE
+     - Prop spins clockwise (from cockpit view). Newton's 3rd: equal and opposite reaction → airframe wants to ROLL LEFT.
+     - "Like a drill — when you trigger it you feel the initial jolt the opposite direction."
+     - Phrase to give the DPE word-for-word: "The prop rotates clockwise; Newton's 3rd law says for every action there is an equal and opposite reaction; so the action of the prop turning clockwise creates a reaction where the plane wants to roll left."
 
-• Weight & Lift Dynamics (01:13:31–01:28:57) — Weight = gravity. Wingtip vortex rotation (inward, upward, downward). GROUND EFFECT: close to runway, vortices blocked → induced drag reduced → aircraft "floats" on landing, affects climb performance.
+  2) SPIRALING SLIPSTREAM (a.k.a. propeller wash)
+     - The prop is itself an airfoil — it generates "lift" forward (= thrust) AND a corkscrewing slipstream.
+     - That spiraling air wraps around the fuselage and STRIKES THE LEFT SIDE OF THE VERTICAL STABILIZER.
+     - Force on left side of the tail pushes tail RIGHT → nose YAWS LEFT.
 
-• Angles & Flight Attitudes (01:37:46–01:40:22) — ANGLE OF ATTACK (AoA) = angle between chord line and relative wind. High AoA increases lift but risks stall past critical angle. Distinguish PITCH ATTITUDE vs FLIGHT PATH vs AoA — an aircraft can fly level at high pitch angle.
+  3) P-FACTOR
+     - Asymmetric thrust caused by GEOMETRY at high angle of attack.
+     - The DESCENDING blade (right side as viewed from cockpit) has a HIGHER angle of attack relative to the relative wind than the ASCENDING blade (left side).
+     - Higher AoA on the right blade → it scoops more air → more thrust on the right → nose YAWS LEFT.
+     - "The right side of the propeller has higher AoA to the air; as it goes down it takes a bigger bite."
+     - Mostly felt at takeoff, climb, slow flight at high pitch.
 
-• Lift in Turns (53:00) — In 45°–60° banks, lift vector splits into vertical (supports weight) and horizontal (centripetal) components. Resultant load factor ↑ → pitch & power adjustments needed to hold altitude and airspeed. Know structural limits.
+  4) GYROSCOPIC PRECESSION
+     - A force applied to a spinning disc is felt 90° AHEAD in the direction of rotation.
+     - In a TRICYCLE-GEAR plane: when you ROTATE (pull the yoke), the tail comes down → forward push on the back of the spinning prop → reaction felt 90° later → nose yaws LEFT.
+     - Most pronounced in TAILWHEEL aircraft when the tail comes up on takeoff.
 
-• Checkride Prep & FAA Resources (01:48:21–02:13:05) — Oral + practical, typically 2–3 hrs total. Oral is open-book — KNOW WHERE TO FIND ANSWERS. Use PHAK, Airplane Flying Handbook, ACS. Practice standardized phrasing (Newton's 3rd verbatim).
+  - Mnemonic to remember the four (loose): TSPG / STPG (Torque, Spiraling slipstream, P-factor, Gyroscopic precession). Instructor admitted listing three and forgetting one — a real risk under DPE pressure. Drill all four.
+  - Honest acknowledgment from instructor: "These aren't the easiest to get at first — you'll have to go home and study."
 
-NEXT FLIGHT LESSON: Turns, climbs, descents, heading practice at ACI south location.
+• HOW LIFT IS GENERATED — deeper drill (50:00–75:00)
+  - Relative wind hits the airfoil → high pressure under, low pressure over → upward push.
+  - Bernoulli unpacked again: longer top surface → faster air → lower pressure (inverse relationship).
+  - DPE expectation: state the principle, link it to aviation, describe its cockpit effect. They obsess over PHRASEOLOGY ("they're super big on how you say it word-for-word").
+  - Visual references the instructor recommended: BOLDMETHOD website (lift/drag relation visuals) and PILOT INSTITUTE on YouTube.
 
-KEYWORDS: Bernoulli's principle · Newton's 3rd law · Left-turning tendencies · Induced drag · Wingtip vortices · Angle of attack · Ground effect · FAA checkride.`;
+• ANGLE OF ATTACK ≠ PITCH ANGLE (60:00–80:00)
+  - RELATIVE WIND = the path the airplane is moving (parallel/opposite to flight path).
+  - CHORD LINE = airfoil reference line.
+  - ANGLE OF ATTACK (AoA) = angle between RELATIVE WIND and CHORD LINE.
+  - PITCH ANGLE = nose position relative to the HORIZON.
+  - These are NOT the same. Example: you can fly straight and level at 3,000 ft pitched up OR pitched down — same flight path, different pitch attitudes, different AoA.
+  - When flying straight and level, the relative wind is essentially horizontal.
+  - This distinction is the basis for understanding stalls — stalls happen at a critical AoA, NOT a critical pitch attitude or airspeed.
 
-    const gl2Notes = `Overview: Deep dive on fundamental forces and aerodynamic principles — practical flying and oral-exam applications.
+• LOAD FACTOR & STEEP TURNS (95:00–01:25:00)
+  - Straight and level: lift = weight, you're pulling 1 G. Always.
+  - In a bank, the LIFT VECTOR splits into:
+      • VERTICAL component (must still equal weight to hold altitude)
+      • HORIZONTAL component (the centripetal force that turns the plane)
+  - CENTRIFUGAL force pushes you outward in the turn (the "car cornering" feel).
+  - Resultant LOAD FACTOR is the combination of centrifugal force and weight.
+  - 60° BANK = 2 Gs.
+  - STEEP TURN = 45°–60° bank (past 60° "is crazy" and not typically practiced).
+  - In a steep turn the nose pitches DOWN because the lift vector has tilted away from the vertical → must PITCH UP and ADD POWER to hold altitude (the higher pitch costs airspeed, which the throttle replaces).
+  - Every aircraft has a G-LIMIT. Desireé's plane: 3.8 Gs. Exceed it → structural damage risk. This is why steep-turn practice is graded — you're learning to manage load.
 
-Four Forces: Lift / thrust / drag / weight. Lift = Bernoulli (fluid velocity ↑, pressure ↓) + Newton's 3rd (air pushed down, wing pushed up). Instructor used hand-out-car-window and water-flow analogies.
+• CHECKRIDE FRAMEWORK (01:00:00–02:13:00)
+  - Oral portion: 2–3 hours depending on coverage.
+  - Practical portion: 1.5–2.5 hours, can stretch with weather/routing.
+  - Same day, oral first; can't fly the practical without passing oral.
+  - Must pass the FAA WRITTEN before either.
+  - Key Part 61 sections to know:
+      • 61.103 — eligibility to be a private pilot
+      • 61.105 — aeronautical knowledge requirements (radio comms, weather, etc.)
+      • 61.107 — flight proficiency; "61.107(b)(1)" + a maneuver is the structure your CFI uses to sign endorsements (slow flight, stalls, instrument, emergency ops, preflight, etc.)
+      • 61.109 — aeronautical experience: 3 hrs cross-country, 10 takeoffs, 10 full-stop landings, some at night
+  - ACS is the blueprint of what's tested — knowledge (TAFs, GFAs, winds-temp, METARs, clouds, turbulence), risk management, skill.
+  - Practical grading: preflight inspection, engine start, taxi, normal/performance landings, maneuvers (steep turns, etc.).
+  - Single-engine private pilot doesn't need the seaplane / multi items.
+  - Open-note ORAL: PHAK, Airplane Flying Handbook, ForeFlight all permitted. Some DPEs let you look things up freely; others pressure you to know cold. Tab your books.
+  - "Free ACS guide on YouTube by a DPE" — recommended supplemental.
 
-Aerodynamic Terminology (required for oral): leading edge, trailing edge, chord line, mean camber line, upper/lower camber, relative wind. Memorize these for inspection and checkride questions.
+• TEACHING & PACING NOTES — instructor-student feedback loop (01:45:00–end)
+  - Aryan's stated learning preference: BIG PICTURE FIRST, then pieces. Desireé had been going pieces → big picture; she committed to flipping the order.
+  - Desireé is newly-CFI'd and using these sessions partly for her own teaching practice. She got feedback from her own CFI (and from Aryan) that the water-bottle analogies are confusing — keep examples AVIATION-specific.
+  - Her own instructor flagged she speaks monotone — she's working on it. Sergio is more "bubbly."
+  - Encouraged Aryan to reach out to ANY CFI at the hangar if a concept doesn't click — instructor numbers are on the whiteboard.
 
-Drag Types: Parasite (skin, form, interference) increases with speed. Induced decreases with speed, caused by wingtip vortices creating downwash that tilts the lift vector rearward. Cessna 172 vs fighter jet contrast.
+• NEXT LESSON
+  - First FLIGHT lesson — turns, climbs, descents, heading practice. Meet at ACI SOUTH, walk to the plane, hands-on preflight.
 
-Left-Turning Tendencies — the Big Four: spiraling slipstream, torque, P-factor, gyroscopic precession. All most pronounced at high AoA + low airspeed + high RPM (i.e., TAKEOFF). Counter with right rudder. Instructor stressed MEMORIZING Newton's 3rd verbatim — checkride DPEs expect exact phrasing.
+KEYWORDS: Four forces · Bernoulli · Newton's 3rd · Airfoil terms · Relative wind · Parasite drag (skin/form/interference) · Fairings · Induced drag · Wingtip vortices · Wake turbulence · Ground effect · Left-turning tendencies (Torque/Spiraling slipstream/P-factor/Gyroscopic precession) · Right rudder · AoA vs pitch · Load factor · 60° bank = 2G · Steep turns · G-limits · 61.103/105/107/109 · ACS · BoldMethod · Pilot Institute YT.`;
 
-Lift in Turns: Steep turns (45°–60°) → lift splits into vertical + horizontal components → increased load factor → must add pitch & power. Structural limits matter.
+    const gl2Notes = `**Overview**
+Two-hour-thirteen full-block aerodynamics ground with CFI Desireé (with Josh present and contributing). Heavy emphasis on the four forces, the four left-turning tendencies, and the aerodynamic terminology DPEs love to probe. Closed with checkride structure and FAR Part 61 section map.
 
-Angle of Attack: Between chord line and relative wind. High AoA = more lift BUT risk of stall past critical angle. Pitch attitude ≠ flight path angle ≠ AoA — aircraft can fly level with nose pitched up.
+**Lift — explained two ways at once**
+Lift was taught via Bernoulli AND Newton simultaneously, because DPEs want both. Bernoulli: longer top camber → faster air → lower pressure → upward push. Newton: airfoil deflects air down → equal/opposite reaction pushes wing up. Desireé leaned on the water-bottle Venturi and the hand-out-the-car-window analogies (later got feedback to stick to aviation analogies). Aryan asked the deeper "why does pressure equalize" question — instructor said that's beyond the DPE's scope; they want principle + aviation application + cockpit effect.
 
-Ground Effect: Within ~1 wingspan of runway, wingtip vortices are blocked → induced drag reduced → float on landing, decreased climb performance just after liftoff.
+**Airfoil vocabulary is non-negotiable**
+Drilled leading edge, trailing edge, chord line, mean camber, upper/lower camber, relative wind. The walkaround question "what is this gash on the trailing edge" requires fluent vocabulary — this isn't busywork.
 
-Checkride: Oral is OPEN-BOOK — know where to find answers fast. Bring PHAK, Airplane Flying Handbook, ACS (digital or printed). Total typically 2–3 hrs. Partial credit: failed areas can be rechecked alone.
+**Drag in detail**
+Parasite drag splits into skin (molecular friction, paint chips), form (shape), and interference (90° intersections; "rivers meeting" turbulence). Fairings smooth interference. INDUCED drag is the conceptually important one — it's a byproduct of lift itself, caused by wingtip vortices that create downwash and tilt the lift vector backward. Big jets create monster vortices that can flip a 172 — that's where the parallel-runway wake-turbulence offset rules come from. GROUND EFFECT (within ~1 wingspan) suppresses vortices: smoother landing flare but degraded climb in the same regime. At high AoA + low airspeed (takeoff, short final) induced drag dominates and you need power to hold speed — that's the underlying physics behind power-on stalls and slow flight.
 
-Teaching Feedback: Pacing and sequencing discussed. Students encouraged to switch instructors for a concept if one explanation isn't clicking.
+**The four left-turning tendencies — drill these word-for-word**
+The lesson spent ~40 minutes here because they're foundational and counterintuitive. All four push the nose left during takeoff (high AoA + high RPM + low airspeed); all are countered with RIGHT RUDDER.
+1. **Torque** — Newton's 3rd applied to a clockwise-spinning prop → airframe rolls left. ("Like a drill kicking opposite when you pull the trigger.")
+2. **Spiraling slipstream** — prop wash corkscrews around the fuselage and hits the LEFT side of the vertical stab → tail goes right, nose yaws left.
+3. **P-factor** — at high AoA the descending right blade has higher AoA than the ascending left blade → asymmetric thrust → nose yaws left. Pure geometry, not power.
+4. **Gyroscopic precession** — force applied to a spinning disc felt 90° ahead in the direction of rotation. In a tricycle-gear plane, when you rotate, the tail drops, pushing the back of the prop → reaction 90° later yaws nose left. Most pronounced in tailwheels when the tail comes UP on takeoff.
 
-Source: Fireflies meeting transcript — "Principles of Flight Apr 16, 05:30 PM Ground 2" (133 min).`;
+Desireé hammered the phraseology: DPEs want Newton's 3rd verbatim — "for every action there is an equal and opposite reaction." She admitted to listing three and forgetting one in real time, so she warned Aryan: under pressure you'll forget one. Drill all four.
+
+**Angle of attack ≠ pitch angle**
+Critical distinction. AoA is between the RELATIVE WIND and the CHORD LINE; pitch is nose vs. horizon. You can fly level at 3,000 ft pitched up OR down — same flight path, different attitudes. Stalls happen at a critical AoA, not a critical pitch or airspeed — this is why a stall can happen at any attitude or speed if AoA exceeds critical.
+
+**Load factor in turns**
+Straight and level = 1 G. In a bank, lift splits into vertical (must equal weight to hold altitude) and horizontal (the centripetal force that turns you). Combined with centrifugal force, you pull more Gs. 60° bank = 2 G. In a steep turn the nose drops because lift has tilted; pitch up + add power to hold altitude. Every aircraft has a G-limit (Desireé's: 3.8) — exceed it, structural damage. This is why steep turns are graded — load management.
+
+**Checkride map**
+Oral 2–3 hr, practical 1.5–2.5 hr, same day, oral first. Written must be done before either. Open-note oral with PHAK / Airplane Flying Handbook / ForeFlight; some DPEs let you look freely, others pressure you to know cold — tab your references. Part 61 section map: 61.103 (eligibility), 61.105 (aeronautical knowledge), 61.107 (proficiency — "61.107(b)(1)" plus maneuver = how endorsements are written), 61.109 (experience: 3 hr XC, 10 TOs, 10 full-stop landings, some at night). ACS is the testable blueprint.
+
+**Teaching dynamics**
+Aryan gave Desireé constructive feedback: he learns BIG PICTURE first, then pieces — she'd been doing the reverse and committed to flipping. Desireé acknowledged her own monotone and the water-bottle confusion (going forward: aviation-specific examples only). Sergio is "more bubbly." Encouraged Aryan to ping ANY CFI in the hangar if a concept isn't clicking; numbers are on the whiteboard.
+
+**Aryan-specific context**
+Five fixed-wing lessons ~15 yrs ago + helicopter time. Pre-read Sporty's and YouTube before this lesson. Detail-oriented; pushed back on incomplete explanations (e.g., the "why does high pressure seek low" question). Visual learner. Took notes throughout. Engaged enough that the instructor explicitly thanked him for the teaching feedback.
+
+**Next**
+First flight lesson — turns, climbs, descents, heading practice. Meet at ACI South, walk to the plane, hands-on preflight.
+
+Source: Fireflies meeting transcript — "Principles of Flight Apr 16, 05:30 PM Ground 2" (133 min), CFI Desireé with Josh present, KSNA.`;
 
     const gl2Homework = [
-      'Study Chapter 3 of the Airplane Flying Handbook — prep for next flight lesson (turns, climbs, descents, heading practice at ACI south)',
-      'Memorize the 4 left-turning tendencies: spiraling slipstream, torque, P-factor, gyroscopic precession',
-      "Memorize Newton's 3rd law verbatim — DPEs expect exact phrasing on checkride oral",
-      'Review Bernoulli\'s principle and how lift is generated (velocity ↑ → pressure ↓)',
-      'Review airfoil terminology for oral exam: leading edge, trailing edge, chord line, mean camber, relative wind',
-      'Review drag types (parasite vs induced) and wingtip vortices → induced drag relationship',
-      'Review angle of attack vs pitch attitude vs flight path — know the distinctions',
-      'Review ground effect and its impact on takeoff/landing performance',
-      'Memorize V-speeds for training aircraft (rotate 55 kt, Vy 76 kt for C172)'
+      'Read Chapter 3 (Air Flight Maneuvers) of the Airplane Flying Handbook before next lesson',
+      'Read Chapters 4 and 5 of the PHAK (principles of flight + aerodynamic forces)',
+      'Memorize the FOUR left-turning tendencies and be able to explain each in one sentence cold',
+      "Memorize Newton's 3rd law VERBATIM — 'for every action there is an equal and opposite reaction' — DPEs expect exact phrasing",
+      'Write one-sentence definitions of torque, spiraling slipstream, P-factor, and gyroscopic precession for checkride prep',
+      "Memorize Bernoulli's principle: as fluid velocity increases, pressure decreases — and explain how this generates lift",
+      'Memorize airfoil terminology cold: leading edge, trailing edge, chord line, mean camber, upper/lower camber, relative wind',
+      'Drill the AoA vs pitch angle distinction — explain why a stall depends on AoA, not pitch or airspeed',
+      'Review the three parasite drag types (skin, form, interference) and how fairings reduce interference drag',
+      'Review induced drag and wingtip vortices — understand why heavy/clean/slow creates the worst vortices and why ground effect reduces induced drag',
+      'Review steep-turn dynamics: 60° bank = 2 G, lift splits into vertical + horizontal, must add pitch and power to hold altitude',
+      "Memorize the aircraft's G-limit and understand why exceeding it risks structural damage",
+      'Bookmark BoldMethod (boldmethod.com) for lift/drag visualizations',
+      'Subscribe to / watch Pilot Institute on YouTube for aerodynamics explainers',
+      'Find and watch the free DPE-led ACS walkthrough on YouTube',
+      'Read FAR 61.103 (eligibility), 61.105 (knowledge), 61.107 (proficiency), 61.109 (experience) — know what each section covers',
+      'Familiarize with the pre-flight and flying checklists Desireé sent',
+      'Meet Desireé at ACI South for first flight lesson — walk to the plane and do hands-on preflight'
     ];
 
     state.ground.push({
@@ -2994,84 +3245,171 @@ Source: Fireflies meeting transcript — "Principles of Flight Apr 16, 05:30 PM 
       topics: gl2Topics,
       notes: gl2Notes,
       homework: gl2Homework.join('\n'),
-      fireflies_id: '01KPCDHWXVY7VAVJ6BREZX3VFR'
+      fireflies_id: FF_ID_GL2
     });
 
-    gl2Homework.forEach(text => {
-      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source: 'Ground L2 · 2026-04-16' });
-    });
+    addHomeworkOnce(gl2Homework, 'Ground L2 · 2026-04-16');
   }
 
-  /* ===== Ground Lesson 3 — 2026-04-21 — ATIS, ATC Comms, Taxi & Pilot Privileges ===== */
-  if (!hasFF('01KPS8BYBGNYVZF84AFK0EX9VD')) {
-    const gl3Topics = `ATIS, ATC COMMUNICATIONS, TAXI OPS & PRIVATE PILOT PRIVILEGES (1 hr 53 min)
+  /* ===== Ground Lesson 3 — 2026-04-21 — ATIS, ATC Comms, Taxi & Pilot Privileges (rebuilt from full transcript) ===== */
+  {
+    const FF_ID_GL3 = '01KPS8BYBGNYVZF84AFK0EX9VD';
+    purgeFF(FF_ID_GL3);
 
-• Weather Information Systems (00:00–10:29) — ATIS at TOWERED airports vs AWOS/ASOS at non-towered. John Wayne ATIS = 126.0. Updates hourly with letter code A→Z. Includes wind, visibility, ceiling, temperature, altimeter, runway in use. ForeFlight gives 3 ways to access: live audio, text transcription, phone playback for practice.
+    const gl3Topics = `ATIS, ATC COMMS, TAXI OPS & 61.113 PRIVILEGES — KSNA (1 hr 53 min · CFI Desireé · transcript-sourced)
 
-• ATIS Note-Taking & NOTAMs (06:38–10:29) — Practice writing wind/vis/ceiling/temp/altimeter shorthand quickly (broadcast moves fast). Decode common abbreviations: RDC (reduce), CONST (construction). Watch NOTAMs for taxiway closures and required offsets. Listen on the drive in to stay current.
+— ATIS / WEATHER —
+• ATIS structure (towered fields) — Information letter A→Z (rolls hourly), airport ID, Zulu time, wind dir/speed (G for gust), visibility in SM, ceiling/cloud coverage (FEW/SCT/BKN/OVC), temp, dewpoint, altimeter, runways in use, remarks/NOTAMs.
+• Non-towered fields — AWOS (Automated Weather Observation) or ASOS (Automated Surface Observation) instead of ATIS. Identifier shown in ForeFlight; check before landing.
+• Three ways to consume ATIS — (1) call the ATIS phone number, (2) ForeFlight text/typewritten version, (3) ForeFlight audio playback. Desireé: practice with the LIVE phone call so you build speed writing it down.
+• Practice drill — Call SNA ATIS while driving to airport; transcribe every element by hand. Goal: keep up without pausing. Slow at first, then automatic.
+• Sample read-out — "Information Echo, time 2353 Zulu, wind 190 at 13, visibility 10, ceiling 6000 broken…" Always lead readbacks with the info letter you have.
+• KSNA ATIS specifics — A–Z hourly cycle. Tower 119.9 (South), 126.8 (North, rarely used). Parallel runways 20L / 20R. Prevailing winds typically 210–260°.
+• KSNA mandatory offset — 15° LEFT TURN to heading 181° at end of Runway 20L departure (wake turbulence from parallel ops). Binding in ATIS/clearance — non-compliance has caused near-misses.
+• Current KSNA NOTAMs (per ATIS) — Southeast run-up CLOSED (construction). Compass Road CLOSED. Midfield run-up only via Taxiway Alpha-Hotel (U-turn entry). Caution wake turbulence — simultaneous parallel ops. ACI ramp closed except by prior permission.
 
-• Runway Selection & Departure Offset (10:30–18:54) — KSNA parallel runways 20L / 20R, picked off prevailing wind. MANDATORY 15° OFFSET TURN after takeoff to avoid wake turbulence from previous departure on parallel runway. Construction-related taxiway closures change run-up routing — always reread ATIS.
+— CLEARANCE DELIVERY —
+• Frequency at KSNA — 118.0. Always advise your information letter on initial contact.
+• Initial request phraseology — "Clearance, Skyhawk 51840 is a Cessna 172 Uniform at Dove Street requesting VFR flight following to [destination] with information [letter]." Write on ForeFlight scratch pad and read verbatim until memorized.
+• Equipment suffix — Aircraft type + slash + equipment code (e.g., 172/U). Uniform = basic equipment, no ILS. Tells ATC what approaches/procedures you can accept.
+• Clearance readback — Use shorthand, NOT full sentences. Example notes: "Left 080 / 2400 / 124.1 / Squawk 0213" → readback: "left 080, at or below 2400, 124.1, squawk 0213, Skyhawk 51840." VFR/altitude/freq/squawk MUST be exact.
+• Squawk code — Four-digit transponder assignment (e.g., 0213). Identifies your VFR flight to radar. Never abbreviate the squawk in readback.
+• Call sign discipline — Full call sign ("Skyhawk 51840") on first contact with any controller. Once ATC abbreviates ("840"), you may match on subsequent transmissions. When in doubt, full sign.
+• KSNA pace — Controllers are FAST and impatient. No time to hesitate. Write it down, read it back, move on. Other airports are more forgiving.
 
-• Clearance Delivery (22:00–41:15) — Call sign example: Skyhawk 51840. Initial request states: aircraft type + equipment suffix (e.g., "172 Cent Uniform"), parking location (Dove Street), destination + flight following request. Controller responds with full clearance. Pilot must READ BACK verbatim. Memorize phonetic alphabet (Alpha→Zulu) — non-negotiable.
+— PHRASEOLOGY —
+• Numbers — Say "five" (NOT "fife"), "three" (NOT "tree"), but ALWAYS "niner" for 9 (distinguishes from "five" on a noisy frequency).
+• Phonetic alphabet — Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliet, Kilo, Lima, Mike, November, Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey, X-ray, Yankee, Zulu. Drill until automatic.
+• Roger = "I copy / acknowledged" (no action implied). Affirmative = yes. Negative = no. Wilco = "Will comply + acknowledged" — useful to shorten long readbacks ("Wilco, 120.7, Skyhawk 840").
+• Plain speaking — Allowed for non-standard requests (fuel, restaurant directions, taxiway confusion). Example: "Hey Ground, trying to get fuel at the restaurant on the north side, should we turn left or right from Foxtrot?" Reduces frequency congestion.
+• Aviation is binary — Never "maybe." Yes or no.
 
-• Note-Taking & Readback Style (32:37–41:15) — Shorthand the clearance: heading, altitude restriction, departure freq, squawk. Read back the key elements only — KSNA is busy and rewards speed. Full call sign on first contact, shortened on subsequent transmissions (39:44).
+— TAXI OPERATIONS —
+• Jurisdictions — Clearance = pre-flight at parking only. Ground = parking → runway holding point. Tower = runway and pattern. Don't call the wrong controller.
+• Ground readiness call — After checklist: "Ground, Skyhawk 51840 at Dove Street request midfield run-up." (Always request midfield at KSNA — SE/Compass Road closed.)
+• Taxi clearance format — "Taxi 20 left via Charlie Kilo." Readback: "Taxi 20 left, Charlie Kilo, Skyhawk 51840." Don't ask questions on frequency — execute or report unable.
+• Opposite-direction traffic (KSNA quirk) — Shared taxiway with oncoming aircraft. Ground announces "Caution, opposite-direction Cessna." Both slow to 3–5 kt, move RIGHT, pass, resume centerline. Constant wing/nose awareness. Desireé: thousands of trips, never seen a wing-clip — but stay heads-up.
+• Wind correction during taxi — Ailerons INTO the wind (upwind wing down). Mnemonic: "DIVE AWAY" — push yoke forward + turn AWAY from wind direction. Wind from left → push forward + turn right.
+• Windsock interpretation — Fully inflated ≈ 15 kt. Each stripe ≈ 3 kt. The OPENING points downwind; inflation points INTO the wind.
+• Pedal mechanics — Heels = rudder, toes = brakes. Differential braking + throttle for tight turns.
 
-• Taxi Procedures at KSNA (41:30–51:07) — Ground manages routing from parking → run-up → runway. Closures: SE Run-up, Compass Road. Midfield run-up is the standard ask. UNIQUE TO KSNA: opposite-direction taxi traffic — slow taxi, watch wingtip clearance, use radio calls. After run-up, request taxi to runway and read back instructions.
+— TOWER, DEPARTURE & CLIMB —
+• Monitor vs. Contact — MONITOR = switch freq but DO NOT transmit ("Roger, monitoring 119.9"). CONTACT = switch AND transmit a position report ("Tower, Skyhawk 51840…"). ATC tells you which.
+• "Say altitude" — Tower asks for CURRENT altitude (not assigned). Readback: "Skyhawk 51840, 1400 climbing to 2400." Order is flexible as long as all info is there.
+• Turn-to-heading altitude — 500 ft AGL practical (technically FAR 91.181 = 300 ft below TPA = 556 ft at KSNA, rounds to 600). On hot/heavy days, climb an extra 100 ft before turning.
+• Departure handoff — KSNA → SoCal Departure on 124.1 for flight following. Practice area = El Toro.
+• KSNA pattern altitude — 856 ft AGL published; fly 900 in practice.
 
-• Tower Handoff & Departure (54:15–01:06:03) — KSNA tower freqs: 119.9 (South Tower) and 126.8 (North Tower), depends on runway direction. "Monitor" = switch freq, do NOT call. "Contact" = initiate the call. Tower issues takeoff clearance + altitude — read back precisely. Handed off to SoCal Departure for flight following.
+— SIX-PACK & SYSTEMS REFRESHER —
+• Six-pack — Attitude (center, blue/brown), Altimeter (left), Vertical Speed Indicator (right), Airspeed (far left, critical), Heading Indicator, Turn Coordinator (turn rate + ball).
+• Step on the ball — Ball right of center → step right rudder (slip). Ball left → step left rudder (skid). Ball direction = rudder direction.
+• Cessna 172 flap schedule — Flaps 10° below 110 kt; Flaps 20° and 30° below 85 kt (full = landing config).
+• Runway naming — Magnetic bearing ÷ 10 (drop last digit) + L/R/C suffix. 20L = ~200° magnetic, parallel left. Runway choice driven by prevailing winds; KSNA almost always 20s, occasionally 02s.
 
-• Climb-Out & Pattern (01:06:03–01:19:12) — Begin assigned-heading turn at 500 ft AGL. KSNA traffic pattern altitude = 856 ft → round to 900 ft. Continue climbing through the turn while maintaining VFR. SoCal calls traffic and may impose altitude/heading restrictions — repeat all changes back. Practice area = El Toro.
+— FAR 61.113 (PRIVATE PILOT PRIVILEGES & LIMITATIONS — MEMORIZE COLD) —
+• CORE RULE — No PPL may act as PIC of an aircraft carrying passengers or property for COMPENSATION OR HIRE. Memorize verbatim.
+• 61.113(b) Incidental to business — May be reimbursed for fuel/oil if flying is INCIDENTAL to a business purpose AND not the primary business function. (Doctor flying to pick up supplies = OK. Charter pilot or cargo run = NOT OK.) Gray zone for Aryan's SkyAccess operator-outreach flights — flag for Sergio/chief instructor written guidance.
+• 61.113(c) Pro-rata cost sharing — Pilot pays AT LEAST equal share. 3 people, $300 trip → each pays $100. Only fuel/oil/airport fees/rental count. Cannot include pilot time, maintenance, insurance.
+• 61.113(d) Charitable event flight — 100% reimbursement of fuel/oil/airport fees/rental allowed; sponsor + pilot must comply with FAR 91.146.
+• 61.113(e) Search & rescue — Fuel/oil/airport fees/rental reimbursement allowed ONLY when sanctioned by local/state/federal agency AND agency contacts you (no self-volunteering).
+• 61.113(f) Aircraft salesman demo — Need ≥200 hours logged PIC time before demoing aircraft to a prospective buyer.
+• 61.113(g) Glider/ultralight tow — Allowed with 61.69 endorsement (CFI training + checkride for the towing operation).
+• 61.113(h) Light-sport production test flight — Allowed for powered parachute / weight-shift control if ≥100 hours PIC in category and familiar with test/special-flight-permit ops.
 
-• Standard Phraseology (01:32:55–01:42:53) — ROGER = received (NOT "yes"). AFFIRMATIVE = yes. NEGATIVE = no. WILCO = will comply (use to shorten long readbacks). Plain language is fine for non-standard requests (e.g., asking ground for directions).
+— OTHER REGULATIONS DRILLED —
+• 61.23 Medical — Required to exercise pilot privileges; keep current through training.
+• 61.51 Logbook — Mandatory record of flight time, PIC, training, endorsements; examiner reviews.
+• 61.56 Flight review — Every 24 calendar months: 1 hr maneuvers + 1 hr ground with a CFI to remain legal to carry pax.
+• 61.103 Eligibility — ≥17 yrs old, current medical, read/speak/write English.
+• 61.105 Aeronautical knowledge — FAR Parts 61, 71, 91; NTSB 830; airspace; weather; instruments; performance; W&B; navigation; ADM; cross-country planning.
+• 61.107 Areas of operation — Slow flight, stalls, turns around point, S-turns, short/soft-field, emergencies, navigation, systems, landings.
+• 61.109 Aeronautical experience — 40 hrs total min (Part 61), 20 dual, 10 solo, 3 dual XC, 5 solo XC, 3 solo TO/L at non-home tower.
+• 91.3 PIC authority — Final authority for safe operation; may deviate from ATC clearance if safety requires.
+• 91.17 Alcohol/drugs — 8 hrs bottle-to-throttle minimum; 0.04 BAC limit; no impairing meds.
+• 91.103 Pre-flight action — All available info: weather, fuel, runway lengths, performance, NOTAMs, runway condition.
+• 91.113 Right-of-way — Converging: give way to right. Overtaking: give way to overtaken aircraft. Head-on: both alter course right. Climbing/descending: give way to climbing aircraft. Power gives way to sail/balloon.
+• 91.123 Compliance with ATC — Must comply unless unable or safety requires; report immediately if unable.
+• 91.125 Light gun signals — Steady green = cleared land/proceed; flashing green = cleared TO; red = give way; flashing red = airport unsafe; flashing white = return to airport.
+• 91.155 VFR weather minimums — Class G surface day: 1 SM vis, clear of clouds; Class C/D/E: 3 SM vis, 1000 above / 500 below / 2000 horizontal. Memorize for oral.
+• 91.157 Special VFR — In Class B/C/D/E surface w/ ATC clearance, 1 SM vis, clear of clouds (day).
+• 91.159 VFR cruising altitudes — Above 3000 AGL: odd thousands +500 heading 0–179° magnetic; even thousands +500 heading 180–359°.
+• 91.209 Lights — Anti-collision lights ON during all flight ops; position lights from sunset to sunrise.
+• 91.211 Supplemental O2 — Crew above 12,500 MSL >30 min, all occupants above 14,000, all occupants supplied above 15,000.
 
-• Taxi Handling & Wind Correction (01:42:54–01:53:04) — Steer with rudder pedals (heels for rudder, toes for brakes). Coordinate brakes + throttle for sharp turns. WIND CORRECTION mnemonic: "DIVE AWAY" — turn ailerons INTO the wind during crosswind taxi. Read windsocks at non-towered fields.
+— STUDY STRATEGY —
+• Get the FAA written DONE early — required before solo. Sergio's preference: written test BEFORE serious flight training. Frees you to focus on flying.
+• Use the eFlyer / ForeFlight FAR app — searchable; allowed at checkride if you can navigate quickly. Avoid the PDF.
+• Build flashcards (Quizlet) for Part 61 sections + 91.103 / 91.113 / 91.155 / 91.159.
 
-• FAA Regs for Private Pilot (01:26:21–01:53:04) — Key parts: 61.23 (medical), 61.56 (flight review), 61.107 (areas of operation), 61.113 (privileges & limits). 61.113 is the big one: NO compensation/hire as PIC. Exceptions: (1) incidental to business if not carrying pax/property for hire, (2) pro-rata cost-sharing with passengers (cannot be reimbursed in full), (3) charity/SAR/aircraft salesman with specific hour & operational rules.
+NEXT: Continue building radio + taxi fluency in flight lessons. First-flight comms = mostly observe, then take over clearance → ground → tower in stages.
 
-• Study Strategy (01:34:37–01:53:04) — FAA app gives full reg access — digital copies allowed at checkride if you can navigate them quickly. Knock out the FAA written EARLY in training so you can focus on flying. Use flashcards/quiz tools for regs.
+KEYWORDS: ATIS · KSNA 118.0/119.9/126.8 · 15° offset to 181° · Phonetic alphabet · Niner · Roger/Wilco · Squawk 0213 example · Monitor vs. Contact · 500 ft AGL turn · TPA 856 → 900 · Dive Away · Step on the ball · 61.113 (b–h) · Pro-rata · 91.155 weather mins.`;
 
-NEXT: Continue building taxi/comms fluency. Apply phraseology and ATIS routine in flight lessons.
+    const gl3Notes = `Overview — Practical comms-and-ground-ops session at KSNA, with the back half spent on FAR 61.113 and the surrounding Part 61/91 regs. Goal: be radio-fluent and able to recite 61.113 cold for the checkride.
 
-KEYWORDS: ATIS · KSNA 126.0 · Clearance Delivery · Phonetic alphabet · Wake turbulence offset · Tower 119.9/126.8 · Wilco/Roger/Affirmative/Negative · Wind correction · 61.113 · Private pilot privileges.`;
+ATIS workflow — KSNA tower freqs 119.9 South / 126.8 North; parallel 20L/20R; prevailing winds 210–260° drive the runway choice. Three ways to pull ATIS (phone, ForeFlight text, ForeFlight audio). Desireé wants you practicing with the live PHONE call on the drive in — that's where transcription speed comes from. Capture only the elements (info letter, time, wind, vis, ceiling, temp/dew, altimeter, runways, NOTAMs) in shorthand — never full sentences.
 
-    const gl3Notes = `Overview: Practical comms-and-ground-ops session for KSNA. Focus on getting fluent on the radio, taxiing safely in a busy environment, and locking down 61.113 cold for the checkride.
+KSNA NOTAMs in play right now — SE run-up CLOSED, Compass Road CLOSED, midfield run-up reachable only via Alpha-Hotel U-turn, construction adjacent to Alpha (slow + minimum thrust), simultaneous parallel ops (wake turb caution), ACI ramp closed except by prior permission. Always request the MIDFIELD run-up.
 
-ATIS / Weather: KSNA ATIS = 126.0. Hourly update, A–Z letter code. Always shorthand wind/vis/ceiling/temp/altimeter and the runway in use. ForeFlight transcription is the practice tool — listen on the drive in.
+The 15° offset — Mandatory left turn to heading 181° on Runway 20L departure to clear wake from the parallel. Binding in ATIS and clearance. There's a near-miss story tied to non-compliance — checkride examiners love asking WHY this exists.
 
-Runways & Wake Turbulence: KSNA = parallel 20L/20R. After takeoff you OWE the controller a 15° offset turn to avoid wake from the parallel-runway departure. This is a checkride-favorite "why" question.
+Clearance scripting — On 118.0: "Clearance, Skyhawk 51840, Cessna 172 Uniform at Dove Street, requesting VFR flight following to [destination] with information [letter]." Write the script on the ForeFlight scratch pad until it lives in muscle memory. Equipment suffix /U = basic, no ILS.
 
-Clearance Delivery: Build the muscle for: aircraft type + equipment suffix, parking spot, destination, flight following. Read EVERYTHING back the first pass; abbreviate on subsequent transmissions. Phonetic alphabet must be automatic.
+Readback discipline — Shorthand the clearance ("Left 080 / 2400 / 124.1 / Squawk 0213"), then read back ONLY heading, altitude, frequency, and squawk — but those four MUST be exact. Don't repeat the whole sentence; KSNA controllers don't have time. Full call sign on first contact with each controller; you can match abbreviated form once they shorten.
 
-Taxi at KSNA: Midfield run-up is normal. Watch for opposite-direction traffic on shared taxiways — this is the airport's quirk. SE Run-up and Compass Road closures still in play. Always reread the ATIS for what's open today.
+Number talk — "five" (not "fife"), "three" (not "tree"), and ALWAYS "niner" for 9. Aryan's prior dispatch background trips him up occasionally ("David" instead of "Delta") — laugh it off and keep drilling the alphabet.
 
-Tower Handoff: 119.9 South / 126.8 North depending on runway direction. "Monitor" ≠ "Contact" — don't call when you're told to monitor. After takeoff: SoCal Departure for flight following.
+Roger / Affirmative / Negative / Wilco — Roger = received (NOT "yes"). Wilco = will comply + acknowledged (great for shortening long readbacks). Plain English is fine for non-standard ground questions (fuel, restaurant directions). No "maybe" — aviation is binary.
 
-Climb-Out: 500 ft AGL = start the turn. Pattern altitude 856 → fly 900. Keep climbing through the turn. Repeat any heading/altitude changes from SoCal.
+Taxi at KSNA — Ground manages parking → runway. Opposite-direction traffic on shared taxiways is the airport's quirk: slow to 3–5 kt, move RIGHT, pass, resume. Heels = rudder, toes = brakes. Crosswind taxi: ailerons INTO the wind. Mnemonic — DIVE AWAY (push yoke forward, turn AWAY from the wind). Aryan: "I thought I knew this — finally clicked." Desireé: "Yeah, everything else is sticking."
 
-Phraseology: Roger = received, NOT yes. Wilco = will comply (saves time on long readbacks). Plain English for non-standard ground questions.
+Tower handoff — Monitor ≠ Contact. Monitor = switch and listen only; Contact = switch AND transmit. Tower's "say altitude" wants your CURRENT altitude, not assigned. Departure turn at 500 ft AGL practical (technically 300 ft below TPA = 556 ft at KSNA, rounded to 600 — bump to 600 if hot/heavy). Pattern altitude 856 → fly 900. Handoff to SoCal Departure 124.1.
 
-Taxi Controls: Heels = rudder, toes = brakes. "Dive away" mnemonic for crosswind taxi — ailerons INTO the wind.
+Six-pack refresher — Step on the ball: ball right → right rudder; ball left → left rudder. Cessna 172 flap schedule: Flaps 10° below 110 kt; 20° and 30° below 85 kt.
 
-61.113 (the big one): No compensation/hire as PIC. Memorize the 3 exceptions: (1) incidental-to-business with no pax/property for hire, (2) pro-rata cost-sharing only, (3) charity/SAR/aircraft salesman with specific conditions. Plan to reference 61.23 / 61.56 / 61.107 / 61.113 fluently on the oral.
+61.113 — THE big one. Memorize the rule + every exception (b through h):
+  b — Incidental to business (NOT primary business function). The gray area for SkyAccess operator-outreach flights. Action: get written guidance from Sergio/chief instructor.
+  c — Pro-rata cost sharing. 3 people, $300 → $100 each. Fuel/oil/airport fees/rental only.
+  d — Charitable event flight per 91.146 (100% reimbursement allowed).
+  e — SAR ops (only when an agency initiates contact).
+  f — Aircraft salesman demo (≥200 hrs PIC).
+  g — Glider/ultralight tow (61.69 endorsement).
+  h — Light-sport production test flight (≥100 hrs PIC in category).
 
-Study Plan: Get the FAA written DONE early. Use the FAA app for digital reg access at checkride. Build flashcards for the part 61 sections.
+Other regs Desireé drilled — 61.23 medical, 61.51 logbook, 61.56 flight review, 61.103 eligibility, 61.105 knowledge areas, 61.107 areas of operation, 61.109 hour mins (40/20/10/3/5/3), 91.3 PIC authority, 91.17 8-hr bottle-to-throttle, 91.103 pre-flight action, 91.113 right-of-way, 91.123 ATC compliance, 91.125 light gun signals, 91.155 VFR weather mins, 91.157 special VFR, 91.159 cruising altitudes, 91.209 lights, 91.211 oxygen.
 
-Source: Fireflies meeting transcript — "Ground lesson 3 Apr 21, 05:10 PM" (114 min).`;
+Study tooling — eFlyer / ForeFlight FAR app is searchable and checkride-allowed. Avoid the PDF. Knock out the FAA written EARLY — Sergio prefers it BEFORE serious flight training. Build Quizlet flashcards for Part 61.
+
+Room dynamics — Just Aryan and Desireé. Restroom break partway through after the clearance/ground discussion. Desireé tracks comprehension and explicitly affirmed progress: "everything else is sticking" after the dive-away mnemonic clicked.
+
+Source — Fireflies transcript "Ground lesson 3, Apr 21 05:10 PM" (~114 min). Full verbatim mining of 1570 lines.`;
 
     const gl3Homework = [
-      'Practice writing down ATIS broadcasts in shorthand — wind, vis, ceiling, temp, altimeter, runway, NOTAMs',
-      'Memorize the phonetic alphabet cold (Alpha through Zulu)',
-      'Memorize FAR 61.113: no compensation/hire as PIC, plus the 3 exceptions (incidental-to-business, pro-rata cost-sharing, charity/SAR/salesman)',
-      'Review FAR 61.23 (medical), 61.56 (flight review), 61.107 (areas of operation) — locate fast in FAA app',
-      'Memorize KSNA freqs: ATIS 126.0 · Tower 119.9 South / 126.8 North',
-      'Memorize KSNA pattern altitude: 856 ft → fly 900 ft, start turn at 500 ft AGL',
-      'Memorize the wake-turbulence rule: mandatory 15° offset turn after takeoff on parallel runways at KSNA',
-      'Practice clearance-delivery script: aircraft type + equipment suffix, parking, destination, flight following',
-      'Practice readback discipline — full call sign first contact, shortened thereafter',
-      'Memorize ATC vocabulary: Roger (received) · Affirmative (yes) · Negative (no) · Wilco (will comply)',
-      'Practice "dive away" wind-correction mnemonic for crosswind taxi (ailerons INTO the wind)',
-      "Continue Sporty's written prep — target completing FAA written exam early to focus on flight training",
-      'Build flashcards for Part 61 regs (61.23 / 61.56 / 61.107 / 61.113) for checkride oral'
+      'Memorize FAR 61.113 verbatim — core rule + all exceptions (b–h): incidental-to-business, pro-rata, charity (91.146), SAR, aircraft salesman (200 hrs PIC), glider tow (61.69), light-sport test flight (100 hrs PIC in category)',
+      'Memorize the rest of the Part 61/91 list: 61.23, 61.51, 61.56, 61.103, 61.105, 61.107, 61.109, 91.3, 91.17, 91.103, 91.113, 91.123, 91.125, 91.155, 91.157, 91.159, 91.209, 91.211',
+      'Practice writing down ATIS while listening — call SNA ATIS phone number on the drive in, transcribe info letter / time / wind / vis / ceiling / temp / dew / altimeter / runways / NOTAMs in shorthand',
+      "Continue Sporty's written prep — finish the FAA written exam EARLY (Sergio's preference: before serious flight training)",
+      'Drill the phonetic alphabet cold (Alpha → Zulu) — break the dispatch-background habit ("Delta" not "David")',
+      'Drill the "DIVE AWAY" wind-correction mnemonic — push yoke forward + turn AWAY from wind direction (ailerons INTO the wind)',
+      'Memorize windsock interpretation — fully inflated ≈ 15 kt, each stripe ≈ 3 kt, opening points downwind',
+      'Get the eFlyer / ForeFlight FAR app — practice navigating it fast (it\'s allowed on checkride)',
+      'Memorize KSNA freqs: ATIS hourly cycle · Clearance 118.0 · Tower 119.9 South / 126.8 North · Departure 124.1 SoCal',
+      'Memorize KSNA mandatory 15° offset to heading 181° on Runway 20L departure (and the WHY: wake turbulence from parallel ops)',
+      'Memorize KSNA pattern altitude 856 ft → fly 900; turn to assigned heading at 500 ft AGL (bump to 600 if hot/heavy)',
+      'Practice clearance-delivery script: "Clearance, Skyhawk 51840, Cessna 172 Uniform at Dove Street, requesting VFR flight following to [dest] with information [letter]"',
+      'Practice readback shorthand — heading / altitude / frequency / squawk only; full call sign first contact, abbreviated thereafter',
+      'Drill ATC vocabulary cold: Roger (received, NOT yes) · Affirmative (yes) · Negative (no) · Wilco (will comply + acknowledged)',
+      'Drill numbers: "five" not "fife", "three" not "tree", but ALWAYS "niner" for 9',
+      'Memorize Monitor vs. Contact — Monitor = switch and listen only; Contact = switch AND transmit a position report',
+      'Memorize "say altitude" answer — current altitude, NOT assigned: "Skyhawk 51840, 1400 climbing to 2400"',
+      'Memorize current KSNA NOTAMs in play: SE run-up CLOSED, Compass Road CLOSED, midfield run-up via Alpha-Hotel U-turn, simultaneous parallel ops wake caution',
+      'Drill KSNA opposite-direction taxi procedure — slow to 3–5 kt, move RIGHT, pass, resume centerline',
+      'Drill taxi controls — heels = rudder, toes = brakes; differential braking + throttle for tight turns',
+      'Drill six-pack scan: Attitude → Airspeed → Altimeter → VSI → Heading → Turn Coordinator',
+      'Drill "step on the ball" — ball right of center → right rudder; ball left → left rudder',
+      'Memorize Cessna 172 flap schedule: 10° below 110 kt; 20° and 30° below 85 kt',
+      'ACTION ITEM: get WRITTEN guidance from Sergio / chief instructor on whether SkyAccess operator-outreach flights count as compensation under 61.113(b) — gray area, document the answer',
+      'Build Quizlet flashcards for Part 61 reg numbers + titles for checkride oral'
     ];
 
     state.ground.push({
@@ -3083,15 +3421,13 @@ Source: Fireflies meeting transcript — "Ground lesson 3 Apr 21, 05:10 PM" (114
       topics: gl3Topics,
       notes: gl3Notes,
       homework: gl3Homework.join('\n'),
-      fireflies_id: '01KPS8BYBGNYVZF84AFK0EX9VD'
+      fireflies_id: FF_ID_GL3
     });
 
-    gl3Homework.forEach(text => {
-      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source: 'Ground L3 · 2026-04-21' });
-    });
+    addHomeworkOnce(gl3Homework, 'Ground L3 · 2026-04-21');
   }
 
-  STORE.set('ppl_seeded_v3', true);
+  STORE.set('ppl_seeded_v4', true);
   persist();
 }
 
