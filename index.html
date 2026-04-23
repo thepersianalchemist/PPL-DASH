@@ -820,13 +820,14 @@
     <div class="col-12">
       <div class="card">
         <div class="flex-between" style="margin-bottom:6px;">
-          <h2>Sparknotes <span class="tag" id="sparkCount">1</span></h2>
+          <h2>Sparknotes <span class="tag" id="sparkCount">2</span></h2>
           <div class="muted">Fast, scannable summaries of the FAA handbook chapters</div>
         </div>
 
         <!-- Chapter selector -->
         <div class="spark-chapters" id="sparkChapters">
           <button class="spark-chip active" data-spark="afh-ch3">Chapter 3: Basic Flight Maneuvers</button>
+          <button class="spark-chip" data-spark="far-61113">FAR 61.113 · ATC Comms · KSNA Ops</button>
         </div>
 
         <!-- ========== AFH Ch. 3 ========== -->
@@ -1086,6 +1087,301 @@
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">On approach: what does pitch control? What does power control?</div><div class="flash-hint">Tap to flip ↻</div></div>
                   <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Pitch controls airspeed, power controls altitude.</b> In steady-state cruise they're coupled.</div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </article>
+
+        <!-- ========== FAR 61.113 · ATC Comms · KSNA Ops ========== -->
+        <article class="spark-article hidden" data-article="far-61113">
+          <header class="spark-head">
+            <span class="chip">FAR 61.113 · ATC · KSNA</span>
+            <h1>FAR 61.113, ATC Communications & KSNA Operations — Sparknotes</h1>
+            <p class="spark-sub">The "what can a private pilot do" rule, plus the radio + taxi fluency you need for John Wayne.</p>
+          </header>
+
+          <div class="spark-callout info">
+            <div class="sc-title">The gist — 6 bullets</div>
+            <ul>
+              <li><b>61.113 core:</b> No PPL acts as PIC for compensation or hire. Memorize the 7 exceptions (b–h).</li>
+              <li><b>Pro-rata only.</b> Pilot pays AT LEAST equal share. Fuel/oil/airport fees/rental only.</li>
+              <li><b>ATIS first, every flight.</b> Info letter, time, wind, vis, ceiling, temp/dew, altimeter, runways, NOTAMs.</li>
+              <li><b>"DIVE AWAY" for crosswind taxi.</b> Push yoke forward + turn AWAY from the wind direction.</li>
+              <li><b>KSNA mandatory 15° offset</b> to heading 181° on RWY 20L departure (wake turbulence).</li>
+              <li><b>Niner, not nine.</b> Roger ≠ yes. Wilco = will comply. Plain English OK for non-standard requests.</li>
+            </ul>
+          </div>
+
+          <h2 class="spark-h2">FAR 61.113 — Private Pilot Privileges & Limitations</h2>
+          <p>The single most important reg on the checkride oral. Be able to recite the core rule and at least three exceptions cold.</p>
+
+          <div class="spark-formula">No PPL may act as PIC of an aircraft carrying passengers or property for compensation or hire.</div>
+
+          <h3 class="spark-h3">The 7 Exceptions (b–h)</h3>
+          <div class="spark-kv">
+            <div><b>(b) Incidental to business</b><span>Flying must be INCIDENTAL — NOT the primary business function. Doctor flying for supplies = OK. Charter pilot = NOT OK.</span></div>
+            <div><b>(c) Pro-rata cost sharing</b><span>Pilot pays AT LEAST an equal share. 3 ppl, $300 → $100 each. Only fuel/oil/airport fees/rental.</span></div>
+            <div><b>(d) Charitable event flight</b><span>Per FAR 91.146. 100% reimbursement of fuel/oil/airport fees/rental allowed.</span></div>
+            <div><b>(e) Search & rescue</b><span>Reimbursement allowed ONLY when sanctioned by an agency AND agency initiates contact.</span></div>
+            <div><b>(f) Aircraft salesman demo</b><span>Need ≥200 hours logged PIC time before demoing aircraft to a prospective buyer.</span></div>
+            <div><b>(g) Glider/ultralight tow</b><span>Allowed with FAR 61.69 endorsement (CFI training + checkride for towing operation).</span></div>
+            <div><b>(h) Light-sport production test</b><span>Powered parachute / weight-shift control: ≥100 hours PIC in category, familiar with test ops.</span></div>
+          </div>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">Gray area to flag</div>
+            <p>SkyAccess operator-outreach flights — does meeting with operators count as compensation under (b)? Desireé flagged this as needing written guidance from Sergio / chief instructor. Document the answer for your records.</p>
+          </div>
+
+          <h2 class="spark-h2">Other Part 61 / 91 Regs to Memorize</h2>
+          <div class="spark-kv">
+            <div><b>61.23 Medical</b><span>Required to exercise pilot privileges; keep current through training.</span></div>
+            <div><b>61.51 Logbook</b><span>Mandatory record of flight time, PIC, training, endorsements.</span></div>
+            <div><b>61.56 Flight review</b><span>Every 24 calendar months: 1 hr maneuvers + 1 hr ground with a CFI.</span></div>
+            <div><b>61.103 Eligibility</b><span>≥17 yrs old, current medical, read/speak/write English.</span></div>
+            <div><b>61.105 Knowledge areas</b><span>FAR 61/71/91, NTSB 830, airspace, weather, instruments, perf, W&amp;B, nav, ADM, XC.</span></div>
+            <div><b>61.107 Areas of operation</b><span>Slow flight, stalls, turns around point, S-turns, short/soft-field, emergencies, nav, systems, landings.</span></div>
+            <div><b>61.109 Hour mins</b><span>40 total, 20 dual, 10 solo, 3 dual XC, 5 solo XC, 3 solo TO/L at non-home tower.</span></div>
+            <div><b>91.3 PIC authority</b><span>Final authority for safe operation; may deviate from ATC if safety requires.</span></div>
+            <div><b>91.17 Alcohol/drugs</b><span>8 hrs bottle-to-throttle min; 0.04 BAC limit; no impairing meds.</span></div>
+            <div><b>91.103 Pre-flight action</b><span>All available info: weather, fuel, runway lengths, performance, NOTAMs.</span></div>
+            <div><b>91.113 Right-of-way</b><span>Converging → give way to right. Head-on → both alter course right. Power gives way to sail.</span></div>
+            <div><b>91.123 ATC compliance</b><span>Must comply unless unable or safety requires; report immediately if unable.</span></div>
+            <div><b>91.155 VFR weather</b><span>Class C/D/E: 3 SM vis, 1000 above / 500 below / 2000 horizontal.</span></div>
+            <div><b>91.159 VFR cruising alt</b><span>Above 3000 AGL: odd thousands +500 hdg 0–179°; even thousands +500 hdg 180–359°.</span></div>
+            <div><b>91.211 Supplemental O2</b><span>Crew above 12,500 MSL &gt;30 min; all occupants above 14,000; all occupants supplied above 15,000.</span></div>
+          </div>
+
+          <h2 class="spark-h2">ATIS — Towered Field Weather</h2>
+          <p>Information letter A→Z (rolls hourly). Always state your info letter on initial contact with each new controller.</p>
+          <ul class="spark-list">
+            <li><b>Read order:</b> Info letter · Zulu time · wind dir/speed (G for gust) · visibility (SM) · ceiling/coverage (FEW/SCT/BKN/OVC) · temp · dewpoint · altimeter · runways in use · remarks/NOTAMs.</li>
+            <li><b>Non-towered fields:</b> AWOS or ASOS instead. Identifier shown in ForeFlight.</li>
+            <li><b>Three ways to consume:</b> (1) call the ATIS phone number, (2) ForeFlight text, (3) ForeFlight audio. Practice with the LIVE phone call to build transcription speed.</li>
+            <li><b>Practice drill:</b> Call SNA ATIS while driving to the airport and transcribe in shorthand.</li>
+          </ul>
+
+          <h2 class="spark-h2">KSNA Specifics</h2>
+          <div class="spark-kv">
+            <div><b>Runways</b><span>Parallel 20L / 20R. Prevailing winds 210–260° drive the choice.</span></div>
+            <div><b>Mandatory offset</b><span>15° LEFT turn to heading 181° at end of RWY 20L departure (wake turbulence).</span></div>
+            <div><b>Frequencies</b><span>Clearance 118.0 · Tower 119.9 South / 126.8 North · Departure 124.1 SoCal.</span></div>
+            <div><b>Pattern altitude</b><span>856 ft AGL published; fly 900.</span></div>
+            <div><b>Turn-to-heading altitude</b><span>500 ft AGL practical (technically 556 → 600 ft per FAR 91.181).</span></div>
+            <div><b>Run-up</b><span>SE run-up CLOSED. Compass Road CLOSED. Always request MIDFIELD via Alpha-Hotel U-turn.</span></div>
+            <div><b>Caution</b><span>Opposite-direction taxi traffic on shared taxiways. Slow to 3–5 kt, move RIGHT, pass, resume.</span></div>
+            <div><b>Practice area</b><span>El Toro.</span></div>
+          </div>
+
+          <h2 class="spark-h2">Clearance Delivery Script (KSNA 118.0)</h2>
+          <div class="spark-formula">"Clearance, Skyhawk 51840 is a Cessna 172 Uniform at Dove Street requesting VFR flight following to [destination] with information [letter]."</div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">Write it on the ForeFlight scratch pad and read verbatim until automatic. KSNA controllers don't have time for hesitation.</p>
+
+          <h3 class="spark-h3">Equipment Suffix</h3>
+          <p>Aircraft type + slash + equipment code (e.g., <b>172/U</b>). Uniform = basic equipment, no ILS. Tells ATC what approaches/procedures you can accept.</p>
+
+          <h3 class="spark-h3">Readback Discipline</h3>
+          <ul class="spark-list">
+            <li>Use shorthand, NOT full sentences. Example notes: <code>Left 080 / 2400 / 124.1 / Squawk 0213</code></li>
+            <li>Readback: "left 080, at or below 2400, 124.1, squawk 0213, Skyhawk 51840."</li>
+            <li><b>Heading / altitude / frequency / squawk MUST be exact.</b></li>
+            <li>Full call sign on first contact with each controller; you may match abbreviated form once they shorten ("840").</li>
+          </ul>
+
+          <h2 class="spark-h2">Phraseology</h2>
+          <div class="spark-kv">
+            <div><b>"Niner"</b><span>Always for 9 (not "nine") — distinguishes from "five" on a noisy frequency.</span></div>
+            <div><b>"Five" / "Three"</b><span>Just "five" / "three" — NOT "fife" / "tree."</span></div>
+            <div><b>Roger</b><span>"I copy / acknowledged" — NOT "yes."</span></div>
+            <div><b>Affirmative / Negative</b><span>Yes / No.</span></div>
+            <div><b>Wilco</b><span>"Will comply + acknowledged." Useful to shorten long readbacks.</span></div>
+            <div><b>Plain English</b><span>OK for non-standard requests (fuel, restaurant directions). Reduces frequency congestion.</span></div>
+          </div>
+
+          <h2 class="spark-h2">Tower Handoff</h2>
+          <div class="spark-kv">
+            <div><b>Monitor [freq]</b><span>Switch frequency but DO NOT transmit. Just listen.</span></div>
+            <div><b>Contact [freq]</b><span>Switch frequency AND transmit a position report.</span></div>
+            <div><b>"Say altitude"</b><span>Wants your CURRENT altitude (not assigned). "Skyhawk 51840, 1400 climbing to 2400."</span></div>
+          </div>
+
+          <h2 class="spark-h2">Phonetic Alphabet</h2>
+          <p style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.8;">
+            <b>A</b>lpha · <b>B</b>ravo · <b>C</b>harlie · <b>D</b>elta · <b>E</b>cho · <b>F</b>oxtrot · <b>G</b>olf · <b>H</b>otel · <b>I</b>ndia · <b>J</b>uliet · <b>K</b>ilo · <b>L</b>ima · <b>M</b>ike · <b>N</b>ovember · <b>O</b>scar · <b>P</b>apa · <b>Q</b>uebec · <b>R</b>omeo · <b>S</b>ierra · <b>T</b>ango · <b>U</b>niform · <b>V</b>ictor · <b>W</b>hiskey · <b>X</b>-ray · <b>Y</b>ankee · <b>Z</b>ulu
+          </p>
+
+          <h2 class="spark-h2">Taxi Operations</h2>
+          <ul class="spark-list">
+            <li><b>Jurisdictions:</b> Clearance = pre-flight at parking. Ground = parking → runway holding point. Tower = runway and pattern.</li>
+            <li><b>Ground readiness call:</b> "Ground, Skyhawk 51840 at Dove Street request midfield run-up."</li>
+            <li><b>Pedals:</b> Heels = rudder, toes = brakes. Differential braking + throttle for tight turns.</li>
+            <li><b>Crosswind taxi (DIVE AWAY):</b> Push yoke FORWARD and turn AWAY from the wind direction. Wind from left → push forward + turn right.</li>
+            <li><b>Windsock:</b> Fully inflated ≈ 15 kt. Each stripe ≈ 3 kt. Opening points DOWNWIND; inflation points INTO the wind.</li>
+          </ul>
+
+          <h2 class="spark-h2">Six-Pack & Systems Refresher</h2>
+          <ul class="spark-list">
+            <li><b>Six-pack:</b> Attitude · Altimeter · VSI · Airspeed · Heading Indicator · Turn Coordinator (turn rate + ball).</li>
+            <li><b>"Step on the ball":</b> Ball right of center → step right rudder. Ball left → step left rudder.</li>
+            <li><b>C172 flap schedule:</b> Flaps 10° below 110 kt; Flaps 20° and 30° below 85 kt (full = landing config).</li>
+            <li><b>Runway naming:</b> Magnetic bearing ÷ 10 + L/R/C suffix. 20L = ~200° magnetic, parallel left.</li>
+          </ul>
+
+          <h2 class="spark-h2">Bottom-Line Takeaways</h2>
+          <ol class="spark-list">
+            <li><b>Memorize 61.113.</b> Core rule + all 7 exceptions (b–h). DPE will probe.</li>
+            <li><b>Write the clearance script.</b> Read it verbatim on the radio until it's automatic.</li>
+            <li><b>"Niner" for 9. Roger ≠ yes. Wilco saves time.</b></li>
+            <li><b>DIVE AWAY for crosswind taxi.</b> Ailerons INTO the wind, yoke forward.</li>
+            <li><b>KSNA quirks: 15° offset to 181°, midfield run-up, opposite-direction taxi.</b></li>
+            <li><b>Get the FAA written DONE early</b> — Sergio's preference, before serious flight training.</li>
+          </ol>
+
+          <!-- Flashcards -->
+          <section class="flash-section">
+            <div class="flash-head">
+              <div class="flash-title">
+                <h2>Flashcards</h2>
+                <span class="tag">22 cards</span>
+              </div>
+              <div class="flash-controls">
+                <span class="flash-progress"></span>
+                <button class="flash-shuffle">🔀 Shuffle</button>
+                <button class="flash-reset">↺ Reset</button>
+              </div>
+            </div>
+            <div class="flash-grid">
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Recite FAR 61.113 — the core rule.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>No private pilot may act as PIC of an aircraft carrying passengers or property for compensation or hire.</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 61.113(c) — pro-rata cost sharing rule?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Pilot pays <b>AT LEAST equal share</b>. 3 people, $300 → $100 each. Only fuel/oil/airport fees/rental count.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 61.113(b) — incidental to business?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Reimbursement OK if flying is <b>INCIDENTAL</b> to the business and <b>NOT the primary business function</b>. Doctor for supplies = OK. Charter pilot = NOT OK.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 61.113(f) — minimum PIC time for an aircraft salesman demo?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>≥200 hours</b> logged PIC time.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 61.56 — flight review currency?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Every <b>24 calendar months</b>: 1 hr maneuvers + 1 hr ground with a CFI.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 61.109 — Part 61 PPL hour minimums?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>40 total</b> · 20 dual · 10 solo · 3 dual XC · 5 solo XC · 3 solo TO/L at non-home tower.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 91.155 — VFR weather minimums in Class C/D/E?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>3 SM visibility</b>, <b>1000 ft above</b> / <b>500 ft below</b> / <b>2000 ft horizontal</b> from clouds.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 91.159 — VFR cruising altitudes above 3000 AGL?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Odd thousands +500</b> heading 0–179° magnetic. <b>Even thousands +500</b> heading 180–359° magnetic.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">FAR 91.17 — alcohol bottle-to-throttle minimum?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>8 hours</b>. BAC limit <b>0.04</b>. No impairing medications.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">KSNA mandatory wake-turbulence offset on RWY 20L?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>15° LEFT turn to heading 181°</b> at end of departure. Binding in ATIS/clearance.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">KSNA frequencies — Clearance, Tower, Departure?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Clearance <b>118.0</b> · Tower <b>119.9 South / 126.8 North</b> · Departure <b>124.1 SoCal</b>.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">KSNA pattern altitude and turn-to-heading altitude?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">TPA <b>856 ft</b> AGL → fly 900. Turn at <b>500 ft</b> AGL practical (technically 556 → 600 ft per FAR 91.181).</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">"DIVE AWAY" mnemonic — what does it mean?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Crosswind taxi: <b>push yoke FORWARD + turn AWAY from the wind direction</b>. Ailerons INTO the wind. Wind from left → forward + turn right.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Monitor vs. Contact?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>MONITOR</b> = switch and listen only. <b>CONTACT</b> = switch AND transmit a position report.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">"Say altitude" — what do you state?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Current actual altitude</b> (not assigned). Example: "Skyhawk 51840, 1400 climbing to 2400."</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Roger, Affirmative, Negative, Wilco — definitions?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Roger</b> = received (NOT yes). <b>Affirmative</b> = yes. <b>Negative</b> = no. <b>Wilco</b> = will comply + acknowledged.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Why "niner" instead of "nine"?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">To <b>distinguish from "five"</b> on a noisy frequency. Note: "five" not "fife", "three" not "tree" — but ALWAYS "niner" for 9.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Initial Clearance Delivery script (KSNA)?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">"Clearance, <b>Skyhawk 51840</b> is a <b>Cessna 172 Uniform</b> at <b>Dove Street</b> requesting <b>VFR flight following</b> to [destination] with <b>information [letter]</b>."</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Equipment suffix — what does /U mean?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Uniform</b> = basic equipment, <b>no ILS capability</b>. Tells ATC what approaches/procedures you can accept.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Windsock — fully inflated wind speed?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>~15 knots</b>. Each stripe ≈ 3 kt. <b>Opening points DOWNWIND</b>; inflation points INTO the wind.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">"Step on the ball" — which rudder?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Ball right of center → <b>right rudder</b>. Ball left → <b>left rudder</b>. Press rudder in the direction the ball points.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">C172 flap deployment limits?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Flaps <b>10° below 110 kt</b>. Flaps <b>20° and 30° below 85 kt</b> (full = landing config).</div></div>
                 </div>
               </div>
             </div>
