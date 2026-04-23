@@ -378,7 +378,7 @@
     <div class="brand-badge">✈︎</div>
     <div>
       <h1>Private Pilot License — Training Dashboard</h1>
-      <div class="sub" id="headerSub">Part 61 · Aryan · Ground Lesson 2 complete · Lesson 3 tomorrow (first flight)</div>
+      <div class="sub" id="headerSub">Part 61 · Aryan · Ground Lesson 3 complete · ATC comms, ATIS, taxi & private pilot privileges</div>
     </div>
   </div>
   <div style="display:flex;gap:8px;">
@@ -2842,8 +2842,8 @@ function guessTag(text) {
 }
 
 function seedIfFirstRun() {
-  // v2 seed: includes real Fireflies-extracted ground lesson content.
-  if (STORE.get('ppl_seeded_v2')) return;
+  // v3 seed: includes real Fireflies-extracted ground lesson content (GL1, GL2, GL3).
+  if (STORE.get('ppl_seeded_v3')) return;
 
   // Remove v1 placeholder entries (topics === 'Ground Lesson 1' or 'Ground Lesson 2 (today)' with 0 duration)
   state.ground = state.ground.filter(g => !(
@@ -3002,7 +3002,96 @@ Source: Fireflies meeting transcript — "Principles of Flight Apr 16, 05:30 PM 
     });
   }
 
-  STORE.set('ppl_seeded_v2', true);
+  /* ===== Ground Lesson 3 — 2026-04-21 — ATIS, ATC Comms, Taxi & Pilot Privileges ===== */
+  if (!hasFF('01KPS8BYBGNYVZF84AFK0EX9VD')) {
+    const gl3Topics = `ATIS, ATC COMMUNICATIONS, TAXI OPS & PRIVATE PILOT PRIVILEGES (1 hr 53 min)
+
+• Weather Information Systems (00:00–10:29) — ATIS at TOWERED airports vs AWOS/ASOS at non-towered. John Wayne ATIS = 126.0. Updates hourly with letter code A→Z. Includes wind, visibility, ceiling, temperature, altimeter, runway in use. ForeFlight gives 3 ways to access: live audio, text transcription, phone playback for practice.
+
+• ATIS Note-Taking & NOTAMs (06:38–10:29) — Practice writing wind/vis/ceiling/temp/altimeter shorthand quickly (broadcast moves fast). Decode common abbreviations: RDC (reduce), CONST (construction). Watch NOTAMs for taxiway closures and required offsets. Listen on the drive in to stay current.
+
+• Runway Selection & Departure Offset (10:30–18:54) — KSNA parallel runways 20L / 20R, picked off prevailing wind. MANDATORY 15° OFFSET TURN after takeoff to avoid wake turbulence from previous departure on parallel runway. Construction-related taxiway closures change run-up routing — always reread ATIS.
+
+• Clearance Delivery (22:00–41:15) — Call sign example: Skyhawk 51840. Initial request states: aircraft type + equipment suffix (e.g., "172 Cent Uniform"), parking location (Dove Street), destination + flight following request. Controller responds with full clearance. Pilot must READ BACK verbatim. Memorize phonetic alphabet (Alpha→Zulu) — non-negotiable.
+
+• Note-Taking & Readback Style (32:37–41:15) — Shorthand the clearance: heading, altitude restriction, departure freq, squawk. Read back the key elements only — KSNA is busy and rewards speed. Full call sign on first contact, shortened on subsequent transmissions (39:44).
+
+• Taxi Procedures at KSNA (41:30–51:07) — Ground manages routing from parking → run-up → runway. Closures: SE Run-up, Compass Road. Midfield run-up is the standard ask. UNIQUE TO KSNA: opposite-direction taxi traffic — slow taxi, watch wingtip clearance, use radio calls. After run-up, request taxi to runway and read back instructions.
+
+• Tower Handoff & Departure (54:15–01:06:03) — KSNA tower freqs: 119.9 (South Tower) and 126.8 (North Tower), depends on runway direction. "Monitor" = switch freq, do NOT call. "Contact" = initiate the call. Tower issues takeoff clearance + altitude — read back precisely. Handed off to SoCal Departure for flight following.
+
+• Climb-Out & Pattern (01:06:03–01:19:12) — Begin assigned-heading turn at 500 ft AGL. KSNA traffic pattern altitude = 856 ft → round to 900 ft. Continue climbing through the turn while maintaining VFR. SoCal calls traffic and may impose altitude/heading restrictions — repeat all changes back. Practice area = El Toro.
+
+• Standard Phraseology (01:32:55–01:42:53) — ROGER = received (NOT "yes"). AFFIRMATIVE = yes. NEGATIVE = no. WILCO = will comply (use to shorten long readbacks). Plain language is fine for non-standard requests (e.g., asking ground for directions).
+
+• Taxi Handling & Wind Correction (01:42:54–01:53:04) — Steer with rudder pedals (heels for rudder, toes for brakes). Coordinate brakes + throttle for sharp turns. WIND CORRECTION mnemonic: "DIVE AWAY" — turn ailerons INTO the wind during crosswind taxi. Read windsocks at non-towered fields.
+
+• FAA Regs for Private Pilot (01:26:21–01:53:04) — Key parts: 61.23 (medical), 61.56 (flight review), 61.107 (areas of operation), 61.113 (privileges & limits). 61.113 is the big one: NO compensation/hire as PIC. Exceptions: (1) incidental to business if not carrying pax/property for hire, (2) pro-rata cost-sharing with passengers (cannot be reimbursed in full), (3) charity/SAR/aircraft salesman with specific hour & operational rules.
+
+• Study Strategy (01:34:37–01:53:04) — FAA app gives full reg access — digital copies allowed at checkride if you can navigate them quickly. Knock out the FAA written EARLY in training so you can focus on flying. Use flashcards/quiz tools for regs.
+
+NEXT: Continue building taxi/comms fluency. Apply phraseology and ATIS routine in flight lessons.
+
+KEYWORDS: ATIS · KSNA 126.0 · Clearance Delivery · Phonetic alphabet · Wake turbulence offset · Tower 119.9/126.8 · Wilco/Roger/Affirmative/Negative · Wind correction · 61.113 · Private pilot privileges.`;
+
+    const gl3Notes = `Overview: Practical comms-and-ground-ops session for KSNA. Focus on getting fluent on the radio, taxiing safely in a busy environment, and locking down 61.113 cold for the checkride.
+
+ATIS / Weather: KSNA ATIS = 126.0. Hourly update, A–Z letter code. Always shorthand wind/vis/ceiling/temp/altimeter and the runway in use. ForeFlight transcription is the practice tool — listen on the drive in.
+
+Runways & Wake Turbulence: KSNA = parallel 20L/20R. After takeoff you OWE the controller a 15° offset turn to avoid wake from the parallel-runway departure. This is a checkride-favorite "why" question.
+
+Clearance Delivery: Build the muscle for: aircraft type + equipment suffix, parking spot, destination, flight following. Read EVERYTHING back the first pass; abbreviate on subsequent transmissions. Phonetic alphabet must be automatic.
+
+Taxi at KSNA: Midfield run-up is normal. Watch for opposite-direction traffic on shared taxiways — this is the airport's quirk. SE Run-up and Compass Road closures still in play. Always reread the ATIS for what's open today.
+
+Tower Handoff: 119.9 South / 126.8 North depending on runway direction. "Monitor" ≠ "Contact" — don't call when you're told to monitor. After takeoff: SoCal Departure for flight following.
+
+Climb-Out: 500 ft AGL = start the turn. Pattern altitude 856 → fly 900. Keep climbing through the turn. Repeat any heading/altitude changes from SoCal.
+
+Phraseology: Roger = received, NOT yes. Wilco = will comply (saves time on long readbacks). Plain English for non-standard ground questions.
+
+Taxi Controls: Heels = rudder, toes = brakes. "Dive away" mnemonic for crosswind taxi — ailerons INTO the wind.
+
+61.113 (the big one): No compensation/hire as PIC. Memorize the 3 exceptions: (1) incidental-to-business with no pax/property for hire, (2) pro-rata cost-sharing only, (3) charity/SAR/aircraft salesman with specific conditions. Plan to reference 61.23 / 61.56 / 61.107 / 61.113 fluently on the oral.
+
+Study Plan: Get the FAA written DONE early. Use the FAA app for digital reg access at checkride. Build flashcards for the part 61 sections.
+
+Source: Fireflies meeting transcript — "Ground lesson 3 Apr 21, 05:10 PM" (114 min).`;
+
+    const gl3Homework = [
+      'Practice writing down ATIS broadcasts in shorthand — wind, vis, ceiling, temp, altimeter, runway, NOTAMs',
+      'Memorize the phonetic alphabet cold (Alpha through Zulu)',
+      'Memorize FAR 61.113: no compensation/hire as PIC, plus the 3 exceptions (incidental-to-business, pro-rata cost-sharing, charity/SAR/salesman)',
+      'Review FAR 61.23 (medical), 61.56 (flight review), 61.107 (areas of operation) — locate fast in FAA app',
+      'Memorize KSNA freqs: ATIS 126.0 · Tower 119.9 South / 126.8 North',
+      'Memorize KSNA pattern altitude: 856 ft → fly 900 ft, start turn at 500 ft AGL',
+      'Memorize the wake-turbulence rule: mandatory 15° offset turn after takeoff on parallel runways at KSNA',
+      'Practice clearance-delivery script: aircraft type + equipment suffix, parking, destination, flight following',
+      'Practice readback discipline — full call sign first contact, shortened thereafter',
+      'Memorize ATC vocabulary: Roger (received) · Affirmative (yes) · Negative (no) · Wilco (will comply)',
+      'Practice "dive away" wind-correction mnemonic for crosswind taxi (ailerons INTO the wind)',
+      "Continue Sporty's written prep — target completing FAA written exam early to focus on flight training",
+      'Build flashcards for Part 61 regs (61.23 / 61.56 / 61.107 / 61.113) for checkride oral'
+    ];
+
+    state.ground.push({
+      id: uid(),
+      date: '2026-04-21',
+      lesson: 3,
+      duration: 1.9,
+      cost: 0,
+      topics: gl3Topics,
+      notes: gl3Notes,
+      homework: gl3Homework.join('\n'),
+      fireflies_id: '01KPS8BYBGNYVZF84AFK0EX9VD'
+    });
+
+    gl3Homework.forEach(text => {
+      state.homework.push({ id: uid(), text, tag: guessTag(text), due: '', done: false, source: 'Ground L3 · 2026-04-21' });
+    });
+  }
+
+  STORE.set('ppl_seeded_v3', true);
   persist();
 }
 
