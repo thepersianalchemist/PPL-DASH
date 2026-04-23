@@ -8,7 +8,7 @@
 <!-- PWA -->
 <link rel="manifest" href="manifest.webmanifest" />
 <meta name="theme-color" content="#0b1221" />
-<meta name="description" content="Private Pilot License training tracker — hours, milestones, homework, budget." />
+<meta name="description" content="Private Pilot License training tracker — hours, homework, sparknotes, quizzes." />
 
 <!-- iOS home-screen / standalone -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,19 +200,6 @@
   .badge.danger { background: rgba(255,107,107,.15); color: var(--danger); }
   .badge.muted { background: var(--chip); color: var(--muted); }
 
-  /* Milestones */
-  .milestone {
-    display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border);
-    border-radius: 10px; background: var(--bg-2); margin-bottom: 8px;
-  }
-  .milestone input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
-  .milestone .m-body { flex: 1; }
-  .milestone .m-title { font-size: 13px; font-weight: 600; }
-  .milestone .m-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .milestone input[type="date"] { max-width: 160px; }
-  .milestone.done { opacity: .65; }
-  .milestone.done .m-title { text-decoration: line-through; }
-
   /* Homework */
   .hw { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-2); margin-bottom: 6px; }
   .hw input[type="checkbox"] { margin-top: 2px; }
@@ -393,12 +380,10 @@
   <button data-tab="requirements">FAR Requirements</button>
   <button data-tab="log">Flight &amp; Ground Log</button>
   <button data-tab="calendar">Learning Calendar</button>
-  <button data-tab="milestones">Milestones</button>
   <button data-tab="homework">Homework</button>
   <button data-tab="documents">Documents</button>
   <button data-tab="sparknotes">Sparknotes</button>
   <button data-tab="quizzes">Quizzes</button>
-  <button data-tab="budget">Budget</button>
   <button data-tab="settings">Settings</button>
 </nav>
 
@@ -412,7 +397,7 @@
 <!-- ================== OVERVIEW ================== -->
 <section class="view active" id="view-overview">
   <div class="row">
-    <div class="col-3">
+    <div class="col-4">
       <div class="card">
         <h2>Total Flight Hours</h2>
         <div class="kpi">
@@ -422,29 +407,22 @@
         <div class="bar" style="margin-top:10px;"><div class="fill" id="kpiTotalBar" style="width:0%"></div></div>
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-4">
       <div class="card">
         <h2>Target Checkride</h2>
         <div class="stat" id="kpiTarget">—</div>
         <div class="muted" id="kpiTargetSub">Set a target date in Settings</div>
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-4">
       <div class="card">
         <h2>Pace Required</h2>
         <div class="stat" id="kpiPace">—</div>
         <div class="muted" id="kpiPaceSub">hours per week to stay on track</div>
       </div>
     </div>
-    <div class="col-3">
-      <div class="card">
-        <h2>Total Spent</h2>
-        <div class="stat" id="kpiSpent">$0</div>
-        <div class="muted" id="kpiSpentSub">Across lessons, gear, exams</div>
-      </div>
-    </div>
 
-    <div class="col-8">
+    <div class="col-12">
       <div class="card">
         <h2>Pacing vs Target</h2>
         <div class="pacing">
@@ -462,13 +440,6 @@
           </div>
         </div>
         <div class="muted" id="paceNarrative" style="margin-top:12px;"></div>
-      </div>
-    </div>
-
-    <div class="col-4">
-      <div class="card">
-        <h2>Next Milestones</h2>
-        <ul class="clean" id="nextMilestones"><li class="muted">Loading…</li></ul>
       </div>
     </div>
 
@@ -662,32 +633,6 @@
     <div class="cal-grid" id="calHeaders"></div>
     <div class="cal-grid" id="calBody"></div>
     <div class="muted" style="margin-top:10px;">Click any day to see all lessons on that date.</div>
-  </div>
-</section>
-
-<!-- ================== MILESTONES ================== -->
-<section class="view" id="view-milestones">
-  <div class="row">
-    <div class="col-6">
-      <div class="card">
-        <h2>Training Milestones</h2>
-        <div id="milestoneList"></div>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="card">
-        <h2>Written Exam &amp; Checkride Prep</h2>
-        <ul class="clean">
-          <li><strong>FAA Knowledge Test (PAR)</strong><span class="badge muted">60 Q, 70% to pass, 2.5 hrs</span></li>
-          <li>Recommended score: 90%+ to avoid deficiency focus on checkride</li>
-          <li>Good prep: Sporty's, King Schools, Sheppard Air, or Rod Machado</li>
-          <li><strong>Checkride (Practical Test)</strong><span class="badge muted">ACS-based</span></li>
-          <li>Oral ~2 hrs · Flight ~1.5 hrs with DPE</li>
-          <li>Endorsements required: §61.39(a)(6)(i) &amp; (ii), §61.105 knowledge, §61.107 proficiency, §61.109 aeronautical experience</li>
-        </ul>
-        <div class="muted" style="margin-top:8px;">Check milestones off as you complete them — dates are saved automatically.</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1551,78 +1496,6 @@
   </div>
 </section>
 
-<!-- ================== BUDGET ================== -->
-<section class="view" id="view-budget">
-  <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <h2>Total Spent</h2>
-        <div class="stat" id="budgetTotal">$0</div>
-        <div class="muted" id="budgetTotalSub">Across all categories</div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="card">
-        <h2>Projected Total Cost</h2>
-        <div class="stat" id="budgetProjected">—</div>
-        <div class="muted">Based on hourly rate × remaining hours + pending exam/checkride costs</div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="card">
-        <h2>Average Cost/Hour</h2>
-        <div class="stat" id="budgetAvgHr">—</div>
-        <div class="muted">Total spent ÷ total flight hours</div>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="card">
-        <h2>Add Expense (beyond lesson costs)</h2>
-        <form id="expenseForm">
-          <div class="grid">
-            <label class="quarter">Date<input type="date" name="date" required /></label>
-            <label class="quarter">Amount ($)<input type="number" step="0.01" name="amount" required /></label>
-            <label class="half">Category<select name="category">
-              <option>Lesson / Flight</option>
-              <option>Ground instruction</option>
-              <option>Gear / Headset</option>
-              <option>iPad / ForeFlight</option>
-              <option>Written test prep</option>
-              <option>Written test fee</option>
-              <option>Medical exam</option>
-              <option>Checkride fee (DPE)</option>
-              <option>Books / charts</option>
-              <option>Other</option>
-            </select></label>
-            <label class="full">Description<input type="text" name="description" placeholder="Bose A20 headset" /></label>
-          </div>
-          <div class="btn-row"><button type="submit">Add expense</button></div>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="card">
-        <h2>Spend by Category</h2>
-        <div id="categoryBreakdown"></div>
-      </div>
-    </div>
-
-    <div class="col-12">
-      <div class="card">
-        <h2>All Expenses <span class="tag" id="expenseCount">0</span></h2>
-        <div class="table-wrap">
-          <table id="expenseTable">
-            <thead><tr><th>Date</th><th>Category</th><th>Description</th><th class="num">Amount</th><th></th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================== SETTINGS ================== -->
 <section class="view" id="view-settings">
   <div class="row">
@@ -1637,10 +1510,7 @@
             <label class="half">Home airport (ICAO)<input type="text" name="homeAirport" placeholder="KSBA" /></label>
             <label class="half">CFI name<input type="text" name="cfi" placeholder="Instructor name" /></label>
             <label class="half">Flight school<input type="text" name="school" placeholder="School / club name" /></label>
-            <label class="half">Est. hourly rental rate ($)<input type="number" step="0.01" name="hourlyRate" placeholder="250" /></label>
-            <label class="half">Est. instructor rate ($/hr)<input type="number" step="0.01" name="cfiRate" placeholder="85" /></label>
             <label class="half">Target total hours<input type="number" name="targetHours" placeholder="60" /></label>
-            <label class="half">Est. checkride fee ($)<input type="number" step="0.01" name="checkrideFee" placeholder="800" /></label>
           </div>
           <div class="btn-row"><button type="submit">Save settings</button></div>
         </form>
@@ -1729,7 +1599,6 @@
       <button type="button" data-ql-kind="flight" class="active">✈ Flight</button>
       <button type="button" data-ql-kind="ground">📖 Ground</button>
       <button type="button" data-ql-kind="homework">📝 Homework</button>
-      <button type="button" data-ql-kind="expense">💵 Expense</button>
     </div>
 
     <!-- Flight form -->
@@ -1779,26 +1648,6 @@
       </div>
       <div class="btn-row"><button type="submit">Add homework</button></div>
     </form>
-
-    <!-- Expense form -->
-    <form id="qlExpenseForm" class="ql-form" style="display:none;">
-      <div class="grid">
-        <label class="half">Date<input type="date" name="date" required /></label>
-        <label class="half">Amount ($)<input type="number" step="0.01" min="0" name="amount" required /></label>
-        <label class="full">Category<select name="category">
-          <option value="rental">Aircraft rental</option>
-          <option value="instructor">Instructor</option>
-          <option value="ground">Ground school</option>
-          <option value="medical">Medical</option>
-          <option value="books">Books / materials</option>
-          <option value="written">Written exam</option>
-          <option value="checkride">Checkride / DPE</option>
-          <option value="other">Other</option>
-        </select></label>
-        <label class="full">Description<input type="text" name="description" placeholder="Details" /></label>
-      </div>
-      <div class="btn-row"><button type="submit">Log expense</button></div>
-    </form>
   </div>
 </div>
 
@@ -1827,7 +1676,7 @@ const STORE = (() => {
     },
     clear() {
       if (hasLS) {
-        ['ppl_flights','ppl_ground','ppl_milestones','ppl_budget','ppl_homework','ppl_settings','ppl_meta']
+        ['ppl_flights','ppl_ground','ppl_homework','ppl_settings','ppl_meta']
           .forEach(k => localStorage.removeItem(k));
       } else {
         Object.keys(mem).forEach(k => delete mem[k]);
@@ -1914,31 +1763,16 @@ async function openStoredDoc(id) {
   }
 }
 
-const DEFAULT_MILESTONES = [
-  { key:'medical',  title:'3rd Class Medical Certificate (or BasicMed eligibility)', desc:'Required before solo. Visit an AME (aviation medical examiner). Valid 5 yrs if under 40, 2 yrs if 40+.' },
-  { key:'student',  title:'Student Pilot Certificate',       desc:'Apply via IACRA. Required before solo flight. No expiration, but tied to medical.' },
-  { key:'presolo',  title:'Pre-solo written exam (CFI-administered)', desc:'Covers FAR 91 applicable to solo, airport/local area info, aircraft POH.' },
-  { key:'solo',     title:'Solo endorsement (§61.87)',       desc:'Valid 90 days, renewable. CFI must endorse logbook and student certificate.' },
-  { key:'firstsolo',title:'First solo flight 🎉',             desc:'Three takeoffs and landings to full stop. A rite of passage.' },
-  { key:'xcsolo',   title:'Cross-country solo endorsement (§61.93)', desc:'Per-flight endorsement for specific XC, or a standing endorsement for repeat flights.' },
-  { key:'written',  title:'FAA Knowledge Test (PAR) — passed', desc:'60 multiple choice, 70% to pass. Valid 24 calendar months.' },
-  { key:'xc150',    title:'Solo XC ≥150 NM completed',        desc:'One solo cross-country with 3 full-stop landings and a leg ≥50 NM.' },
-  { key:'checkridePrep', title:'Pre-checkride readiness check with CFI', desc:'All ACS tasks proficient. CFI endorses §61.39 and §61.107.' },
-  { key:'checkride', title:'Checkride passed 🏆',             desc:'With Designated Pilot Examiner (DPE). Temporary airman certificate issued on the spot.' }
-];
-
 let state = {
   flights: STORE.get('ppl_flights', []),
   ground:  STORE.get('ppl_ground', []),
-  milestones: STORE.get('ppl_milestones', {}),
-  budget:  STORE.get('ppl_budget', []),
   homework: STORE.get('ppl_homework', []),
   documents: STORE.get('ppl_documents', []),
   quizzes: STORE.get('ppl_quizzes', []),
   quizAttempts: STORE.get('ppl_quiz_attempts', []),
   settings: STORE.get('ppl_settings', {
     targetDate: '', startDate: '', aircraftType: 'C172', homeAirport: '',
-    cfi: '', school: '', hourlyRate: 250, cfiRate: 85, targetHours: 55, checkrideFee: 800
+    cfi: '', school: '', targetHours: 55
   }),
   meta: STORE.get('ppl_meta', { showDoneHw: true, calMonth: null, docFilterType: '', docSearch: '' })
 };
@@ -1946,8 +1780,6 @@ let state = {
 function persist() {
   STORE.set('ppl_flights', state.flights);
   STORE.set('ppl_ground', state.ground);
-  STORE.set('ppl_milestones', state.milestones);
-  STORE.set('ppl_budget', state.budget);
   STORE.set('ppl_homework', state.homework);
   STORE.set('ppl_documents', state.documents);
   STORE.set('ppl_quizzes', state.quizzes);
@@ -2075,10 +1907,6 @@ function totals() {
   };
 }
 
-function budgetTotal() {
-  return sum(state.flights, x=>x.cost) + sum(state.ground, x=>x.cost) + sum(state.budget, x=>x.amount);
-}
-
 /* ============================================================
    REQUIREMENTS — FAR §61.109(a)
 ============================================================ */
@@ -2118,17 +1946,12 @@ function renderRequirements() {
   document.getElementById('sf6').innerHTML = t.hasTestPrep ? '<span class="badge good">Done</span>' : '<span class="badge muted">Pending</span>';
 
   // Readiness checklist
-  const m = state.milestones;
   const items = [
     { ok: t.total >= 40, label: 'Total ≥ 40 hrs' },
     { ok: t.dual >= 20, label: 'Dual ≥ 20 hrs' },
     { ok: t.solo >= 10, label: 'Solo ≥ 10 hrs' },
     { ok: t.dualXc >= 3 && t.dualNight >= 3 && t.dualHood >= 3, label: 'All dual sub-requirements met' },
     { ok: t.soloXc >= 5 && t.hasSoloXc150 && t.soloTlTower >= 3, label: 'All solo sub-requirements met' },
-    { ok: !!m.medical?.done, label: '3rd Class Medical' },
-    { ok: !!m.student?.done, label: 'Student Pilot Certificate' },
-    { ok: !!m.written?.done, label: 'FAA Written Test passed' },
-    { ok: !!m.checkridePrep?.done, label: 'CFI pre-checkride signoff' },
   ];
   document.getElementById('readiness').innerHTML = items.map(i =>
     `<li><span>${i.label}</span><span class="badge ${i.ok?'good':'muted'}">${i.ok?'Ready':'—'}</span></li>`
@@ -2147,8 +1970,6 @@ function renderOverview() {
   const pct = Math.min(100, (t.total/target)*100);
   document.getElementById('kpiTotalPct').textContent = pct.toFixed(0) + '%';
   document.getElementById('kpiTotalBar').style.width = pct + '%';
-
-  document.getElementById('kpiSpent').textContent = '$' + budgetTotal().toLocaleString(undefined,{maximumFractionDigits:0});
 
   // Target + pacing
   const td = state.settings.targetDate;
@@ -2208,13 +2029,6 @@ function renderOverview() {
   if (fCount) parts.push(`${fCount} flight${fCount>1?'s':''} · ${t.total.toFixed(1)} hrs`);
   if (latest) parts.push(`latest: ${latest.kind} ${latest.date}`);
   document.getElementById('headerSub').textContent = parts.join(' · ');
-
-  // Next milestones
-  const pending = DEFAULT_MILESTONES
-    .filter(m => !state.milestones[m.key]?.done)
-    .slice(0,5)
-    .map(m => `<li><span>${m.title}</span><span class="badge muted">Pending</span></li>`).join('');
-  document.getElementById('nextMilestones').innerHTML = pending || '<li><span class="badge good">All milestones complete! 🎉</span></li>';
 
   // Active homework
   const active = state.homework.filter(h => !h.done).sort((a,b)=> (a.due||'').localeCompare(b.due||''));
@@ -2348,38 +2162,6 @@ function renderLogTables() {
   gt.querySelectorAll('[data-del-ground]').forEach(b => b.addEventListener('click', e => {
     const id = e.target.dataset.delGround;
     if (confirm('Delete this ground lesson?')) { state.ground = state.ground.filter(x=>x.id!==id); persist(); renderAll(); }
-  }));
-}
-
-/* ============================================================
-   MILESTONES
-============================================================ */
-function renderMilestones() {
-  const root = document.getElementById('milestoneList');
-  root.innerHTML = DEFAULT_MILESTONES.map(m => {
-    const s = state.milestones[m.key] || { done:false, date:'' };
-    return `
-      <div class="milestone ${s.done?'done':''}">
-        <input type="checkbox" data-ms="${m.key}" ${s.done?'checked':''} />
-        <div class="m-body">
-          <div class="m-title">${m.title}</div>
-          <div class="m-desc">${m.desc}</div>
-        </div>
-        <input type="date" data-ms-date="${m.key}" value="${s.date||''}" title="Completion date" />
-      </div>`;
-  }).join('');
-  root.querySelectorAll('[data-ms]').forEach(cb => cb.addEventListener('change', e => {
-    const k = e.target.dataset.ms;
-    state.milestones[k] = state.milestones[k] || {};
-    state.milestones[k].done = e.target.checked;
-    if (e.target.checked && !state.milestones[k].date) state.milestones[k].date = new Date().toISOString().slice(0,10);
-    persist(); renderAll();
-  }));
-  root.querySelectorAll('[data-ms-date]').forEach(inp => inp.addEventListener('change', e => {
-    const k = e.target.dataset.msDate;
-    state.milestones[k] = state.milestones[k] || {};
-    state.milestones[k].date = e.target.value;
-    persist();
   }));
 }
 
@@ -3032,68 +2814,6 @@ document.getElementById('qzImportDo').addEventListener('click', doImportQuiz);
 document.getElementById('quizImportModal').addEventListener('click', e => { if (e.target.id === 'quizImportModal') closeImportQuiz(); });
 
 /* ============================================================
-   BUDGET
-============================================================ */
-document.getElementById('expenseForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const fd = new FormData(e.target);
-  state.budget.push({ id: uid(), date: fd.get('date'), amount: +fd.get('amount')||0, category: fd.get('category'), description: fd.get('description')||'' });
-  persist(); renderAll(); e.target.reset();
-});
-
-function renderBudget() {
-  const t = totals();
-  const total = budgetTotal();
-  document.getElementById('budgetTotal').textContent = '$' + total.toLocaleString(undefined,{maximumFractionDigits:0});
-
-  // Projected
-  const s = state.settings;
-  const targetHrs = s.targetHours || 40;
-  const remaining = Math.max(0, targetHrs - t.total);
-  const projected = total + remaining * ((+s.hourlyRate||0) + (+s.cfiRate||0)) + (+s.checkrideFee||0);
-  document.getElementById('budgetProjected').textContent = projected ? '$' + projected.toLocaleString(undefined,{maximumFractionDigits:0}) : '—';
-
-  // Avg per hr
-  const avgHr = t.total > 0 ? total / t.total : 0;
-  document.getElementById('budgetAvgHr').textContent = t.total > 0 ? '$' + avgHr.toFixed(0) : '—';
-
-  // By category
-  const cats = {};
-  state.flights.forEach(f => { if (f.cost) cats['Flight lessons'] = (cats['Flight lessons']||0) + f.cost; });
-  state.ground.forEach(g => { if (g.cost) cats['Ground lessons'] = (cats['Ground lessons']||0) + g.cost; });
-  state.budget.forEach(b => { cats[b.category] = (cats[b.category]||0) + b.amount; });
-  const sortedCats = Object.entries(cats).sort((a,b)=> b[1]-a[1]);
-  const catMax = sortedCats[0]?.[1] || 1;
-  document.getElementById('categoryBreakdown').innerHTML = sortedCats.length ? sortedCats.map(([k,v]) => `
-    <div class="req">
-      <div class="req-head"><span class="name">${escapeHtml(k)}</span><span class="nums">$${v.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
-      <div class="bar"><div class="fill" style="width:${(v/catMax)*100}%"></div></div>
-    </div>`).join('') : '<div class="muted">No spending yet.</div>';
-
-  // Expense table
-  const et = document.querySelector('#expenseTable tbody');
-  const all = [
-    ...state.flights.filter(f=>f.cost).map(f => ({id:f.id, kind:'flight', date:f.date, category:'Flight lesson', description:`Flight L${f.lesson||'?'} · ${f.route||'local'}`, amount:f.cost})),
-    ...state.ground.filter(g=>g.cost).map(g => ({id:g.id, kind:'ground', date:g.date, category:'Ground lesson', description:`Ground L${g.lesson||'?'}`, amount:g.cost})),
-    ...state.budget.map(b => ({...b, kind:'budget'}))
-  ].sort((a,b)=> (b.date||'').localeCompare(a.date||''));
-  et.innerHTML = all.map(x => `
-    <tr>
-      <td>${x.date||''}</td>
-      <td>${escapeHtml(x.category||'')}</td>
-      <td>${escapeHtml(x.description||'')}</td>
-      <td class="num">$${(x.amount||0).toFixed(2)}</td>
-      <td>${x.kind==='budget' ? `<button class="del" data-del-budget="${x.id}">✕</button>` : '<span class="muted">from log</span>'}</td>
-    </tr>`).join('') || `<tr><td colspan="5" class="muted" style="text-align:center; padding:24px;">No expenses yet.</td></tr>`;
-  document.getElementById('expenseCount').textContent = `${all.length} items`;
-  et.querySelectorAll('[data-del-budget]').forEach(b => b.addEventListener('click', e => {
-    const id = e.target.dataset.delBudget;
-    state.budget = state.budget.filter(x => x.id !== id);
-    persist(); renderAll();
-  }));
-}
-
-/* ============================================================
    CALENDAR
 ============================================================ */
 let calRef = null;
@@ -3181,10 +2901,7 @@ document.getElementById('settingsForm').addEventListener('submit', e => {
     homeAirport: fd.get('homeAirport'),
     cfi: fd.get('cfi'),
     school: fd.get('school'),
-    hourlyRate: +fd.get('hourlyRate')||0,
-    cfiRate: +fd.get('cfiRate')||0,
-    targetHours: +fd.get('targetHours')||40,
-    checkrideFee: +fd.get('checkrideFee')||0
+    targetHours: +fd.get('targetHours')||40
   };
   persist(); renderAll();
   alert('Settings saved.');
@@ -3212,9 +2929,9 @@ function download(name, data) {
 }
 function exportAll() {
   const data = JSON.stringify({
-    _v:2, exported: new Date().toISOString(),
-    flights: state.flights, ground: state.ground, milestones: state.milestones,
-    budget: state.budget, homework: state.homework, documents: state.documents, settings: state.settings
+    _v:3, exported: new Date().toISOString(),
+    flights: state.flights, ground: state.ground,
+    homework: state.homework, documents: state.documents, settings: state.settings
   }, null, 2);
   download(`ppl-backup-${iso(new Date())}.json`, data);
 }
@@ -3225,7 +2942,6 @@ function handleImport(file) {
       const d = JSON.parse(reader.result);
       if (!confirm('Import will REPLACE current data. Continue?')) return;
       state.flights = d.flights||[]; state.ground = d.ground||[];
-      state.milestones = d.milestones||{}; state.budget = d.budget||[];
       state.homework = d.homework||[]; state.documents = d.documents||[];
       state.settings = {...state.settings, ...(d.settings||{})};
       persist(); renderAll();
@@ -3255,9 +2971,7 @@ function renderAll() {
   renderOverview();
   renderRequirements();
   renderLogTables();
-  renderMilestones();
   renderHomework();
-  renderBudget();
   renderDocuments();
   renderQuizzes();
 }
@@ -3964,8 +3678,7 @@ function updatePreflightStatus() {
   const forms = {
     flight:   document.getElementById('qlFlightForm'),
     ground:   document.getElementById('qlGroundForm'),
-    homework: document.getElementById('qlHwForm'),
-    expense:  document.getElementById('qlExpenseForm')
+    homework: document.getElementById('qlHwForm')
   };
   function showKind(k) {
     chooser.forEach(b => b.classList.toggle('active', b.dataset.qlKind === k));
@@ -3973,7 +3686,7 @@ function updatePreflightStatus() {
   }
   function open() {
     const today = iso(new Date());
-    ['qlFlightForm','qlGroundForm','qlExpenseForm'].forEach(id => {
+    ['qlFlightForm','qlGroundForm'].forEach(id => {
       const d = document.querySelector(`#${id} input[name="date"]`);
       if (d && !d.value) d.value = today;
     });
@@ -4038,18 +3751,6 @@ function updatePreflightStatus() {
     e.preventDefault();
     const fd = new FormData(e.target);
     state.homework.push({ id: uid(), text: fd.get('text'), due: fd.get('due')||'', tag: fd.get('tag')||'general', docId:'', done:false });
-    persist(); renderAll(); e.target.reset(); close();
-  });
-  forms.expense.addEventListener('submit', e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    state.budget.push({
-      id: uid(),
-      date: fd.get('date'),
-      amount: +fd.get('amount') || 0,
-      category: fd.get('category'),
-      description: fd.get('description') || ''
-    });
     persist(); renderAll(); e.target.reset(); close();
   });
 })();
