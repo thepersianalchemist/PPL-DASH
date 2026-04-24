@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "ingestedFirefliesIds": [],
   "ingestedLessonNumbers": [1, 2, 3],
-  "lastRun": null,
-  "lastRunStatus": null,
-  "lastRunMessage": "Initial state — GL1/GL2/GL3 already in seed block via seedIfFirstRun(). The auto-ingest task should pick up GL4 onwards."
+  "lastRun": "2026-04-23T20:00:00.000Z",
+  "lastRunStatus": "no-new",
+  "lastRunMessage": "No new ground lessons since last run. Scanned 22 transcripts in last 14d; only GL1 (01KP7B07K7D4CW1EGK485SWA8T) and GL3 (01KPS8BYBGNYVZF84AFK0EX9VD) match strict '^Ground lesson N' pattern, both already covered by static seed (ingestedLessonNumbers 1-3). Note: 'Principles of Flight Apr 16, 05:30 PM Ground 2' likely IS GL2 but does not match the strict title regex; left untouched per task spec — rename in Fireflies to 'Ground lesson 2 ...' to ingest on next run."
 }
