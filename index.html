@@ -917,6 +917,7 @@
           <button class="spark-chip active" data-spark="afh-ch3">Chapter 3: Basic Flight Maneuvers</button>
           <button class="spark-chip" data-spark="far-61113">FAR Reference · ATC Comms · KSNA Ops</button>
           <!-- AUTO_INGEST_SPARKNOTES_CHIPS_START -->
+          <button class="spark-chip" data-spark="gl4-metars-incursions">GL4 · METARs · Hazardous Attitudes · Incursions</button>
           <!-- AUTO_INGEST_SPARKNOTES_CHIPS_END -->
         </div>
 
@@ -1663,6 +1664,385 @@
         </article>
 
         <!-- AUTO_INGEST_SPARKNOTES_ARTICLES_START -->
+
+        <!-- ========== GL4 · METARs · Hazardous Attitudes · Runway Incursions · Movement Areas ========== -->
+        <article class="spark-article hidden" data-article="gl4-metars-incursions">
+          <header class="spark-head">
+            <span class="chip">GL4 · 2026-04-24</span>
+            <h1>METARs, Runway Numbering, Hazardous Attitudes & Runway Incursions — Sparknotes</h1>
+            <p class="spark-sub">Reading weather out loud, the math behind runway numbers, the five attitudes that kill pilots, and why we read back every clearance.</p>
+          </header>
+
+          <div class="spark-callout info">
+            <div class="sc-title">The gist — 6 bullets</div>
+            <ul>
+              <li><b>METARs are read OUT LOUD.</b> Direction digit-by-digit. Wind is "AT". Vis &gt;6 = P6SM. AO2 = with precip discrim. RMK = remarks (AIM 5-1-3).</li>
+              <li><b>Runway number = magnetic bearing ÷ 10.</b> Reciprocal = ±20. L/C/R from the approach side. Always say both digits.</li>
+              <li><b>Five hazardous attitudes — memorize all five + every antidote.</b> The written test pairs them.</li>
+              <li><b>Runway incursion = wrong presence on a protected surface.</b> 4 severity levels (A worst → D best). Read back EVERY clearance — that is the Tenerife lesson.</li>
+              <li><b>Movement = ATC controls. Non-movement = you don't ask.</b> Solid yellow line = non-movement side; dashed = movement.</li>
+              <li><b>Sterile cockpit during taxi.</b> No phone, no chatter. ATC can amend at any moment.</li>
+            </ul>
+          </div>
+
+          <h2 class="spark-h2">METAR Decoding — Read It Like ATC Reads It</h2>
+          <p>METAR = the routine hourly weather observation. Standard issue at the :55 mark. SPECI ("special") gets issued mid-hour when conditions change drastically. ATIS pulls from the same data, which is why the ATIS letter advances mid-hour after a SPECI.</p>
+
+          <div class="spark-formula">"METAR for [airport] on the [DD]th day at [HHMM] Zulu, winds [DDD] at [SS], gusting [GG] knots, [V] statute miles of visibility, [coverage] at [altitude], temperature [T], dewpoint [D], altimeter [A.AA], remarks [...]."</div>
+
+          <h3 class="spark-h3">The Field-by-Field Read</h3>
+          <div class="spark-kv">
+            <div><b>Date / Time</b><span>First six digits = DDHHMM Zulu (e.g., <b>240053Z</b> = 24th day, 00:53Z). Always say "on the 24th day at 00:53 Zulu."</span></div>
+            <div><b>Wind</b><span>DDDSSGGGKT — direction digit-by-digit ("one eight zero" not "one-eighty"). Wind is "AT". Gust is the upper number — never "at 11 to 18."</span></div>
+            <div><b>Visibility</b><span>Below 10: spoken plain ("3 statute miles of visibility"). Past 10: encoded as <b>P6SM</b> (Plus 6 Statute Miles) — never "17 statute miles."</span></div>
+            <div><b>Cloud coverage</b><span><b>FEW</b> 1–2 oktas · <b>SCT</b> scattered 3–4 · <b>BKN</b> broken 5–7 · <b>OVC</b> overcast 8/8. Spoken: "few clouds at 2,700, scattered at 9,000."</span></div>
+            <div><b>Temp / dewpoint</b><span>Two-digit Celsius each. "Temperature 19, dewpoint 13." The T-group inside RMK gives precision to the tenth (T01890128 = 18.9 / 12.8).</span></div>
+            <div><b>Altimeter</b><span><b>A2986</b> = 29.86" Hg. Spoken plain numeric: "altimeter 2986" (no decimal point in voice).</span></div>
+            <div><b>Remarks</b><span><b>RMK</b> = remarks block. Per AIM 5-1-3 contractions table. Includes T-group, SLP (sea-level pressure), wind-shift codes.</span></div>
+          </div>
+
+          <h3 class="spark-h3">AO1 vs AO2 — know cold</h3>
+          <div class="spark-formula">AO1 = Automated Station WITHOUT precipitation discrimination · AO2 = Automated Station WITH precipitation discrimination</div>
+          <p>AO2 stations can tell rain from snow. Almost every modern automated station is AO2.</p>
+
+          <h3 class="spark-h3">Weather Descriptor Codes (memorize the common merges)</h3>
+          <div class="spark-kv">
+            <div><b>TS</b><span>Thunderstorm</span></div>
+            <div><b>FZ</b><span>Freezing</span></div>
+            <div><b>BL</b><span>Blowing</span></div>
+            <div><b>DR</b><span>Drift (low blowing)</span></div>
+            <div><b>MI</b><span>Shallow</span></div>
+            <div><b>BR</b><span>Mist ("baby rain" — no good reason for the code, just memorize)</span></div>
+            <div><b>PR</b><span>Partial</span></div>
+            <div><b>SH</b><span>Shower</span></div>
+            <div><b>SQ</b><span>Squall</span></div>
+            <div><b>FC</b><span>Funnel cloud</span></div>
+            <div><b>DZ / RA / SN</b><span>Drizzle / Rain / Snow</span></div>
+            <div><b>GR / GS</b><span>Hail / Small hail</span></div>
+            <div><b>FG / HZ / FU</b><span>Fog / Haze / Smoke</span></div>
+            <div><b>DU / SA</b><span>Widespread dust / Sand</span></div>
+          </div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">Combinations: <b>BLDU</b> = blowing widespread dust · <b>-RA</b> = light rain · <b>+TSRA</b> = heavy thunderstorm with rain.</p>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">Practice drill</div>
+            <p>DPEs pull from places that actually have weather — Wyoming, Denver, the Midwest. Pull a different airport in ForeFlight every day and read the METAR out loud at speed. Do this on the drive in like you do with ATIS.</p>
+          </div>
+
+          <h2 class="spark-h2">Runway Numbering & Reciprocals</h2>
+          <p>Runway number = magnetic bearing of the centerline, rounded to the nearest 10°, with the last digit dropped. Heading 198° rounds to 200° → "Runway 20." Heading 022° → "Runway 02."</p>
+
+          <div class="spark-formula">RWY # = round(magnetic bearing) ÷ 10 · Reciprocal = ±20 (drop the leading zero)</div>
+
+          <h3 class="spark-h3">The Rules</h3>
+          <ul class="spark-list">
+            <li><b>Always say BOTH digits.</b> "Two zero" not "twenty." ATC will never clear you to "Runway 200" or "Runway 90" — it's two-zero or zero-niner-zero.</li>
+            <li><b>Lowest possible: 01</b> (heading 010°). <b>Highest: 36</b> (heading 360°). Never single digit.</li>
+            <li><b>Reciprocal math:</b> add 20 to the "right" half (or subtract from the "left" half) — that's the drop-the-zero version of ±180°. <b>020 ↔ 200 · 060 ↔ 240 · 090 ↔ 270.</b></li>
+            <li><b>Parallel suffix L/C/R</b> assigned from the approach side. KSNA has 20L / 20R; when winds shift, the same strips become 02L / 02R.</li>
+            <li><b>KSNA winds favor 20L/20R 99% of the time.</b> Coastal headwind on departure, tailwind on arrival is rare.</li>
+          </ul>
+
+          <h3 class="spark-h3">When to Spell vs Speak Plain</h3>
+          <div class="spark-kv">
+            <div><b>Headings · Runway #s · Squawks</b><span>Digit-by-digit. "Heading zero eight zero." "Squawk zero two one three."</span></div>
+            <div><b>Speeds · Altitudes · Visibility (≤10)</b><span>Spoken plain. "100 knots." "VFR at or below 2500." "10 statute miles of visibility."</span></div>
+            <div><b>Relative degree offsets</b><span>Spoken plain. "15-degree offset" (because it's relative to your current heading, not an absolute heading).</span></div>
+          </div>
+
+          <h2 class="spark-h2">CFIT — Controlled Flight Into Terrain</h2>
+          <p>You fly a perfectly airworthy airplane into the ground. No engine failure, no mechanical problem — just a decision-making failure. The textbook setup: VFR-only pilot pushes into deteriorating weather, gets into IMC, becomes spatially disoriented, descends into a mountain.</p>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">KSNA local hazard</div>
+            <p>Santiago Peak (5,689 ft) collects orographic clouds. A cross-country east on a marginal day is the classic CFIT setup. If you're not instrument rated and the weather is closing, turn around before you're committed.</p>
+          </div>
+
+          <h3 class="spark-h3">If You Get Inadvertently IMC</h3>
+          <div class="spark-formula">"Mayday, mayday, mayday — Skyhawk 51840 — IMC, request vectors out of cloud, no longer VFR."</div>
+          <p>Declare immediately. Don't try to fly out yourself. ATC will vector you. CFIT lives in the <b>enVironment</b> + <b>External pressures</b> slots of PAVE — sometimes <b>Pilot</b> (fatigue, get-there-itis).</p>
+
+          <h2 class="spark-h2">The Five Hazardous Attitudes (memorize verbatim)</h2>
+          <p>The FAA identifies five hazardous attitudes that degrade pilot decision-making. Each has a one-line dangerous thought and a one-line antidote. The written test pairs them — DPE shows the dangerous thought, you pick the antidote (or vice versa).</p>
+
+          <div class="spark-kv">
+            <div><b>1. Anti-authority</b><span>"Don't tell me." → Antidote: <b>"Follow the rules. They are usually right."</b></span></div>
+            <div><b>2. Impulsivity</b><span>"Do it now." → Antidote: <b>"Not so fast. Think first."</b></span></div>
+            <div><b>3. Invulnerability</b><span>"It won't happen to me." → Antidote: <b>"It could happen to me."</b></span></div>
+            <div><b>4. Macho</b><span>"I can do it." → Antidote: <b>"Taking chances is foolish."</b></span></div>
+            <div><b>5. Resignation</b><span>"What's the use?" → Antidote: <b>"I'm not helpless. I can make a difference."</b></span></div>
+          </div>
+
+          <div class="spark-callout info">
+            <div class="sc-title">Self-assessment matters</div>
+            <p>Know your own default. Aryan's read on himself: <b>anti-authority + macho</b>, with resignation lowest. Desireé's: <b>impulsivity</b> — and it cost her a CFI checkride. She extended upwind, debated in her head whether she heard the call right, didn't use the G1000 audio playback button, turned downwind early, conflicted with sequenced traffic. Examiner: <em>"girlfriend, it was perfect — I have to bust you for this."</em> When in doubt about a clearance, USE the playback or ASK. Never act on what you THINK you heard.</p>
+          </div>
+
+          <h2 class="spark-h2">Runway Incursions</h2>
+          <div class="spark-formula">"Any occurrence at an aerodrome involving the incorrect presence of an aircraft, vehicle, or person on the protected area of a surface designated for the landing and takeoff of aircraft."</div>
+          <p>Memorize verbatim. <b>Aerodrome</b> = "a defined area on land or water, including buildings, installations, and equipment, intended for the arrival, departure, and movement of aircraft." Both definitions are FAA verbatim.</p>
+
+          <h3 class="spark-h3">Four Severity Categories</h3>
+          <div class="spark-kv">
+            <div><b>A</b><span>Barely-avoided collision</span></div>
+            <div><b>B</b><span>Significant potential for collision</span></div>
+            <div><b>C</b><span>Ample time and distance to avoid collision</span></div>
+            <div><b>D</b><span>Little to no risk of collision</span></div>
+          </div>
+
+          <h3 class="spark-h3">KSNA Incursion Risks</h3>
+          <ul class="spark-list">
+            <li><b>Morning back-taxi.</b> Before noise abatement opens (~7 AM), airliners use the runway as a taxiway in sequence. Cessnas hold and wait.</li>
+            <li><b>Opposite-direction taxi.</b> KSNA Cessna ops share a single taxiway with oncoming aircraft. Ground announces "caution opposite-direction Cessna." Both move RIGHT, pass nose-to-nose, resume.</li>
+            <li><b>Southwest off Hotel.</b> Airliners normally exit at Echo or Delta. When they unexpectedly exit at Hotel, you can get squeezed.</li>
+            <li><b>Echo crossings.</b> Going Alpha-Hotel to midfield run-up — watch for "hold short of Echo for Southwest. Caution jet blast."</li>
+          </ul>
+
+          <h3 class="spark-h3">Hot Spots</h3>
+          <p>FAA-charted areas of elevated incursion risk. Marked on the airport diagram and in the chart supplement. <b>KSNA has HS1 and HS2</b> (between the runways). Hot spots = "extra eyes here," not "avoid." Note: the midfield run-up area in front of Hotel was a hot spot until recently. They removed the designation when construction started, but the risk hasn't changed — treat it like a hot spot anyway.</p>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">Tenerife — the textbook why-we-read-back-clearances story</div>
+            <p>1977, Los Rodeos (now Tenerife North), KLM 4805 + Pan Am 1736. <b>583 fatalities — the worst aviation disaster in history.</b> Low-vis day, runway being used as a taxiway. KLM started take-off roll without clearance while Pan Am was still back-taxiing on the same runway. KLM tried to rotate early, near-clear with a tail strike, crashed on top of Pan Am. <b>Always read back every clearance verbatim. If unsure, ask.</b></p>
+          </div>
+
+          <h2 class="spark-h2">Movement vs Non-Movement Areas</h2>
+          <div class="spark-kv">
+            <div><b>Movement area</b><span>"All taxiways and runways under the jurisdiction of the control tower." <b>Clearance required to enter.</b> ATC controls.</span></div>
+            <div><b>Non-movement area</b><span>Ramps and parking areas. <b>ATC does NOT control.</b> No clearance or radio call needed.</span></div>
+          </div>
+
+          <div class="spark-formula">SOLID yellow line = boundary; non-movement side · DASHED yellow line = movement side</div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">Mnemonic: <b>"dash = movement, solid = stopped."</b></p>
+
+          <h3 class="spark-h3">Practical Cases</h3>
+          <ul class="spark-list">
+            <li>Pulling the plane out of the tie-down at Dove Street to a parking spot = <b>non-movement</b>, no call.</li>
+            <li>Taxiing onto Charlie or Hotel = <b>movement</b>, ground clearance required.</li>
+            <li>Wing/wheel will overhang the boundary while ground-handling on foot? Grab a handheld, tune ground, give a courtesy call: "Ground, just FYI we're shifting an aircraft at Dove Street, the wing will overhang the movement boundary." Sometimes they say "stand by" if traffic is congested.</li>
+          </ul>
+
+          <h2 class="spark-h2">Taxi Workload — Sterile Cockpit</h2>
+          <ul class="spark-list">
+            <li><b>No phone. No app fiddling. No non-essential talk.</b> ATC can amend your clearance any moment ("hold short Echo for Southwest, caution jet blast"). Miss the call = incursion.</li>
+            <li><b>Take-runway flow — "lights, camera, action":</b> all exterior lights ON, mixture FULL RICH, transponder/squawk confirmed.</li>
+            <li><b>At any intersection:</b> "clear left, clear straight, clear right" OUT LOUD, head moving. Same logic as a car at an uncontrolled intersection.</li>
+            <li><b>If unsure of a clearance:</b> use the G1000 audio playback or query ATC ("Confirm hold short Echo, Skyhawk 51840"). They'd rather repeat than have an incursion.</li>
+          </ul>
+
+          <h2 class="spark-h2">ATC Handoffs, Flight Following & Guard</h2>
+          <ul class="spark-list">
+            <li><b>"Babysitter" model.</b> Whoever you're talking to NOW is your babysitter. Need to amend? Talk to your CURRENT controller — never reach back to a previous one.</li>
+            <li><b>KSNA outbound flow:</b> Clearance → Ground → Tower → SoCal Departure (124.1).</li>
+            <li><b>KSNA inbound flow:</b> SoCal → Tower → Ground.</li>
+            <li><b>Flight following</b> = TRACON VFR advisory service. Optional in most airspace. <b>KSNA requires you to depart with flight following.</b></li>
+            <li><b>Quiet periods are normal.</b> Once you're in the El Toro practice area, SoCal often won't talk to you for long stretches. They're still there — they'll call traffic if it matters.</li>
+            <li><b>Guard frequency 121.5</b> = universal emergency. Every aircraft monitors it. If you go down or call mayday on guard, every plane within range hears you. Monitor it when not on flight following.</li>
+          </ul>
+
+          <h2 class="spark-h2">AIM Reading Map</h2>
+          <div class="spark-kv">
+            <div><b>AIM Chapter 5</b><span>Air Traffic Procedures — clearances, handoffs, separation. Section 5-1-3 = contractions table (RMK, AO2, SLP, etc.).</span></div>
+            <div><b>AIM Chapter 7</b><span>Safety of Flight — weather services, hazardous weather, in-flight weather advisories.</span></div>
+            <div><b>AIM Chapter 14</b><span>Airport Operations — signs, runway/taxiway markings, lighting. <b>Required reading before next ground.</b> DPE will pull a sign image and ask "taxiway or runway?"</span></div>
+          </div>
+
+          <h2 class="spark-h2">Bottom-Line Takeaways</h2>
+          <ol class="spark-list">
+            <li><b>Read METARs out loud daily.</b> Different airport every time. Direction digit-by-digit, "AT" for wind, P6SM for vis &gt;6.</li>
+            <li><b>Runway # = magnetic ÷ 10. Reciprocal = ±20.</b> Always say both digits.</li>
+            <li><b>Memorize the five hazardous attitudes + every antidote.</b> The written test pairs them.</li>
+            <li><b>Read back every clearance.</b> Unsure? Use playback or ask. Don't be Tenerife.</li>
+            <li><b>Dash = movement, solid = stopped.</b></li>
+            <li><b>Sterile cockpit during taxi.</b> Lights camera action. Clear left, straight, right.</li>
+            <li><b>Read AIM Ch 14 before next lesson.</b> Sign and marking memorization.</li>
+          </ol>
+
+          <!-- Flashcards -->
+          <section class="flash-section">
+            <div class="flash-head">
+              <div class="flash-title">
+                <h2>Flashcards</h2>
+                <span class="tag">28 cards</span>
+              </div>
+              <div class="flash-controls">
+                <span class="flash-progress"></span>
+                <button class="flash-shuffle">🔀 Shuffle</button>
+                <button class="flash-reset">↺ Reset</button>
+              </div>
+            </div>
+            <div class="flash-grid">
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What does <b>METAR</b> stand for, and when is it issued?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Meteorological Aerodrome Report.</b> Routine hourly observation, issued at the <b>:55 mark</b>. SPECI ("special") is issued mid-hour when conditions change drastically.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Decode the wind group <b>18011G18KT</b> verbally as you would on a checkride.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">"Winds <b>one eight zero</b> at <b>11</b>, gusting <b>18 knots</b>." Direction digit-by-digit; wind is "AT"; gust is the upper number — never "11 to 18."</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What does <b>P6SM</b> mean in a METAR, and how do you say it?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Plus 6 Statute Miles</b> — visibility greater than 6 SM (exact value not reported). On a checkride read it as "visibility greater than 6 statute miles." Never invent numbers like "17 statute miles."</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q"><b>AO1 vs AO2</b> — what's the difference?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>AO1</b> = Automated Station <b>WITHOUT</b> precipitation discrimination. <b>AO2</b> = Automated Station <b>WITH</b> precipitation discrimination (it can tell rain from snow). Almost every modern station is AO2.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What does <b>RMK</b> mean in a METAR, and where do you find the abbreviation list?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Remarks.</b> The contractions table is in <b>AIM 5-1-3</b>. Inside RMK you'll see SLP (sea-level pressure), the T-group (precise temp/dewpoint to the tenth), wind-shift codes, etc.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Cloud coverage codes — <b>FEW · SCT · BKN · OVC</b> — in oktas?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>FEW</b> 1–2 oktas · <b>SCT</b> scattered 3–4 · <b>BKN</b> broken 5–7 · <b>OVC</b> overcast 8/8.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">METAR weather descriptors — what do <b>BR, BL, FZ, MI, TS, DZ, GR</b> mean?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>BR</b> mist ("baby rain") · <b>BL</b> blowing · <b>FZ</b> freezing · <b>MI</b> shallow · <b>TS</b> thunderstorm · <b>DZ</b> drizzle · <b>GR</b> hail.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Decode <b>BLDU</b> and <b>+TSRA</b> from a METAR.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>BLDU</b> = blowing widespread dust. <b>+TSRA</b> = heavy thunderstorm with rain. Modifiers stack: <b>-</b> = light, no symbol = moderate, <b>+</b> = heavy.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">How is a runway number derived from the magnetic bearing?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Round to the nearest 10°, drop the last digit.</b> Heading 198° → "Runway 20." Heading 022° → "Runway 02." Lowest possible: 01. Highest: 36. Never single digit.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Reciprocal of Runway 09? Of Runway 24? Of Runway 02?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>09 ↔ 27</b> · <b>24 ↔ 06</b> · <b>02 ↔ 20</b>. Math trick: <b>±20</b> (the drop-the-zero version of ±180°). Add 20 if the number is in the 01–18 range, subtract 20 if in 19–36.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What do the <b>L / C / R</b> suffixes on a runway number mean, and from whose perspective?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Left / Center / Right</b> assigned from the <b>approach side</b>. KSNA has 20L and 20R; when winds shift the same strips become 02L and 02R (still left/right from the new approach direction).</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">When do you spell digits ATC-style vs. speak them plain?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Spell digit-by-digit:</b> headings, runway numbers, squawk codes, frequencies. <b>Speak plain:</b> speeds, altitudes, visibility ≤10, relative degree offsets ("15-degree offset"). Headings get 3 digits; "heading 080" = "zero eight zero."</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What does <b>CFIT</b> stand for, and what's the typical scenario?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Controlled Flight Into Terrain.</b> Pilot flies a fully airworthy airplane into terrain — no mechanical failure, just a decision-making failure. Classic setup: VFR-only pilot pushes into IMC, becomes spatially disoriented, descends into a mountain.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">You are VFR-only and accidentally enter IMC. What is the radio call?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">"<b>Mayday, mayday, mayday — Skyhawk 51840 — IMC, request vectors out of cloud, no longer VFR.</b>" Declare immediately. Don't try to fly out yourself.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Name the five hazardous attitudes the FAA identifies.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1. Anti-authority · 2. Impulsivity · 3. Invulnerability · 4. Macho · 5. Resignation.</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Antidote to <b>anti-authority</b> ("don't tell me")?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>"Follow the rules. They are usually right."</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Antidote to <b>impulsivity</b> ("do it now")?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>"Not so fast. Think first."</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Antidote to <b>invulnerability</b> ("it won't happen to me")?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>"It could happen to me."</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Antidote to <b>macho</b> ("I can do it")?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>"Taking chances is foolish."</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Antidote to <b>resignation</b> ("what's the use")?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>"I'm not helpless. I can make a difference."</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Recite the FAA definition of a <b>runway incursion</b>.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">"<b>Any occurrence at an aerodrome involving the incorrect presence of an aircraft, vehicle, or person on the protected area of a surface designated for the landing and takeoff of aircraft.</b>"</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Name the four runway-incursion severity categories.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>A</b> barely-avoided collision · <b>B</b> significant potential for collision · <b>C</b> ample time and distance to avoid · <b>D</b> little to no risk.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What were the <b>Tenerife</b> accident's key facts (year, airlines, fatalities, cause)?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1977, KLM 4805 + Pan Am 1736, ~583 fatalities</b> — worst aviation disaster in history. Low-vis day at Los Rodeos, runway being used as a taxiway. KLM started take-off roll without clearance while Pan Am was still back-taxiing on the same runway. <b>The textbook why-we-read-back-clearances story.</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What are <b>HS1</b> and <b>HS2</b> at KSNA?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">FAA-charted <b>hot spots</b> — areas of elevated runway-incursion risk between the runways. Hot spots = "extra eyes," not "avoid." The midfield run-up area in front of Hotel was a hot spot until recently — treat it like one anyway.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Define <b>movement area</b> and <b>non-movement area</b>.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Movement area</b> = all taxiways and runways under the jurisdiction of the control tower; clearance required to enter. <b>Non-movement area</b> = ramps and parking; ATC does NOT control; no clearance needed.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Solid yellow line vs dashed yellow line at the boundary — which is which?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>SOLID yellow = non-movement side</b> (you stop). <b>DASHED yellow = movement side</b> (clearance required to cross). Mnemonic: <b>"dash = movement, solid = stopped."</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q"><b>Sterile cockpit</b> during taxi — what does it mean and why does it matter?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">No phone, no app fiddling, no non-essential conversation during taxi. ATC can amend your clearance any moment ("hold short Echo for Southwest, caution jet blast"). Miss the call = runway incursion.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q"><b>Guard frequency</b> — what is it, and why monitor it?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>121.5</b> — the universal emergency frequency. Every aircraft monitors it. If you go down or call mayday on guard, every plane within range hears you. Monitor it whenever you're not on flight following.</div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </article>
         <!-- AUTO_INGEST_SPARKNOTES_ARTICLES_END -->
 
       </div>
@@ -3372,6 +3752,192 @@ function addGroundLessonOnce(lessonKey, entry, homeworkTexts, source) {
 
 function runAutoIngestedLessons() {
   /* AUTO_INGEST_LESSONS_START */
+  addGroundLessonOnce('GL4', {
+    date: '2026-04-24',
+    lesson: 4,
+    duration: 1.7,
+    cost: 0,
+    topics: `METARS, RUNWAY NUMBERING, HAZARDOUS ATTITUDES, RUNWAY INCURSIONS & MOVEMENT AREAS — KSNA (1 hr 44 min · CFI Desireé · transcript-sourced)
+
+— METAR DECODING (READING IT OUT LOUD) —
+• METAR = routine hourly weather observation. Standard issue at the 55-minute mark; a SPECI ("special") gets issued mid-hour when conditions change drastically. ATIS pulls from the same data — that's why ATIS rolls hourly too.
+• Verbal read order — "METAR for [airport] on the [DD]th day at [HHMM] Zulu, winds are [DDD] at [SS], gusting [GG] knots, [V] statute miles of visibility, [coverage] at [altitude], temperature [T], dewpoint [D], altimeter [A.AA], remarks [...]."
+• Date/time block — first six digits = DDHHMM Zulu (e.g., 240053Z = 24th day, 00:53Z). Always say "on the [DD]th day at [HHMM] Zulu."
+• Wind block — DDDSSGGGKT (direction/speed/gust/knots). Say "winds are 180 at 11, gusting 18 knots." Don't say "at 11 to 18" — speeds are AT, gust is the upper number. Direction is always 3-digit and SPELLED OUT digit-by-digit ("one eight zero", not "one-eighty").
+• Visibility — say "10 statute miles of visibility." Past 10, METARs use P6SM (Plus 6 Statute Miles); never say "17 statute miles." Below 10 the integer is spoken plain.
+• Cloud coverage — FEW (1–2 oktas), SCT scattered (3–4), BKN broken (5–7), OVC overcast (8/8). Read as "few clouds at 2,700, scattered at 9,000, scattered at 25,000."
+• Temp / dewpoint — two digits each, comma-separated in spoken form: "temperature 19, dewpoint 13." In RMK detail (T-group) it's stored as decimal: T01890128 = 18.9 °C / 12.8 °C → rounded for the basic METAR.
+• Altimeter — A2986 = 29.86" Hg. Say "altimeter 2986" (numeric, no decimal in voice).
+• AO1 vs AO2 — AO1 = automated station WITHOUT precipitation discrimination. AO2 = automated station WITH precipitation discrimination (it can tell rain from snow). Almost every modern station is AO2.
+• RMK = "Remarks." Per AIM 5-1-3 list of contractions. Following abbreviations live here: SLP (sea-level pressure), T-group (precise temp/dew in tenths), wind-shift codes.
+• Weather descriptor codes (memorize the common merges) — TS thunderstorm, FZ freezing, BL blowing, DR drift, MI shallow, BR mist ("baby rain" = mist), PR partial, SH shower, SQ squall, FC funnel cloud, DZ drizzle, RA rain, SN snow, GR hail, GS small hail, FG fog, HZ haze, DU widespread dust, SA sand, FU smoke. Combinations are common: BLDU = blowing widespread dust, -RA = light rain, +TSRA = heavy thunderstorm with rain.
+• P6SM — "Plus 6 Statute Miles" — visibility >6 SM, exact value not reported.
+• Practice drill — DPE will pull a Wyoming or Denver METAR (somewhere with real weather) and tell you to decode it cold. Get hands on ForeFlight, pull a different airport every day.
+
+— RUNWAY NUMBERING & RECIPROCALS —
+• Runway number = magnetic bearing of the runway centerline, rounded to nearest 10°, dropping the last digit. Heading 198° → "20." Heading 022° → "02."
+• Always SAY both digits ("two zero," not "twenty"). ATC will never clear you to "Runway 200" or "Runway 90" — they say two-zero, niner-zero (or zero-niner-zero).
+• Reciprocals — same physical runway, opposite direction. Math trick: ±20 / ∓20. Add 20 to the "right" half (or subtract 20 from the "left" half) to flip direction. So 020 ↔ 200, 060 ↔ 240, 090 ↔ 270.
+• Lowest possible runway number is 01 (heading 010°); highest is 36 (heading 360°). Never single-digit.
+• Parallel runway suffix — L (left), C (center), R (right) when viewed from the approach end. KSNA has 20L / 20R (parallel pair). When winds shift, those same physical strips become 02L / 02R (still left/right from the NEW approach direction — KSNA is symmetric, but at most airports the L/R swap accordingly).
+• KSNA prevailing — winds favor 20L/20R 99% of the time (winds come off the coast, you depart toward the coast into headwind). 02 ops are rare.
+• Heading conventions — ATC issues headings as 3-digit, spoken digit-by-digit: heading 080 = "zero eight zero." Speeds are spoken plain ("100 knots," "VFR at or below 2500"). Visibility is spoken plain below 10. The 15° wake-turbulence offset at KSNA is spoken "fifteen degrees" (NOT "one five zero degrees") because it's a relative offset, not a heading.
+
+— CFIT (CONTROLLED FLIGHT INTO TERRAIN) —
+• Definition — Pilot flies a fully airworthy airplane into terrain or water. NO mechanical emergency. Almost always a decision-making failure.
+• Common scenario — VFR-only pilot pushes into deteriorating weather, gets into IMC, becomes spatially disoriented, descends into a mountain or the ground.
+• KSNA local hazard — Santiago Peak (5,689 ft) collects orographic clouds. Crossing east on a cross-country with marginal weather is the textbook setup.
+• If you accidentally enter IMC as a VFR pilot — DECLARE AN EMERGENCY immediately: "Mayday, mayday, mayday, Skyhawk 51840, IMC, request vectors out of cloud, no longer VFR." Don't try to hide it. ATC vectors you out.
+• PAVE = the risk framework that catches CFIT before takeoff. CFIT lives mostly under enVironment (weather) and External pressures (must-fly attitudes), occasionally under Pilot (fatigue, get-there-itis).
+
+— HAZARDOUS ATTITUDES (MEMORIZE ALL FIVE + ANTIDOTES) —
+The FAA identifies five hazardous attitudes that degrade pilot decision-making. Each has a one-line dangerous thought and a one-line antidote. Both columns are written-test fodder — DPE shows the dangerous thought, you pick the antidote (or vice versa).
+
+  1. ANTI-AUTHORITY — "Don't tell me." → Antidote: "Follow the rules. They are usually right."
+  2. IMPULSIVITY — "Do it now." → Antidote: "Not so fast. Think first."
+  3. INVULNERABILITY — "It won't happen to me." → Antidote: "It could happen to me."
+  4. MACHO — "I can do it." → Antidote: "Taking chances is foolish."
+  5. RESIGNATION — "What's the use?" → Antidote: "I'm not helpless. I can make a difference."
+
+• Self-assessment — ask yourself which is YOUR default. Desireé's was impulsivity (cost her her first checkride — see story below). Aryan's read on himself: anti-authority leans first, with macho second; resignation lowest.
+• Desireé's CFI checkride bust — extending upwind at KSNA, in her head debating whether ATC actually said "extend." Convinced herself she'd misheard, turned downwind early, conflicted with traffic ATC was sequencing in. Examiner: "girlfriend, it was perfect — I have to bust you for this." Could have been resolved with the G1000 audio playback button (which she KNEW existed). Pure impulsivity. Lesson: if unsure of a clearance, USE the playback button or ask ATC to confirm — don't act on what you THINK you heard.
+
+— CFIT vs PAVE PLACEMENT —
+• Pilot (I'M SAFE) = personal readiness — illness, medications, stress, alcohol, fatigue, eating
+• Aircraft = airworthiness (separate "Arrow"-style mnemonic)
+• enVironment = weather (where CFIT mostly sits)
+• External pressures = passengers, business commitments, get-there-itis (the other CFIT trigger)
+
+— RUNWAY INCURSIONS —
+• FAA definition — "Any occurrence at an aerodrome involving the incorrect presence of an aircraft, vehicle, or person on the protected area of a surface designated for the landing and takeoff of aircraft." Memorize verbatim.
+• Aerodrome — broader than "airport"; "a defined area on land or water, including buildings, installations, and equipment, intended for the arrival, departure, and movement of aircraft."
+• FOUR severity categories (A worst, D best):
+    A — Barely avoided collision
+    B — Significant potential for collision
+    C — Ample time and distance to avoid collision
+    D — Little to no risk of collision
+• CFI examiners HARP on runway incursions. They happen at TOWERED fields too (you'd be surprised) — not just non-towered.
+• KSNA-specific incursion risks:
+    — Back taxi: airliners use the runway as a taxiway in the early morning before the noise-abatement window opens (~7 AM). They taxi DOWN the runway, then take off in sequence. Cessnas hold and wait.
+    — Opposite-direction taxiway sharing: KSNA Cessna ops share a single taxiway with oncoming aircraft. ATC announces "caution opposite-direction Cessna." Both move RIGHT, pass nose-to-nose, resume.
+    — Southwest off Hotel: airliners normally exit at Echo or Delta (long-rollout). When they unexpectedly exit at Hotel, you can get squeezed.
+    — Echo crossing: when ATC routes you Alpha-Hotel to midfield run-up, watch for "hold short of Echo for Southwest. Caution jet blast."
+• HOT SPOTS — FAA-charted areas of elevated incursion risk. KSNA has HS1 and HS2 (between the runways). Marked on the airport diagram and chart supplement. Hotspots = "extra eyes here" — you don't avoid them, you scan harder.
+• Note — the midfield run-up area (in front of Hotel) used to be a hotspot until recently. They removed the designation when construction started, but the underlying risk hasn't changed — treat it like a hotspot anyway.
+• TENERIFE (1977, KLM 4805 + Pan Am 1736) — worst aviation disaster in history (583 fatalities — Desireé said "538"; correct figure is 583). Low-vis day at Los Rodeos (now Tenerife North), runway being used as a taxiway. KLM started take-off roll without clearance while Pan Am was still back-taxiing on the same runway. Tail strike, near-clear, crashed on top of Pan Am. WHY IT MATTERS: this is THE textbook why-we-read-back-clearances story. DPEs cite it.
+
+— MOVEMENT AREAS vs NON-MOVEMENT AREAS —
+• Movement area — "All taxiways and runways under the jurisdiction of the control tower." Clearance required to enter. ATC controls.
+• Non-movement area — Ramps and parking areas; ATC does NOT control. You can move/taxi/push without a clearance or radio call.
+• Surface markings — SOLID yellow line = boundary; NON-MOVEMENT side is solid. DASHED yellow line = MOVEMENT side. Mnemonic: "Dash = movement, solid = stopped."
+• Practical example — Pulling the plane out of the tie-down at Dove Street to a parking spot is non-movement; no call needed. Taxiing onto Charlie or Hotel = movement, ground clearance required.
+• Edge case — if a wing/wheel will overhang from non-movement INTO movement during ground handling (e.g., maneuvering a plane on foot), grab a handheld, tune ground, give a courtesy call: "Ground, just FYI we're shifting an aircraft at Dove Street, the wing will overhang the movement boundary." Sometimes they'll say "stand by" if traffic is congested.
+
+— TAXI WORKLOAD MANAGEMENT —
+• STERILE COCKPIT — During taxi, no non-essential conversation, no phone, no app fiddling. ATC can amend your clearance any time ("hold short of Echo for Southwest"); miss the call and you're a runway incursion.
+• Take-runway flow — "Lights, camera, action": all exterior lights ON, mixture FULL RICH, transponder/squawk confirmed. Then clear approach end, clear opposite end.
+• Clear-direction call when crossing intersections — "Clear left, clear straight, clear right" out loud, head moving. Same logic as a car at an uncontrolled intersection.
+• Read-back EVERY clearance. If you're unsure, query ATC ("Confirm hold short Echo, Skyhawk 51840"). They'd rather repeat than have an incursion.
+
+— ATC HANDOFFS, FLIGHT FOLLOWING & GUARD —
+• "Babysitter" model — whoever you're talking to is your current babysitter. Need to amend the plan? Talk to your CURRENT controller, not back to clearance.
+• Outbound flow KSNA — Clearance → Ground → Tower → SoCal Departure. Inbound — SoCal → Tower → Ground.
+• Flight following — VFR advisory service from a TRACON facility (SoCal at KSNA on 124.1). Optional in most airspace. You get traffic advisories ("Skyhawk 51840, traffic 12 o'clock, descend to 2,500 and turn this heading"). KSNA is one of the few class-C fields where you must depart WITH flight following.
+• Quiet periods — once you're established in the El Toro practice area, SoCal often won't talk to you for long stretches. They're still there.
+• Without flight following — you self-separate (ADS-B / Sentry / visual scan) and monitor GUARD frequency 121.5 (the universal emergency frequency — every aircraft monitors it; if you go down or call mayday on guard, every plane within range hears).
+
+— AIM CHAPTER REFERENCES (HOMEWORK READING) —
+• AIM Chapter 5 — Air Traffic Procedures (clearance/handoff procedures)
+• AIM Chapter 7 — Safety of Flight (weather services, hazardous weather, contractions table at AIM 5-1-3 for METAR/NOTAM abbreviations)
+• AIM Chapter 14 — Airport Operations (signs, markings, lighting — required reading before next lesson)
+• FAR/AIM — front half is the FARs (regulations), back half is the AIM (the how-to). When the DPE asks "what FAR covers..." you flip to the front; "what does ATIS look like..." back half.
+
+NEXT (per Desireé): Read AIM Chapter 14 — airport signs, runway/taxiway markings, glide slope visuals, airport lighting. DPE will pull a sign image and ask "is this taxiway or runway?" Pure memorization — get the visuals in your head before next ground.
+
+KEYWORDS: METAR · SPECI · AO1/AO2 · RMK · P6SM · BR (mist) · BLDU · Runway numbering (magnetic ÷ 10) · Reciprocals (±20) · L/C/R parallels · KSNA 20L/20R · Hazardous attitudes (Anti-authority/Impulsivity/Invulnerability/Macho/Resignation) · CFIT · Runway incursion (A/B/C/D) · Tenerife · Hot spots HS1/HS2 · Movement vs non-movement · Dashed = movement · Sterile cockpit · Lights camera action · Flight following · SoCal 124.1 · Guard 121.5 · AIM Ch 5/7/14.`,
+    notes: `**Overview**
+1 hr 44 min ground at KSNA with Desireé. Heavy on weather decoding (METARs read out loud the way ATC says them), runway numbering math, the five hazardous attitudes + antidotes, runway incursions (with the Tenerife reference and KSNA-specific hotspots), and the movement-vs-non-movement distinction. Lighter coverage of CFIT, sterile cockpit, ATC handoff "babysitter" model, and flight following. Closes with reading assignment for AIM Ch 14 (airport signs and markings) before next lesson.
+
+**METAR — read it out loud the way ATC reads it**
+Aryan walked through KSNA and Denver METARs verbatim. Desireé corrected the cadence — direction is digit-by-digit ("one eight zero" not "one-eighty"), wind is "AT" (not "at to"), gust is the upper number, visibility past 10 is P6SM (never spoken). Cloud sequence is FEW/SCT/BKN/OVC at the reported altitude. The T-group inside RMK gives precise temps to the tenth — the basic METAR rounds. AO2 = automated station WITH precipitation discrimination; AO1 is without. RMK = remarks (per AIM 5-1-3). Weather descriptors merge: BLDU = blowing dust, -RA = light rain, +TSRA = heavy thunderstorm rain. BR is mist ("baby rain" — Desireé doesn't actually know why it's BR). Practice with a different airport every day; DPEs pull from places with actual weather (Wyoming, Denver).
+
+**SPECI vs METAR**
+SPECI = special, issued mid-hour when conditions change drastically. METAR = the routine hourly issue at the :55 mark. ATIS rolls hourly off the same data; if a SPECI hits, ATIS updates mid-hour and the letter advances.
+
+**Runway numbering & reciprocals**
+Runway number = magnetic bearing rounded to nearest 10, last digit dropped. Heading 198° → "20" (RWY 20). Always SAY both digits ("two zero"). Reciprocal math: add or subtract 20 (the "drop the zero" version of ±180°). 020 ↔ 200, 060 ↔ 240, 090 ↔ 270. Lowest is 01, highest is 36; never single digits. Parallel suffix L/C/R from approach side. KSNA = 20L/20R 99% of the time.
+
+**Heading conventions**
+ATC speaks headings 3-digit digit-by-digit ("zero eight zero"). Speeds plain ("100 knots"). Visibility integer plain when ≤10. The 15° KSNA wake-turbulence offset is spoken "fifteen degrees" because it's relative — not a heading. Aryan asked the consistent meta-question (when do we spell out vs. say plain?) — answer: headings/runway numbers/squawks digit-by-digit; speeds/altitudes/visibility/relative-degrees plain.
+
+**CFIT (controlled flight into terrain)**
+Pilot crashes a perfectly good airplane into terrain because of a decision-making failure. KSNA local hazard = Santiago Peak (orographic clouds park on top). VFR-only pilot pushes into IMC → spatial disorientation → impact. Antidote: declare emergency the moment you're inadvertently IMC ("mayday × 3, Skyhawk 51840, IMC, request vectors out of cloud, no longer VFR"). Don't try to fly out yourself. Lives in the enVironment + External pressures slots of PAVE.
+
+**The five hazardous attitudes (memorize verbatim with antidotes)**
+1. Anti-authority "don't tell me" → "follow the rules, they are usually right"
+2. Impulsivity "do it now" → "not so fast, think first"
+3. Invulnerability "it won't happen to me" → "it could happen to me"
+4. Macho "I can do it" → "taking chances is foolish"
+5. Resignation "what's the use" → "I'm not helpless, I can make a difference"
+
+DPE will give you the dangerous thought and ask for the antidote (or vice versa) on the written. Self-assessment matters too — know your own default. Aryan: anti-authority + macho. Desireé: impulsivity (cost her her first CFI checkride — extended upwind, debated in her head whether she heard the call right, didn't use the G1000 playback button she knew existed, turned downwind early, examiner busted her on the spot). Lesson: when in doubt about a clearance, ASK or use the playback. Don't act on what you THINK you heard.
+
+**Runway incursions**
+Memorize FAA definition: "any occurrence at an aerodrome involving the incorrect presence of an aircraft, vehicle, or person on the protected area of a surface designated for the landing and takeoff of aircraft." Aerodrome = "a defined area on land or water, including buildings, installations, and equipment, intended for the arrival, departure, and movement of aircraft."
+
+Severity categories (A worst → D best): A barely-avoided collision; B significant potential; C ample time/distance to avoid; D little/no risk. CFI examiners harp on this. Happens at TOWERED fields too.
+
+KSNA-specific risks: morning back-taxi (airliners use the runway as a taxiway before noise-abatement opens), opposite-direction taxi sharing, Southwest unexpectedly exiting at Hotel, Echo crossings when going to midfield run-up. HS1 and HS2 are the charted hot spots (between the runways). The midfield run-up area was a hot spot until recently — Desireé says treat it like one anyway.
+
+Tenerife (1977, KLM 4805 + Pan Am 1736) — worst aviation disaster ever. Desireé said 538 deaths; actual figure is 583. Low-vis runway-as-taxiway scenario, KLM rolled without clearance while Pan Am was still on the runway. THIS is why we read back every clearance.
+
+**Movement vs non-movement areas**
+Movement = all taxiways and runways under tower jurisdiction; ATC controls; clearance required. Non-movement = ramps and parking; not ATC; no clearance needed. SOLID yellow line = boundary, non-movement side. DASHED yellow = movement side. Mnemonic: "dash = movement." Pulling a plane out of a tie-down on foot = non-movement, no call. If a wing overhangs the boundary while ground-handling, grab a handheld and give ground a courtesy call.
+
+**Sterile cockpit during taxi**
+No phone, no app fiddling, no non-essential talk during taxi. ATC can amend ("hold short Echo for Southwest, caution jet blast"); miss it = incursion. Take-runway flow: "lights, camera, action" (lights on, mixture full rich, squawk confirmed). Clear approach end, clear opposite end. At intersections: "clear left, clear straight, clear right" out loud, head moving.
+
+**ATC babysitter model & flight following**
+Whoever you're talking to NOW is your babysitter — talk to them when you want to amend. Don't reach back to clearance. Outbound: Clearance → Ground → Tower → SoCal Departure (124.1). Inbound: SoCal → Tower → Ground. Flight following = TRACON VFR advisory service; mandatory at KSNA on departure. Once you're in the El Toro practice area, SoCal often goes quiet for long stretches. Without flight following, you self-separate and monitor Guard 121.5 (universal emergency).
+
+**KSNA ATIS frequency note**
+Per the live ATIS recording during the lesson, ATIS is on 126.0 (matching prior lesson). Tower 119.9 South. Departure handoff 124.1 SoCal.
+
+**Reading assignment**
+AIM Chapter 14 — Airport Operations (signs, runway/taxiway markings, lighting). DPE will pull a sign image and ask "taxiway or runway?" Pure memorization.
+
+**Aryan-specific context**
+Aryan is detail-oriented and pushed back productively when phraseology rules seemed inconsistent (when do we spell out digits vs. say plain?). He grasped the reciprocal math quickly. Self-assessed his hazardous attitudes accurately. Did not yet have hands on a real plane this week — flight time pending.
+
+Source: Fireflies transcript "Ground Lesson 4 Apr 24, 05:48 PM" (~104 min). Full verbatim mining of 1664 lines.`,
+    fireflies_id: '01KQ11RQGTTD1TVDJNDZ3TXQMZ'
+  }, [
+    'Read AIM Chapter 14 — Airport Operations (signs, runway/taxiway markings, lighting) before next ground lesson — DPE will pull sign images and ask "taxiway or runway?"',
+    'Read AIM Chapter 5 — Air Traffic Procedures (clearance/handoff structure)',
+    'Read AIM Chapter 7 — Safety of Flight (weather services, hazardous weather)',
+    'Memorize AIM 5-1-3 contractions table — RMK, AO1/AO2, SLP, T-group, common weather descriptors',
+    'Practice reading METARs OUT LOUD — pull a different airport in ForeFlight every day; build cadence (digit-by-digit direction, "AT" for wind, P6SM for vis >6)',
+    'Memorize METAR weather descriptor codes: TS, FZ, BL, DR, MI, BR (mist), PR, SH, SQ, FC, DZ, RA, SN, GR, GS, FG, HZ, DU, SA, FU — and how they combine (-RA light rain, +TSRA heavy thunderstorm rain, BLDU blowing dust)',
+    'Memorize AO1 vs AO2 (without vs with precipitation discrimination), SPECI vs METAR (special vs hourly routine at :55)',
+    'Memorize cloud coverage codes — FEW (1–2 oktas), SCT (3–4), BKN (5–7), OVC (8/8) — and the verbal read order',
+    'Memorize runway numbering rule — magnetic bearing rounded to nearest 10°, last digit dropped; always say both digits ("two zero," not "twenty"); lowest 01, highest 36',
+    'Memorize reciprocal math — ±20 trick: 020↔200, 060↔240, 090↔270 — and L/C/R parallel suffix from approach side',
+    'Memorize the five FAA hazardous attitudes and ALL FIVE antidotes verbatim — the written test pairs them: anti-authority/follow rules, impulsivity/not so fast, invulnerability/it could happen to me, macho/taking chances is foolish, resignation/I am not helpless',
+    'Self-assess your default hazardous attitude(s) — Aryan currently identifies as anti-authority + macho; lowest is resignation',
+    'Memorize CFIT definition (controlled flight into terrain) and the IMC-emergency call: "Mayday mayday mayday, Skyhawk 51840, IMC, request vectors out of cloud, no longer VFR"',
+    'Memorize FAA runway incursion definition VERBATIM: "any occurrence at an aerodrome involving the incorrect presence of an aircraft, vehicle, or person on the protected area of a surface designated for the landing and takeoff of aircraft"',
+    'Memorize the four runway incursion severity categories: A barely-avoided collision · B significant potential · C ample time/distance to avoid · D little/no risk',
+    'Study Tenerife (1977 KLM/Pan Am, ~583 fatalities) as the canonical why-we-read-back-clearances case — Desireé will send the video',
+    'Memorize KSNA hot spots HS1 and HS2 (between the runways) — and treat the midfield run-up area as a hot spot even though designation was removed during construction',
+    'Memorize movement vs non-movement areas — movement = all taxiways/runways under tower jurisdiction (clearance required); non-movement = ramps/parking (no clearance); SOLID yellow line = non-movement side, DASHED yellow = movement side ("dash = movement")',
+    'Drill the take-runway "lights, camera, action" flow — all exterior lights ON, mixture FULL RICH, squawk confirmed; clear approach end and opposite end before crossing the hold short',
+    'Drill intersection scan — "clear left, clear straight, clear right" OUT LOUD, head moving, before crossing any taxiway intersection',
+    'Drill the sterile-cockpit rule during taxi — no phone, no app fiddling, no non-essential talk; ATC can amend any time ("hold short Echo for Southwest, caution jet blast")',
+    'Drill the ATC "babysitter" handoff model — whoever you are talking to NOW handles your amendments; do not reach back to a previous controller',
+    'Memorize KSNA outbound flow: Clearance → Ground → Tower → SoCal Departure 124.1; inbound: SoCal → Tower → Ground',
+    'Memorize Guard frequency 121.5 — universal emergency; monitor it when not on flight following',
+    'When unsure of an ATC clearance, USE the G1000 audio playback button OR query ATC ("Confirm hold short Echo, Skyhawk 51840") — never act on what you THINK you heard (this cost Desireé her first CFI checkride to impulsivity)'
+  ], 'Ground L4 · 2026-04-24');
   /* AUTO_INGEST_LESSONS_END */
 }
 
