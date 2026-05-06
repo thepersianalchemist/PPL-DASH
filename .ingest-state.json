@@ -10,7 +10,7 @@
     3,
     4
   ],
-  "lastRun": "2026-04-29T03:41:58.000Z",
+  "lastRun": "2026-05-05T00:00:00.000Z",
   "lastRunStatus": "no-new",
-  "lastRunMessage": "No new ground lessons since last run. Fireflies query (14-day window from 2026-04-14, mine=true, limit=50) returned 29 transcripts; matched 3 against /^Ground lesson \\d+/i (GL1=01KP7B07K7D4CW1EGK485SWA8T, GL3=01KPS8BYBGNYVZF84AFK0EX9VD, GL4=01KQ11RQGTTD1TVDJNDZ3TXQMZ) — all already ingested. GL2 transcript ('Principles of Flight Apr 16, 05:30 PM Ground 2') doesn't match the regex but lesson #2 is already in ingestedLessonNumbers. No GL5+ found."
+  "lastRunMessage": "No new ground lessons matching the title regex `^Ground lesson \\d+\\b` since last run. Window scanned: 14 days from 2026-04-21, 20 transcripts retrieved. Title-matching transcripts found: GL3 (2026-04-21, id 01KPS8BYBGNYVZF84AFK0EX9VD) and GL4 (2026-04-24, id 01KQ11RQGTTD1TVDJNDZ3TXQMZ) — both already in state. NOTE: transcript 01KQXBR03YYE6NRPPFGDRHERG1 dated 2026-05-05 17:41 PT (108 min, Aryan-only, no meeting link) has content that strongly suggests Ground Lesson 5 — covers stall aerodynamics, power-on/power-off stall procedures, PARE spin recovery, mixture leaning above 3000 ft, ACS standards, KSNA traffic-pattern stall/spin risks. Title is the Fireflies default 'May 05, 05:41 PM' — does NOT match the regex, so skipped per strict filter rules. ACTION FOR ARYAN: if this is GL5, rename it in Fireflies to 'Ground lesson 5 May 05, 05:41 PM' (or similar), then re-run the sync. Remaining 18 transcripts are SkyAccess work meetings (JetNet, AMSTAT, FetchAir, TrueSkies, FlyingZebra, AirAlsie, OKR/negotiation training, etc.) plus 2 personal (Private Chef, Laguna Beach house) — non-matching. No edits, no commit."
 }
