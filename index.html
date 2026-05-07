@@ -918,6 +918,7 @@
           <button class="spark-chip" data-spark="far-61113">FAR Reference · ATC Comms · KSNA Ops</button>
           <!-- AUTO_INGEST_SPARKNOTES_CHIPS_START -->
           <button class="spark-chip" data-spark="gl4-metars-incursions">GL4 · METARs · Hazardous Attitudes · Incursions</button>
+          <button class="spark-chip" data-spark="gl5-stalls-spins">GL5 · Stalls · Spins · PARE</button>
           <!-- AUTO_INGEST_SPARKNOTES_CHIPS_END -->
         </div>
 
@@ -2038,6 +2039,317 @@
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q"><b>Guard frequency</b> — what is it, and why monitor it?</div><div class="flash-hint">Tap to flip ↻</div></div>
                   <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>121.5</b> — the universal emergency frequency. Every aircraft monitors it. If you go down or call mayday on guard, every plane within range hears you. Monitor it whenever you're not on flight following.</div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </article>
+
+        <!-- ========== GL5 · Stalls · Spins · PARE · Mixture · KSNA Base-to-Final ========== -->
+        <article class="spark-article hidden" data-article="gl5-stalls-spins">
+          <header class="spark-head">
+            <span class="chip">GL5 · 2026-05-05</span>
+            <h1>Stalls, Spins, PARE & the KSNA Base-to-Final Killer Turn — Sparknotes</h1>
+            <p class="spark-sub">Critical AoA, the verbatim power-on/power-off procedures, the four-letter spin recovery, and why the deadly turn keeps killing pilots.</p>
+          </header>
+
+          <div class="spark-callout info">
+            <div class="sc-title">The gist — 5 bullets</div>
+            <ul>
+              <li><b>A stall is exceeding the CRITICAL ANGLE OF ATTACK.</b> You can stall at any airspeed. Memorize this verbatim — DPE will ask.</li>
+              <li><b>Power-on procedure:</b> 1500 RPM, back pressure, hold to 55 kt, throttle to ≥65%, pitch 20–25°, call-outs <em>mushy / horn / stall</em>, recover.</li>
+              <li><b>Power-off procedure:</b> carb heat OUT, 1800 RPM, flaps 10/20/30 (below 110/85/85), 65 kt stabilized descent, descend 8–15 sec, power idle, pitch 10–15° flare, call-outs <em>mushy / horn / buffeting / stall</em>, recover.</li>
+              <li><b>A spin requires BOTH stall AND uncoordinated flight.</b> Recovery = <b>PARE</b> — Power idle · Ailerons neutral · Rudder OPPOSITE · Elevator forward.</li>
+              <li><b>The base-to-final turn is the killer.</b> 550–650 ft AGL, low recovery margin. Don't lead with rudder. Turn early not late. Overshoot? GO AROUND.</li>
+            </ul>
+          </div>
+
+          <h2 class="spark-h2">Stall Fundamentals</h2>
+          <div class="spark-formula">A stall = exceeding the CRITICAL ANGLE OF ATTACK · You can stall at ANY airspeed</div>
+          <p>The critical angle of attack is the angle between the <b>chord line</b> (leading edge to trailing edge) and the <b>relative wind</b> at which airflow over the wing separates and Bernoulli stops producing lift. Airspeed alone does not define a stall — angle of attack does.</p>
+
+          <h3 class="spark-h3">The Four Phases of a Stall</h3>
+          <div class="spark-kv">
+            <div><b>1. Entry</b><span>Normal flight transitions toward stall as AoA increases.</span></div>
+            <div><b>2. Incipient</b><span>Stall just begins — wing dips, nose turns. Easiest phase to recover from.</span></div>
+            <div><b>3. Developed</b><span>Full stall, often combined with a spin if uncoordinated.</span></div>
+            <div><b>4. Recovery</b><span>Standard four-step recovery — break AoA, restore coordinated flight.</span></div>
+          </div>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">Most dangerous places to stall</div>
+            <p>Takeoff and landing — close to the ground, no time to recover. The base-to-final turn is the textbook killer (see below).</p>
+          </div>
+
+          <h2 class="spark-h2">Pre-Maneuver (Cruise) Checklist & Pitch–Power–Trim</h2>
+          <p>Before EVERY maneuver. Plane must be straight-and-level and TRIMMED for it first — fly with fingertips, not with a death grip. If you're already fighting the airplane, the maneuver will be ugly.</p>
+
+          <div class="spark-formula">PITCH → POWER → TRIM (always in that order, never reversed)</div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">Originally taught backwards (power-pitch-trim) you'll fight the plane forever. Pitch first, every time.</p>
+
+          <h3 class="spark-h3">Cruise Checklist Items (say out loud)</h3>
+          <p>Power · Airspeed · Trim · Mixture · Lights · Carb heat · Pitot heat · Defrost · <b>CB</b> (circuit breakers — the one that confuses students) · Flight & engine instruments · Tasks · CO detector · Flight plan · Fuel quantity & selector both · Map · Range · Area clear · <b>Bug set</b>.</p>
+
+          <h3 class="spark-h3">Leveling-Off Flow</h3>
+          <p>~50 ft prior to assigned altitude, anticipate. Pitch nose toward the horizon → airspeed comes up from Vy 76 kt to ~80–85 → reduce power to 2100–2200 RPM (whatever holds level) → trim quarter-inch to inch nose-down. The 172 cruise sweet spot is 2100–2200 RPM.</p>
+
+          <h2 class="spark-h2">Mixture Leaning Above 3,000 MSL</h2>
+          <p>Air is less dense at altitude — molecules are spread out. The same fuel rate floods the engine. We lean for three reasons: <b>(1) prevent flooding · (2) save fuel · (3) smoother engine.</b></p>
+
+          <div class="spark-kv">
+            <div><b>Below 3,000 MSL</b><span>Checklist says <b>50° rich of peak EGT</b>. You don't actively lean unless you're already up high.</span></div>
+            <div><b>Above 3,000 MSL</b><span>Active leaning required.</span></div>
+          </div>
+
+          <h3 class="spark-h3">G1000 Method (digital lean assist)</h3>
+          <p>Press the lean-assist button. Twist the mixture out — EGT readout climbs ("+50, +40 …"). Wait for it to peak, then turn the mixture IN until "−50". Target ~<b>1450 EGT</b>.</p>
+
+          <h3 class="spark-h3">N51840 Method (no digital readout)</h3>
+          <div class="spark-formula">Twist mixture OUT → watch RPM rise to peak → fall after peak → turn mixture IN three times</div>
+          <p>Watch the tach (or six-pack RPM bar). RPMs rise as you lean toward peak, then fall. Once you see them fall, turn the mixture knob in three full turns. That's your best fuel/air ratio for the current altitude. If the engine gets rough or the gauges quiver, you've over-leaned — twist back IN slightly.</p>
+
+          <h2 class="spark-h2">Carb Heat (Carbureted Engine)</h2>
+          <div class="spark-kv">
+            <div><b>When ON</b><span>Below the green arc, OR landing/descending. Heat into the throttle valve prevents ice formation.</span></div>
+            <div><b>Icing risk</b><span>~70°F + high humidity. Moisture freezes on the throttle valve → engine roughness → potential failure.</span></div>
+            <div><b>Power-on stall (N51840)</b><span><b>NO carb heat</b> per the POH (even though we go below the green arc).</span></div>
+            <div><b>Power-off stall</b><span>Carb heat <b>FULLY OUT</b>.</span></div>
+          </div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">Position is binary: <b>fully OUT = on (hot)</b>, <b>fully IN = off (cold)</b>. Don't half-set it.</p>
+
+          <h2 class="spark-h2">Power-On Stall — Verbatim Procedure</h2>
+          <ol class="spark-list">
+            <li>Pre-maneuver checklist · clearing turns · pick visual reference · bug heading · hold assigned altitude.</li>
+            <li>Reduce throttle to <b>1,500 RPM</b>. No flaps (we don't take off with flaps).</li>
+            <li>Add <b>back pressure</b> to hold assigned altitude — trading airspeed for altitude.</li>
+            <li>Hold pitch until airspeed drops to <b>55 KIAS</b> (Vr).</li>
+            <li>At 55 KIAS, add throttle to <b>NO LESS THAN 65% power</b> (per ACS — never full).</li>
+            <li>★ <b>STAY COORDINATED.</b> Correct deviations with RUDDER, not ailerons.</li>
+            <li>Pitch UP to <b>20–25°</b> (cruise climb is ~10° — much higher).</li>
+            <li>Call-outs: <em>"mushy controls" → "stall horn" → "stall."</em></li>
+            <li>Recovery: nose dips down naturally → reduce throttle → return to assigned altitude and heading.</li>
+          </ol>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">Why no full throttle on power-on stall?</div>
+            <p>At full power the plane keeps climbing/won't stall. You'd have to over-pitch into a dangerous attitude to get a stall. Just past half power is the N51840 sweet spot.</p>
+          </div>
+
+          <h2 class="spark-h2">Power-Off Stall — Verbatim Procedure (simulates landing)</h2>
+          <ol class="spark-list">
+            <li>Pre-maneuver checklist · clearing turns · bug heading · assigned altitude.</li>
+            <li>Carb heat <b>FULLY OUT</b>.</li>
+            <li>Throttle to <b>1,800 RPM</b>.</li>
+            <li>Flaps <b>10°</b> below 110 KIAS.</li>
+            <li>Flaps <b>20°</b> below 85 KIAS.</li>
+            <li>Flaps <b>30°</b> below 85 KIAS. (Hold altitude through this whole step — release back pressure as airspeed bleeds; nose comes down naturally.)</li>
+            <li>Establish <b>65 KIAS stabilized descent</b> (65 = glide AND approach speed).</li>
+            <li>Descend <b>8–15 seconds</b> (simulate "coming in to land").</li>
+            <li><b>Power IDLE</b> (throttle fully out). Carb heat stays out.</li>
+            <li>★ Stay coordinated with rudder.</li>
+            <li>Pitch nose UP to <b>10–15°</b> (simulates flare).</li>
+            <li>Call-outs (4): <em>"mushy controls" → "stall horn" → "buffeting" → "stall."</em></li>
+            <li>Recovery: nose pitches down → add right rudder → <b>FULL THROTTLE · CARB HEAT IN · FLAPS 20°</b> (simultaneous, in that order).</li>
+            <li>Above 60 KIAS: flaps 10°.</li>
+            <li>Climbing & airspeed rising: flaps 0°. Climb out to assigned altitude and heading.</li>
+          </ol>
+
+          <div class="spark-callout info">
+            <div class="sc-title">Reset is allowed</div>
+            <p>If your setup looks messy at any point, recover early and call <em>"this isn't a good setup, I'm going to try it again."</em> DPEs prefer the safe-pilot reset over a muscled bad maneuver.</p>
+          </div>
+
+          <h2 class="spark-h2">ACS Tolerances — Both Stalls</h2>
+          <div class="spark-formula">References: AC 61-67 · FAA-H-8083 (Airplane Flying Handbook) · POH/AFM</div>
+          <div class="spark-kv">
+            <div><b>ASEL recovery altitude</b><span><b>NO LOWER than 1,500 ft AGL.</b> AMEL is 3,000 — doesn't apply to us.</span></div>
+            <div><b>Practical entry altitude</b><span>3,500 ft AGL → 2,000 ft buffer above the floor.</span></div>
+            <div><b>Heading tolerance (straight)</b><span>±10°.</span></div>
+            <div><b>Bank tolerance (turning)</b><span>20° max ±10°.</span></div>
+            <div><b>Power-on power</b><span>As assigned, <b>NO LESS than 65%</b>.</span></div>
+          </div>
+
+          <h3 class="spark-h3">ACS Codes — How They Map</h3>
+          <p>After the FAA written, your wrong-answer codes (e.g., <b>PA.IV.B.K1</b>) map to ACS sections. Examiner pulls those exact codes and drills you on those knowledge items in the oral. Read the ACS cover-to-cover and there are zero surprises.</p>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">Don't be Desireé</div>
+            <p>Desireé didn't know what the ACS was until two seconds before her checkride. Read it now. The PPL ACS Areas of Operation are on pages 42–44 — power-on and power-off stalls.</p>
+          </div>
+
+          <h2 class="spark-h2">Spins — PARE Recovery</h2>
+          <div class="spark-formula">A spin requires BOTH (1) STALL AND (2) UNCOORDINATED flight</div>
+          <p>That's why the ★ "stay coordinated" appears in both stall procedures. Stalled + uncoordinated = spin. On the turn coordinator: ball off-center = uncoordinated. <b>"Step on the ball"</b> — add rudder in the direction the ball is offset.</p>
+
+          <h3 class="spark-h3">PARE — drill verbatim</h3>
+          <div class="spark-kv">
+            <div><b>P — Power idle</b><span>Keeps the spin from FLATTENING. Power adds energy that's the wrong kind.</span></div>
+            <div><b>A — Ailerons neutral</b><span>Aileron input adds roll/bank, which feeds INTO the spin.</span></div>
+            <div><b>R — Rudder OPPOSITE</b><span>Spin LEFT → RIGHT rudder · Spin RIGHT → LEFT rudder. Counters the yaw.</span></div>
+            <div><b>E — Elevator forward</b><span>Pushes nose down to BREAK the angle of attack — un-stalls the wing.</span></div>
+          </div>
+
+          <h3 class="spark-h3">Spin Phases (4)</h3>
+          <ol class="spark-list">
+            <li><b>Entry</b> — normal flight → one wing more deeply stalled → plane drops into the stalled wing.</li>
+            <li><b>Incipient</b> — first two turns. Nose starts falling. Easiest to recover.</li>
+            <li><b>Developed (autorotation)</b> — spiraling corkscrew. Harder the longer it lasts.</li>
+            <li><b>Recovery</b> — apply PARE → straight-and-level.</li>
+          </ol>
+
+          <h3 class="spark-h3">Steep vs Flat Spin (CG matters)</h3>
+          <div class="spark-kv">
+            <div><b>Steep spin</b><span>Nose-DOWN attitude · FORWARD CG · easier to recover. Normal accidental spin from a stall.</span></div>
+            <div><b>Flat spin</b><span>Horizontal attitude · AFT CG · very hard to recover. The horizontal stabilizer is an upside-down airfoil that produces DOWNFORCE; without enough airflow, it can't push the nose down. F-22s can intentionally enter; a Cessna 172 absolutely cannot.</span></div>
+          </div>
+          <p class="muted" style="text-align:center; margin-top:-6px;">N51840 is NOT certified for intentional spins. Don't practice spins in the 172.</p>
+
+          <h2 class="spark-h2">The Base-to-Final Killer Turn — KSNA</h2>
+          <div class="spark-callout warn">
+            <div class="sc-title">Why this turn keeps killing pilots</div>
+            <p>Pilot overshoots final → leads with rudder to swing nose back → doesn't add aileron → uncoordinated → unintentionally pitches up to hold altitude → STALLED + UNCOORDINATED at <b>600 ft AGL</b> = spin with no recovery time.</p>
+          </div>
+
+          <h3 class="spark-h3">KSNA Pattern Quirks</h3>
+          <ul class="spark-list">
+            <li>U-turn to downwind (not square).</li>
+            <li>Base turn at an angle to ground roads — not aligned with the cardinal compass.</li>
+            <li>Turn final aiming at a specific parking lot, then line up.</li>
+            <li>Many turns at low altitude → many opportunities to get cross-controlled.</li>
+            <li>Base-to-final altitude: <b>550–650 ft AGL</b> depending on how far ATC extends downwind.</li>
+          </ul>
+
+          <h3 class="spark-h3">The Aerodynamics</h3>
+          <p>When you bank with aileron, the <b>down aileron has a HIGHER angle of attack</b> (it's trying to "lift" that wing). At slow approach speed, the down aileron <b>stalls FIRST</b>. That wing yanks back, and the plane "tomahawks" over into a spin entry.</p>
+
+          <div class="spark-callout info">
+            <div class="sc-title">Defense — three rules</div>
+            <ol>
+              <li><b>Turn EARLY rather than late.</b> Don't horse the airplane around with rudder.</li>
+              <li><b>Eyes on turn coordinator.</b> Cross-check the ball on every turn.</li>
+              <li><b>Overshot? GO AROUND.</b> Climb, fly the pattern again. The runway will still be there.</li>
+            </ol>
+          </div>
+
+          <h2 class="spark-h2">IMC + Spin (Instrument Illusion)</h2>
+          <p>Inadvertent IMC: VFR pilots instinctively pitch up. Pitch up + slow + uncoordinated → spin in cloud, blind. The somatogravic illusion will lie to you about which way you're spinning.</p>
+          <div class="spark-formula">If you spin in IMC: TRUST YOUR INSTRUMENTS — apply PARE per the turn coordinator, not per your inner ear</div>
+          <p>PPL training simulates this with <b>foggles</b> (view-limiting hood) under VMC — instructor flies you into "unusual attitudes," you recover on instruments alone. Not actual IMC, but the muscle memory transfers.</p>
+
+          <h2 class="spark-h2">Visual Reference Points & Clearing Turns</h2>
+          <h3 class="spark-h3">Reference Points (eye level or above — never below)</h3>
+          <ul class="spark-list">
+            <li>Mountain peaks — <b>Santiago Peak</b> (KSNA practice area), Saddleback range.</li>
+            <li><b>Catalina Island</b> (Long Beach practice area).</li>
+            <li>Tall landmarks at altitude — towers, distinctive geography.</li>
+            <li>AVOID water as a reference (it's below you).</li>
+            <li>Always BUG YOUR HEADING — instrument cross-check on top of the visual.</li>
+          </ul>
+
+          <h3 class="spark-h3">Clearing Turns</h3>
+          <p>Two 90° turns covering 180° of view: turn 90° right, then 90° left back to original heading. Your back is never to the direction of flight. One full 360° is acceptable, but the L+R 90s are easier and more thorough.</p>
+
+          <h2 class="spark-h2">Operation Lights On (Advisory Circular)</h2>
+          <div class="spark-formula">AC = Advisory Circular = guidance, NOT a regulation</div>
+          <p>"Operation Lights On" recommends keeping ALL exterior lights ON in busy airspace for visibility. School policy: lights on always. In the middle of nowhere (Desireé's Kansas example), you can turn the LANDING LIGHT off during cruise to save bulb life. Beacon, nav, strobe stay on.</p>
+
+          <h2 class="spark-h2">Bottom-Line Takeaways</h2>
+          <ol class="spark-list">
+            <li><b>Stall = exceeding the critical AoA. Any airspeed.</b> Memorize verbatim.</li>
+            <li><b>Pitch–power–trim, in that order.</b> Pitch first, every time.</li>
+            <li><b>Power-on call-outs: 3 (mushy / horn / stall).</b> Pitch 20–25°. Power ≥65%, never full.</li>
+            <li><b>Power-off call-outs: 4 (mushy / horn / buffeting / stall).</b> Carb heat OUT. Flaps 10/20/30 below 110/85/85. 65 kt descent. Pitch 10–15° flare.</li>
+            <li><b>Spin = stall + uncoordinated.</b> Recovery = PARE.</li>
+            <li><b>Base-to-final: turn early, never late. Overshoot = go around.</b></li>
+            <li><b>ACS recovery: 1,500 ft AGL ASEL. Maneuver at 3,500 for buffer.</b> ±10° heading, 20° max bank.</li>
+            <li><b>Mixture leaning N51840: twist out, RPM peak then fall, turn IN three times.</b></li>
+            <li><b>Read PHAK Ch 5 + watch spin video before next ground.</b></li>
+          </ol>
+
+          <!-- Flashcards -->
+          <section class="flash-section">
+            <div class="flash-head">
+              <div class="flash-title">
+                <h2>Flashcards</h2>
+                <span class="tag">12 cards</span>
+              </div>
+              <div class="flash-controls">
+                <span class="flash-progress"></span>
+                <button class="flash-shuffle">🔀 Shuffle</button>
+                <button class="flash-reset">↺ Reset</button>
+              </div>
+            </div>
+            <div class="flash-grid">
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What is a stall, in the verbatim definition the DPE wants?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">A stall is the result of <b>exceeding the CRITICAL ANGLE OF ATTACK</b> — the angle between the chord line and the relative wind. <b>You can stall at ANY airspeed.</b></div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Name the four phases of a stall.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>Entry → Incipient → Developed → Recovery.</b> Incipient = just starting (wing dips, nose turns). Developed = full stall, often with spin if uncoordinated.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Power-on stall procedure — recite the order.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Pre-maneuver + clearing turns → throttle <b>1500 RPM</b>, no flaps → back pressure to hold altitude → hold to <b>55 KIAS</b> → throttle to <b>≥65%</b> → ★ stay coordinated → pitch <b>20–25°</b> → call-outs <em>mushy / stall horn / stall</em> → recover.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Power-off stall procedure — recite the order.</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Pre-maneuver + clearing turns → carb heat OUT → throttle <b>1800 RPM</b> → flaps <b>10/20/30</b> below <b>110/85/85</b> → <b>65 KIAS</b> stabilized descent → descend 8–15 sec → power idle → ★ stay coordinated → pitch <b>10–15°</b> → call-outs <em>mushy / horn / buffeting / stall</em> → recover (full throttle, carb heat IN, flaps 20).</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">ACS tolerances — recovery altitude, heading, and bank for stalls?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>ASEL recovery: NO LOWER than 1,500 ft AGL</b> · heading <b>±10°</b> (straight) · bank <b>max 20°</b> ±10° (turning) · power-on power <b>NO LESS than 65%</b>.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">PARE — what does each letter stand for and why?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>P</b>ower idle (keeps spin from flattening) · <b>A</b>ilerons neutral (aileron adds INTO the spin) · <b>R</b>udder OPPOSITE (counters yaw drag) · <b>E</b>levator forward (breaks AoA, un-stalls).</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What two conditions must BOTH exist for a spin?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>(1) STALLED, AND (2) UNCOORDINATED</b> (yawing). That's why the ★ "stay coordinated" appears in both stall procedures. Either alone won't spin you.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Spinning LEFT — which rudder do you push?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>RIGHT rudder.</b> Spin direction → opposite rudder. Spin RIGHT = LEFT rudder. The R in PARE = "Rudder OPPOSITE."</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Steep spin vs flat spin — which is harder to recover and why?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>FLAT spin</b> is much harder to recover. Horizontal attitude · AFT CG · the horizontal stabilizer (an upside-down airfoil) can't get enough airflow to push the nose down → wing stays stalled. <b>Steep spin</b> = nose-down · forward CG · easier to recover.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">Why do pilots stall on the base-to-final turn at KSNA?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Pilot overshoots final → leads with <b>rudder</b> (yaw) without adding aileron → uncoordinated → unintentionally pitches up to hold altitude → <b>stall + uncoordinated = SPIN</b> at 600 ft AGL with essentially no recovery time. Defense: turn early, GO AROUND if you overshoot.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">N51840 mixture-leaning technique (no digital lean assist)?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Twist mixture <b>OUT</b> → watch RPMs rise to peak then fall → turn the mixture <b>IN three times</b>. That's your best fuel/air ratio. If the engine gets rough or gauges quiver, you over-leaned — twist back IN slightly.</div></div>
+                </div>
+              </div>
+              <div class="flash-card" tabindex="0">
+                <div class="flash-inner">
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">When is carb heat ON in N51840 — and when is it OFF for power-on stalls?</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>ON</b> below the green arc OR landing/descending. For power-off stalls, carb heat <b>FULLY OUT</b>. For <b>power-on stalls in N51840 the POH says NO carb heat</b> (even though we go below the green arc) — this is the exception.</div></div>
                 </div>
               </div>
             </div>
@@ -3938,6 +4250,243 @@ Source: Fireflies transcript "Ground Lesson 4 Apr 24, 05:48 PM" (~104 min). Full
     'Memorize Guard frequency 121.5 — universal emergency; monitor it when not on flight following',
     'When unsure of an ATC clearance, USE the G1000 audio playback button OR query ATC ("Confirm hold short Echo, Skyhawk 51840") — never act on what you THINK you heard (this cost Desireé her first CFI checkride to impulsivity)'
   ], 'Ground L4 · 2026-04-24');
+
+  addGroundLessonOnce('GL5', {
+    date: '2026-05-05',
+    lesson: 5,
+    duration: 1.8,
+    cost: 0,
+    topics: `STALLS, SPINS, MIXTURE LEANING, KSNA BASE-TO-FINAL HAZARDS — Cessna 172 N51840 (CFI Desireé · 1 hr 48 min · transcript-sourced)
+
+— STALL FUNDAMENTALS (memorize verbatim) —
+• A stall is the result of EXCEEDING THE CRITICAL ANGLE OF ATTACK — not exceeding a specific airspeed. You can stall at ANY airspeed if you exceed the critical AoA. DPE will ask this verbatim.
+• Critical AoA = the angle between the CHORD LINE and the RELATIVE WIND at which airflow over the wing separates and lift collapses (Bernoulli's principle no longer producing lift).
+• Most dangerous place to stall = takeoff and landing. WHY: you're close to the ground, little to no time to recover. Base-to-final at low altitude is the killer.
+• Phases of a stall: ENTRY → INCIPIENT (just starts; wing dips, nose turns) → DEVELOPED (full stall / spin) → RECOVERY (4-step recovery).
+• Stall types you must know: power-on stall, power-off stall. (Accelerated stall and cross-control stall are commercial-level — know they exist but not procedural-deep for PPL.)
+
+— PRE-MANEUVER (CRUISE) CHECKLIST — say it out loud —
+Always run BEFORE any maneuver. Plane must be straight-and-level and TRIMMED for straight-and-level first ("you fly the plane by its fingertips"). Items: POWER · AIRSPEED · TRIM · MIXTURE · LIGHTS · CARB HEAT · PITOT HEAT · DEFROST · CB (circuit breakers) · FLIGHT/ENGINE INSTRUMENTS · TASKS · CO DETECTOR · FLIGHT PLAN · FUEL · MAP/RANGE/AREA CLEAR · BUG SET. Bug your heading every time.
+
+• PITCH-POWER-TRIM order — ALWAYS pitch first, then power, then trim. Originally taught backwards (power-pitch-trim) and you'll fight the plane forever. PITCH first.
+• Leveling-off flow: ~50 ft prior to assigned altitude, anticipate. Pitch the nose toward the horizon → airspeed comes up from Vy 76 kt to ~80–85 → reduce power to 2100–2200 RPM (whatever holds level) → trim a quarter-inch to an inch nose-down. Cessna 172 cruise sweet spot ~2100–2200 RPM.
+
+— MIXTURE LEANING (above 3,000 MSL) —
+• WHY lean: air is less dense at altitude (molecules more spread out). Same fuel into thinner air = too rich → flood the engine. Three reasons we lean: (1) prevent flooding, (2) save fuel, (3) smoother engine running.
+• 50° rich of peak EGT below 3,000 MSL is the rule on the checklist. Above 3,000 you actively lean.
+• G1000 method: lean-assist button. Twist mixture out, EGT numbers rise (you'll see "+50", "+40"…), wait for it to peak, then turn back IN until "−50". Target ~1450 EGT.
+• N51840 method (no digital lean assist): twist mixture OUT, watch the RPM bar (or six-pack tach quiver). RPMs rise as you lean toward peak, then FALL after peak. Once it peaks and starts falling, turn the mixture IN three times. That's your best fuel/air ratio for the current altitude.
+• Lean too much → engine roughness; gauge needles quiver. Twist mixture IN slightly to recover.
+• Why glass is replacing steam: digital numbers are more finite/exact. But N840 is a great learner — eyes outside, less instrument dependence.
+
+— CARB HEAT (carbureted engine) —
+• Only ON when (a) below the green arc, or (b) landing/descending. Carb heat introduces hot air into the throttle valve to prevent ice formation that causes engine roughness or failure.
+• Icing risk envelope: roughly 70°F with high humidity (moisture freezes on the throttle valve).
+• Per N51840 POH: NO CARB HEAT for power-on stalls (even though you go below the green arc). For power-off stalls, carb heat FULLY OUT (on).
+• Position: fully OUT = on (hot). Fully IN = off (cold). Don't half-set it.
+
+— POWER-ON STALL PROCEDURE (write this in your head) —
+1. Pre-maneuver checklist · clearing turns · pick visual reference point · bug heading · stay at assigned altitude
+2. Reduce throttle to 1500 RPM. No flaps (we don't take off with flaps).
+3. Add BACK PRESSURE to hold assigned altitude (we're trading airspeed for altitude).
+4. Hold pitch until airspeed drops to 55 KIAS (Vr).
+5. At 55 KIAS, add throttle to NO LESS THAN 65% power (per ACS — never full throttle; full throttle and the plane won't stall, you'd have to pitch dangerously back).
+6. ★ STAY COORDINATED. Correct deviations with RUDDER, never with ailerons.
+7. Pitch UP to 20–25° (cruise climb is ~10° pitch — this is much higher).
+8. Call-outs (3): "mushy controls" → "stall horn" → "stall."
+9. Recovery: nose dips down naturally → reduce throttle → return to assigned altitude and heading.
+
+WHY no full throttle on power-on stall: at full power the plane keeps climbing/won't stall — you'd have to over-pitch into a dangerous attitude. Just past half power is the sweet spot for N51840.
+
+— POWER-OFF STALL PROCEDURE (simulates landing) —
+1. Pre-maneuver checklist · clearing turns · bug heading · assigned altitude.
+2. Carb heat FULLY OUT.
+3. Throttle to 1800 RPM.
+4. Flaps 10° below 110 KIAS.
+5. Flaps 20° below 85 KIAS.
+6. Flaps 30° below 85 KIAS. (Hold altitude through this whole step — release back pressure as airspeed bleeds; nose comes down naturally, you don't push it.)
+7. Establish 65 KIAS STABILIZED DESCENT. (65 = our glide AND our approach speed.)
+8. Descend for 8–15 seconds (simulate "coming in to land").
+9. Power IDLE (throttle fully out). Carb heat stays out.
+10. ★ STAY COORDINATED with rudder.
+11. Pitch nose UP to 10–15° (simulates the flare).
+12. Call-outs (4): "mushy controls" → "stall horn" → "buffeting" (plane shakes) → "stall."
+13. Recovery: nose pitches down → ADD RIGHT RUDDER (just enough to keep ball centered) → FULL THROTTLE · CARB HEAT IN · FLAPS 20° (simultaneous, in that order).
+14. Above 60 KIAS: flaps 10°.
+15. Climbing & airspeed rising: flaps 0°. Climb out to assigned altitude and heading.
+
+If your setup looks messy at any point, you can recover early and call "this isn't a good setup, I'm going to try it again." DPE prefers a SAFE pilot who resets over one who muscles a bad maneuver.
+
+— ACS TOLERANCES (POWER-ON & POWER-OFF STALLS — VERBATIM SKILLS) —
+References: AC 61-67 · FAA-H-8083 (Airplane Flying Handbook) · POH/AFM. Memorize:
+• ASEL recovery altitude: NO LOWER than 1,500 ft AGL. (AMEL: 3,000 ft AGL — doesn't apply to us.)
+• Heading tolerance: ±10° (if straight flight).
+• Bank tolerance: 20° max ±10° (if turning flight).
+• Power-on power setting: as assigned by evaluator, NO LESS than 65% power.
+• Practical: fly the maneuver at 3,500 ft AGL so the 1,500 ft floor gives a 2,000 ft buffer. (Colorado at 16,000 elevation = doing it at 20,000 — leaning is non-optional there.)
+
+ACS knowledge requirements (read the page yourself in ForeFlight or FAA.gov, page 42–44 in the PPL ACS): aerodynamics of stalls, AoA, airspeed, load factor, power setting, weight & CG, attitude, yaw effects, stall characteristics, impending vs full-stall indications (sight/sound/feel), prevention factors, and stall recovery fundamentals.
+
+ACS risk management requirements: factors leading to inadvertent stall/spin, stall-warning indicator limitations (CG, aircraft buffet, stall horn), secondary/accelerated/cross-control stalls, environmental effects (turbulence, microburst, high density altitude), collision hazards, distractions, task prioritization, loss of situational awareness/disorientation.
+
+ACS skills requirements: clear area · select entry altitude no lower than 1,500 ft AGL (ASEL) · configure airplane · maintain coordinated flight · establish stabilized descent (power-off) or simulate takeoff/climb (power-on) · transition smoothly to a pitch attitude that induces stall · maintain heading ±10° (straight) or bank ±10° at not more than 20° (turning) · acknowledge cues of impending stall · recover promptly after FULL stall occurs · execute recovery per POH/AFM · accelerate to Vx or Vy · return to assigned altitude/heading/airspeed · use single-pilot (or crew) resource management.
+
+— ACS CODES — what they mean —
+After the FAA written test, your wrong-answer codes (e.g., "PA.IV.B.K1") map to ACS sections. Examiner pulls those codes and drills you on those exact knowledge items in the oral. NO surprises if you read the ACS cover-to-cover. Desireé didn't know what the ACS was until 2 seconds before her own checkride — don't be Desireé.
+
+— SPIN AERODYNAMICS & PARE RECOVERY (memorize all 4 letters) —
+TWO conditions must BOTH be true for a spin: (1) STALLED, AND (2) UNCOORDINATED (yawing). The ★ in the stall procedure is "stay coordinated" because uncoordinated + stalled = spin.
+On the turn coordinator: ball off-center = uncoordinated. "Step on the ball" — add rudder in the direction the ball is offset.
+
+PARE Recovery (drill verbatim):
+• P — POWER idle. Keeping power adds energy and FLATTENS the spin (very bad).
+• A — AILERONS NEUTRAL. Aileron input adds roll/bank, which adds INTO the spin direction.
+• R — RUDDER OPPOSITE the spin direction. Spin LEFT → RIGHT rudder. Spin RIGHT → LEFT rudder. (Counters the yaw drag.)
+• E — ELEVATOR FORWARD. Pushes nose down to BREAK the angle of attack — un-stalls the wing.
+
+Spin entry-direction trivia: the wing more deeply stalled is the wing the airplane "drops into." If your LEFT wing stalls first, you spin LEFT.
+
+— SPIN PHASES (4) —
+1. ENTRY — normal flight → one wing stalls more than the other → plane drops into the stalled wing.
+2. INCIPIENT — the FIRST TWO TURNS. Nose starts falling (we usually had pitch-up attitude entering the stall). Easiest phase to recover.
+3. DEVELOPED (also called AUTOROTATION) — spiraling corkscrew motion downward. Harder to break out the longer it lasts.
+4. RECOVERY — establish normal flight, apply PARE.
+
+— SPIN TYPES (know both, especially flat) —
+• STEEP SPIN — nose-DOWN pitch attitude. Forward CG. Easier to recover. This is the "normal" spin you'd accidentally enter from a stall.
+• FLAT SPIN — uncontrolled HORIZONTAL spin (nose along the horizon). Aft CG. Tail isn't getting enough airflow → horizontal stabilizer (which works as an UPSIDE-DOWN airfoil producing DOWNFORCE) can't push the nose down → plane won't un-stall. F-22s can intentionally enter and recover; a 172 cannot. If you load aft CG and stall, you can fall into a flat spin you can't recover from.
+• Most planes (including N51840) are NOT certified for intentional spins. Don't practice them in the 172.
+
+— BASE-TO-FINAL "DEADLY TURN" (KSNA-specific) —
+• KSNA pattern is weird: U-turn to downwind, base turn at an angle (not aligned with ground roads), turn final aiming at a specific parking lot, then line up with the runway. Many turns at low altitude.
+• Base-to-final altitude at KSNA: 550–650 ft AGL (depending on how far ATC extends downwind). Don't descend through that range chasing the runway — engine failure on base = no glide to runway.
+• Why pilots stall here: they overshoot final, try to compensate with RUDDER (yaw input), don't add aileron with it → UNCOORDINATED → unintentionally pitch up to hold altitude → STALL + UNCOORDINATED = SPIN at 600 ft AGL = no recovery time.
+• Aerodynamics: when you bank with aileron, the DOWN aileron has a HIGHER angle of attack (it's trying to "lift" that wing). At slow approach speed, the down aileron stalls FIRST → that wing yanks back → plane "tomahawks" over → spin entry.
+• Defense: it's better to turn EARLY than to turn LATE. Eyes on turn coordinator. Cross-check ball. If you overshoot, GO AROUND — don't horse the airplane around with rudder.
+• "Deadly turn" or "killer turn" — referenced in NTSB GA stall/spin reports. Happens more at non-towered fields where pilots fly less; KSNA's tower mostly catches it but stay vigilant.
+
+— IMC + SPIN (instrument illusion) —
+• Inadvertent IMC for a VFR pilot: people instinctively pitch up. Pitch up + slow + uncoordinated → spin in cloud, fully blind.
+• If you spin in IMC: TRUST YOUR INSTRUMENTS. The turn coordinator tells you spin direction. Apply opposite rudder per the instrument, not per what your inner ear is telling you (somatogravic illusion).
+• PPL training simulates this with FOGGLES (view-limiting hood) under VMC — instructor flies you into "unusual attitudes" while you're hooded; you recover on instruments alone. Not actual IMC.
+
+— VISUAL REFERENCE POINTS FOR MANEUVERS —
+You always need a visual reference at eye level / above (not below). Good options:
+• Mountain peaks — Santiago Peak (KSNA practice area), Saddleback range
+• Catalina Island (Long Beach practice area)
+• Tall landmarks at altitude — buildings, towers if tall enough
+• AVOID water as a reference (it's below you).
+• Always BUG YOUR HEADING — gives you an instrument cross-check on top of the visual.
+
+— CLEARING TURNS —
+• Two 90° turns covering 180° of view: turn 90° right, then 90° left back to original heading (e.g., from heading 360 → 090 → back through 360 → 270 → back to 360). Procedure-wise, your back is never to the direction of flight.
+• Alternative: one full 360° turn is acceptable, but the L+R 90s are easier and more thorough.
+• Purpose: clear the airspace below and around you for traffic before any maneuver where you'll be out of normal cruise.
+
+— OPERATION LIGHTS ON (Advisory Circular) —
+• AC = Advisory Circular = guidance, NOT a regulation. "Operation Lights On" recommends keeping ALL exterior lights ON in busy airspace for visibility/conspicuity.
+• School policy: lights ON at all times. Saves you from forgetting to flip them on/off and keeps you visible in the SoCal training environment.
+• In the middle of nowhere (Kansas): you can turn off the LANDING LIGHT during cruise to save bulb life. Keep nav/strobe/beacon on.
+
+KEYWORDS: Critical AoA · stall at any airspeed · phases (entry/incipient/developed/recovery) · pitch-power-trim · cruise pre-maneuver checklist · CB = circuit breakers · 50° rich of peak · 1450 EGT · twist out, RPM peak, 3 turns in · carb heat below green arc · NO carb heat (power-on) · CARB HEAT OUT (power-off) · 1500 RPM (power-on entry) · 1800 RPM (power-off entry) · 55 kt then 65% power · 20–25° pitch (power-on) · 10–15° pitch flare (power-off) · 65 kt stabilized descent · 8–15 sec descent · ASEL recovery 1,500 AGL · maneuver at 3,500 AGL · ±10° heading · 20° max bank · AC 61-67 · PARE (Power idle, Ailerons neutral, Rudder opposite, Elevator forward) · stall + uncoordinated = spin · steep vs flat spin · aft CG = flat spin · forward CG = steep spin · base-to-final deadly turn · 550–650 ft AGL · down aileron stalls first · turn early not late · trust instruments in IMC · clearing turns 90L + 90R · AC = Advisory Circular · Operation Lights On.`,
+    notes: `**Overview**
+1 hr 48 min ground at KSNA with Desireé (N51840). Heavy on stall fundamentals, the verbatim power-on and power-off stall procedures, the ACS skills/knowledge/risk-management language for both maneuvers, the four-letter PARE spin-recovery acronym, and the KSNA base-to-final "deadly turn" stall/spin scenario. Mid-lesson rabbit-holes on mixture leaning above 3,000 MSL (G1000 vs N51840 method), carb-heat use cases, the 4 phases of a stall, and steep-vs-flat-spin aerodynamics with CG implications. Watched the spin training video at the end. Reading: PHAK Chapter 5.
+
+**Stall fundamentals — say it cold**
+A stall happens when you exceed the CRITICAL ANGLE OF ATTACK — the angle between the chord line and the relative wind. Airspeed alone does NOT define a stall; you can stall at any airspeed if you exceed the critical AoA. Bernoulli's principle stops producing lift because airflow separates over the wing. The most dangerous places to stall are takeoff and landing because there's no time to recover. The four phases are entry, incipient (just starting; wing dips, nose turns), developed (full stall or spin), and recovery.
+
+**Pre-maneuver (cruise) checklist**
+Run before EVERY maneuver. Plane must be straight-and-level and TRIMMED for it first — "you fly the plane by its fingertips." If you're fighting the controls going INTO the maneuver, the maneuver will be ugly. Pitch-power-trim ALWAYS in that order (Desireé was originally taught power-pitch-trim and fought the plane forever — pitch first, every time). The "CB" in the checklist that confuses students = circuit breakers. Bug heading every time.
+
+**Mixture leaning above 3,000 MSL**
+Why lean: less dense air at altitude = same fuel rate floods the engine. Three reasons: prevent flooding, save fuel, smoother engine. G1000 has a digital lean-assist button that shows "+50/+40/peak/−50" — target ~1450 EGT. N51840 has no digital readout, so the technique is: twist the mixture OUT and watch the RPM peak then fall, then turn the mixture IN three times. If you over-lean, the engine gets rough and the gauge needles quiver — twist back IN slightly. We do stalls at 3,500 ft AGL so we lean a little. In Colorado at 16,000 ft, leaning is mandatory. Below 3,000, the checklist says 50° rich of peak.
+
+**Carb heat — when and when NOT**
+Only ON below the green arc OR landing/descending. The carb heat introduces heat into the throttle valve to prevent icing (≈70°F + humidity is the danger zone — moisture freezes on the throttle valve, causing engine roughness and possibly failure). For N51840, the POH says NO carb heat for power-on stalls (even though we go below the green arc). For power-off stalls, carb heat FULLY OUT. Fully OUT = on (hot). Fully IN = off (cold). Don't half-set it — it's binary.
+
+**Power-on stall — verbatim procedure**
+After the cruise pre-maneuver checklist and clearing turns: pick a visual reference point, bug heading, hold assigned altitude. (1) Reduce throttle to 1,500 RPM, no flaps. (2) Add back pressure to hold altitude — we're trading airspeed for altitude. (3) Hold pitch until airspeed drops to 55 KIAS (Vr). (4) At 55 kt, add throttle to NO LESS THAN 65% power (per ACS — never full; full power and the plane refuses to stall, forcing dangerous over-pitch). (5) ★ STAY COORDINATED — correct deviations with RUDDER, not ailerons. (6) Pitch up to 20–25° (cruise climb is only ~10°, this is much higher). (7) Call-outs: "mushy controls," "stall horn," "stall." (8) Recovery: nose dips down naturally; reduce throttle; return to assigned altitude and heading.
+
+**Power-off stall — verbatim procedure (simulates landing)**
+After cruise checklist and clearing turns: bug heading, assigned altitude. (1) Carb heat FULLY OUT. (2) Throttle to 1,800 RPM. (3) Flaps 10° below 110 KIAS. (4) Flaps 20° below 85 KIAS. (5) Flaps 30° below 85 KIAS — hold altitude through these by releasing back pressure as airspeed bleeds; the nose comes down on its own. (6) Establish 65 KIAS stabilized descent (65 is both glide AND approach speed). (7) Descend 8–15 seconds (simulating coming in to land). (8) Power IDLE — throttle fully out; carb heat stays out. (9) ★ Stay coordinated with rudder. (10) Pitch up 10–15° (simulates the flare). (11) Call-outs (4 — note buffeting before stall): "mushy controls," "stall horn," "buffeting" (plane shakes), "stall." (12) Recovery: nose pitches down, add right rudder to keep ball centered, then SIMULTANEOUSLY full throttle · carb heat IN · flaps 20°. (13) Above 60 KIAS: flaps 10°. (14) Climbing and airspeed rising: flaps 0°. Climb to assigned altitude and heading.
+
+If the setup looks messy at any point, you can call "this isn't a good setup, I'm going to try it again" and reset. DPEs prefer the safe-pilot reset.
+
+**ACS tolerances — both stalls**
+Reference AC 61-67. ASEL recovery: NO LOWER than 1,500 ft AGL (AMEL is 3,000; doesn't apply to us). We do the maneuver at 3,500 AGL for a 2,000 ft buffer. Heading tolerance ±10° (straight flight). Bank tolerance: max 20° ±10° (if turning). Power-on power setting: as assigned, no less than 65%. Memorize the verbatim language for the oral — they'll pull it word-for-word from the ACS.
+
+**ACS knowledge / risk-management / skills (oral fodder)**
+Knowledge: aerodynamics, AoA/airspeed/load factor, power, weight/CG, attitude, yaw, stall characteristics, impending vs full-stall indications, prevention, recovery fundamentals. Risk management: inadvertent stall/spin factors, stall-warning indicator limitations (CG, buffet, stall horn), secondary/accelerated/cross-control stalls, environmental (turbulence, microburst, high density altitude), collision/distraction/task prioritization/loss of SA. Skills: clear area, select entry altitude (≥1,500 AGL ASEL), configure, coordinated flight, stabilized descent / simulated takeoff-climb, smooth pitch transition to induce stall, ±10° heading or 20° bank, acknowledge cues, recover promptly AFTER full stall, recover per POH/AFM, accelerate Vx or Vy, return to assigned altitude/heading/airspeed, use SRM/CRM.
+
+**Spin entry — two conditions, both required**
+A spin requires (1) STALL and (2) UNCOORDINATED flight (yawing). That's why the ★ "stay coordinated" appears in both stall procedures. Ball off-center on the turn coordinator = uncoordinated. "Step on the ball" — add rudder in the direction the ball has slid. Most students fly with too little or too much RIGHT rudder, never raw left rudder; if the ball is right and you're already in right rudder, you have too much right rudder and need to release it (rarely add left).
+
+**PARE recovery (memorize all four letters)**
+P — POWER IDLE. Keeping power flattens the spin (very bad — flat spin is harder to escape).
+A — AILERONS NEUTRAL. Aileron input adds roll/bank, which adds INTO the spin direction.
+R — RUDDER OPPOSITE the spin direction. Spin LEFT → RIGHT rudder. Spin RIGHT → LEFT rudder. Counters the yaw drag.
+E — ELEVATOR FORWARD. Pushes nose down to BREAK the angle of attack — un-stalls the wing.
+
+**Spin phases**
+1. Entry: normal → stall; one wing more deeply stalled, plane drops into it.
+2. Incipient: the first two turns. Nose begins falling. Easiest to recover.
+3. Developed (autorotation): full corkscrew. Harder the longer it lasts.
+4. Recovery: PARE → straight-and-level.
+
+**Steep vs flat spin (with CG)**
+STEEP spin = nose-DOWN attitude, FORWARD CG, easier recovery. The "normal" accidental spin from a stall.
+FLAT spin = horizontal nose attitude, AFT CG, very hard to recover. The horizontal stabilizer is an UPSIDE-DOWN airfoil that produces DOWNFORCE; with insufficient airflow, it can't push the nose down and the wing stays stalled. F-22s can intentionally enter and recover. A Cessna 172 absolutely cannot. Loading aft CG raises this risk.
+
+**Base-to-final "deadly turn" — KSNA**
+The KSNA pattern is weird: U-turn to downwind, base turn at an angle to the ground roads (not square), turn final aiming at a specific parking lot, then line up. Lots of turns at low altitude. Base-to-final altitude is 550–650 ft AGL depending on how far ATC extends you on downwind. Don't descend through that range chasing the runway — if the engine quits on base, you need glide for the runway.
+
+The textbook stall/spin scenario: pilot overshoots final, tries to compensate by leading with rudder (yaw input). They don't add aileron with it → uncoordinated. They unintentionally pitch up to hold altitude → stalled + uncoordinated = SPIN at 600 ft AGL = essentially no recovery time. Aerodynamically, the down aileron has a HIGHER AoA at slow approach speed, stalls FIRST, the wing yanks back, the plane "tomahawks" into a spin.
+
+Defense: turn EARLY rather than late. Eyes on turn coordinator. Cross-check the ball. If you overshoot, GO AROUND — never horse the airplane around with rudder. Desireé says this is the turn she watches like a hawk when she instructs.
+
+**IMC + spin**
+Inadvertent IMC: pilots instinctively pitch up. Pitch up + slow + uncoordinated → spin in cloud, blind. If you spin in IMC, TRUST YOUR INSTRUMENTS — the turn coordinator tells you direction; apply PARE per the gauge, not per your inner ear (the somatogravic illusion will lie to you). PPL training simulates "unusual attitudes" with foggles (view-limiting hood) under VMC, not actual IMC.
+
+**Visual reference points**
+Always at eye level or above — never below (water doesn't work). Mountain peaks (Santiago Peak from KSNA's practice area; Saddleback range), Catalina Island (Long Beach practice area), tall landmarks at altitude (towers, distinctive geography). Bug your heading too — gives an instrument cross-check on top of the visual.
+
+**Clearing turns**
+Two 90° turns covering 180° of view: 90° right, then 90° left back to original heading. Your back is never to the direction of flight. One full 360° is acceptable but L+R 90s are easier.
+
+**Operation Lights On (AC, not regulation)**
+AC = Advisory Circular = guidance, not enforceable. Recommends all exterior lights ON in busy airspace for conspicuity. School policy: lights on always. In the middle of nowhere (Desireé's Kansas example), you can turn the LANDING LIGHT off during cruise. Beacon, nav, strobe stay on.
+
+**Aryan-specific context**
+Aryan handled the conceptual aerodynamics well (chord line, relative wind, Bernoulli) but had to be coached on the verbatim procedure ordering — specifically the "to vs by" wording on "reduce throttle to 1,500" and the four call-outs vs three. The mixture leaning section took two passes (G1000 method first, then the N51840 visual method). Got the PARE acronym on the second try after Desireé walked through what each letter prevents. Confused power-on with power-off when reading the ACS (read power-off skills aloud while procedure-talking power-on). Watched Desireé's spin training video at the end; she recommends finding a tail-wheel CFI for elective spin training. Sergio (school owner) prefers all students do spin training in a tail-wheel where spins are tighter and faster. Optional, not required.
+
+**Reading assignment (pre next lesson)**
+PHAK Chapter 5 — aerodynamics in depth (load factors, AoA, CG impact, stall mechanics). Watch the spin-training video Desireé shared.
+
+Source: Fireflies transcript "Ground lesson 5 May 05, 05:41 PM" (~108 min). Full verbatim mining.`,
+    fireflies_id: '01KQXBR03YYE6NRPPFGDRHERG1'
+  }, [
+    'Read PHAK Chapter 5 — aerodynamics, AoA, load factor, weight/CG, stall mechanics — before next ground lesson',
+    'Watch the spin-training video Desireé shared — get the visual feel of a spin and recovery before practicing',
+    'Memorize verbatim: a stall happens when you EXCEED THE CRITICAL ANGLE OF ATTACK — you can stall at any airspeed',
+    'Memorize the 4 phases of a stall: ENTRY → INCIPIENT → DEVELOPED → RECOVERY',
+    'Memorize the power-on stall procedure — pre-maneuver checklist, throttle 1500, back pressure, hold to 55 kt, throttle to ≥65% power, stay coordinated, pitch 20–25°, call-outs (mushy controls / stall horn / stall), recover',
+    'Memorize the power-off stall procedure — carb heat OUT, throttle 1800, flaps 10/20/30 below 110/85/85, 65 kt stabilized descent, descend 8–15 sec, power idle, pitch 10–15°, call-outs (mushy controls / stall horn / buffeting / stall), recover full throttle + carb heat in + flaps 20',
+    'Memorize the ACS tolerances for both stalls verbatim: ASEL recovery NO LOWER than 1,500 ft AGL · heading ±10° · bank max 20° (±10°) · power-on power set NO LESS than 65%',
+    'Memorize PARE spin recovery — Power idle · Ailerons neutral · Rudder OPPOSITE the spin · Elevator forward — and the WHY of each letter',
+    'Memorize the two conditions required for a spin: STALL + UNCOORDINATED. Drill the ★ "stay coordinated" rule in both stall procedures',
+    'Memorize spin direction → rudder mapping: spin LEFT = RIGHT rudder · spin RIGHT = LEFT rudder',
+    'Memorize the difference between STEEP spin (nose-down, forward CG, easier recovery) and FLAT spin (horizontal, aft CG, often unrecoverable)',
+    'Memorize the KSNA base-to-final "deadly turn": altitude 550–650 ft AGL · stall/spin from overshooting + leading with rudder + unintentional pitch-up · defense: turn EARLY rather than late, GO AROUND if you overshoot',
+    'Drill mixture leaning in N51840: twist mixture OUT, watch RPMs peak then fall, turn IN three times. Engine roughness or quivering needles = over-leaned, twist back IN',
+    'Memorize carb-heat rules: ON below the green arc OR landing/descending. NO carb heat for N51840 power-on stalls (per POH). Carb heat OUT for power-off stalls',
+    'Memorize V-speeds you USE in stalls: Vr 55 kt (power-on entry), 65 kt (power-off stabilized descent), Vy 76 kt, Vx 60 kt',
+    'Memorize visual-reference rules — at eye level or above (mountain peaks, Catalina, tall landmarks); NOT water (below). Always bug your heading',
+    'Memorize clearing-turns procedure — 90° right then 90° left back to original heading (or one full 360°)',
+    'Memorize Operation Lights On — Advisory Circular (NOT a regulation). School policy = all lights on always',
+    'Look up FAR/AIM definitions of AC vs FAR vs CFR. Memorize that AC = Advisory Circular = guidance only',
+    'Read the PPL ACS Areas of Operation pages 42–44 (power-on and power-off stalls) cover-to-cover. Match the verbatim language back when answering oral questions',
+    'After the FAA written, decode every wrong-answer ACS code and prepare oral answers on those exact knowledge items — DPE will drill those'
+  ], 'Ground L5 · 2026-05-05');
   /* AUTO_INGEST_LESSONS_END */
 }
 

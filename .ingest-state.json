@@ -2,15 +2,17 @@
   "_doc": "State file written by the Fireflies → PPL Dash auto-ingest scheduled task. Tracks which transcripts have been processed so re-runs are idempotent. Do not edit by hand unless you know what you're doing.",
   "schemaVersion": 1,
   "ingestedFirefliesIds": [
-    "01KQ11RQGTTD1TVDJNDZ3TXQMZ"
+    "01KQ11RQGTTD1TVDJNDZ3TXQMZ",
+    "01KQXBR03YYE6NRPPFGDRHERG1"
   ],
   "ingestedLessonNumbers": [
     1,
     2,
     3,
-    4
+    4,
+    5
   ],
-  "lastRun": "2026-05-05T00:00:00.000Z",
-  "lastRunStatus": "no-new",
-  "lastRunMessage": "No new ground lessons matching the title regex `^Ground lesson \\d+\\b` since last run. Window scanned: 14 days from 2026-04-21, 20 transcripts retrieved. Title-matching transcripts found: GL3 (2026-04-21, id 01KPS8BYBGNYVZF84AFK0EX9VD) and GL4 (2026-04-24, id 01KQ11RQGTTD1TVDJNDZ3TXQMZ) — both already in state. NOTE: transcript 01KQXBR03YYE6NRPPFGDRHERG1 dated 2026-05-05 17:41 PT (108 min, Aryan-only, no meeting link) has content that strongly suggests Ground Lesson 5 — covers stall aerodynamics, power-on/power-off stall procedures, PARE spin recovery, mixture leaning above 3000 ft, ACS standards, KSNA traffic-pattern stall/spin risks. Title is the Fireflies default 'May 05, 05:41 PM' — does NOT match the regex, so skipped per strict filter rules. ACTION FOR ARYAN: if this is GL5, rename it in Fireflies to 'Ground lesson 5 May 05, 05:41 PM' (or similar), then re-run the sync. Remaining 18 transcripts are SkyAccess work meetings (JetNet, AMSTAT, FetchAir, TrueSkies, FlyingZebra, AirAlsie, OKR/negotiation training, etc.) plus 2 personal (Private Chef, Laguna Beach house) — non-matching. No edits, no commit."
+  "lastRun": "2026-05-07T04:45:00.000Z",
+  "lastRunStatus": "ingested",
+  "lastRunMessage": "Ingested GL5 (Fireflies id 01KQXBR03YYE6NRPPFGDRHERG1, 'Ground lesson 5 May 05, 05:41 PM', 108 min, 2026-05-05). Title was renamed by Aryan since the previous run (was 'May 05, 05:41 PM' default; matched our action note in the prior lastRunMessage). Topics: stall fundamentals (critical AoA), pre-maneuver/cruise checklist, pitch-power-trim, mixture leaning above 3000 MSL (G1000 vs N51840 method), carb-heat use cases, verbatim power-on stall procedure (1500 RPM, 55 kt, 65% power, 20-25° pitch, 3 call-outs), verbatim power-off stall procedure (carb heat out, 1800 RPM, flaps 10/20/30 below 110/85/85, 65 kt descent, 8-15 sec, power idle, 10-15° pitch flare, 4 call-outs with buffeting), ACS tolerances (1500 ft AGL ASEL recovery, ±10° heading, max 20° bank, ≥65% power-on), PARE spin recovery (Power idle, Ailerons neutral, Rudder opposite, Elevator forward), spin entry conditions (stalled + uncoordinated), 4 spin phases (entry/incipient/developed/recovery), steep vs flat spin with CG, KSNA base-to-final 'deadly turn' (550-650 ft AGL, down-aileron-stalls-first aerodynamics), IMC + spin (trust instruments), visual reference points, clearing turns (90L+90R), Operation Lights On AC. Generated: 1 lesson seed (~21 homework items), 1 sparknotes chapter chip + article (~12 H2 sections, 12 flashcards), 1 quiz (12 multiple-choice questions). SW cache bumped v18→v19. Window scanned: 14 days from 2026-04-23, 25 transcripts retrieved; remaining transcripts are SkyAccess work meetings (JetNet/Aerodex 3-yr deal, FetchAir, AMSTAT, Flightworks, AirAlsie, OKR/negotiation training, etc.) — non-matching."
 }
