@@ -12,7 +12,7 @@
     4,
     5
   ],
-  "lastRun": "2026-05-10T00:00:00.000Z",
+  "lastRun": "2026-05-11T00:00:00.000Z",
   "lastRunStatus": "no-new",
-  "lastRunMessage": "No new ground lessons since last run. Window scanned: 14 days from 2026-04-26, 14 transcripts retrieved (mine=true, limit=50). One ground-lesson title match found — already ingested: GL5 (id 01KQXBR03YYE6NRPPFGDRHERG1, 'Ground lesson 5 May 05, 05:41 PM'). No GL6+ transcripts present yet. Remaining 13 transcripts are SkyAccess work meetings (May 08 trade-secrets/pricing call, SkyAccess & AMSTAT, Yarrow Kubrin sales-leadership, JETNET/SKYACCESS Aerodex 3-yr deal, Michael Kennedy/FetchAir, Mohammed Arif/Skybridge, AMSTAT demos x2, Flightworks, Ayomide Josiah African market, JetNet x2, AirAlsie) — non-matching. No file edits, no commit."
+  "lastRunMessage": "No new ground lessons since last run. Window scanned: 14 days from 2026-04-27, 18 transcripts retrieved (mine=true, limit=50). One ground-lesson title match found — already ingested: GL5 (id 01KQXBR03YYE6NRPPFGDRHERG1, 'Ground lesson 5 May 05, 05:41 PM'). No GL6+ transcripts present yet. Remaining 17 transcripts are SkyAccess work meetings (Cutter Aviation x2, Aryan Aggarwal intern intro, SkyAccess/Altivion, May 08 trade-secrets call, SkyAccess & AMSTAT, Yarrow Kubrin sales leadership, JETNET/SKYACCESS Aerodex deal, Michael Kennedy/FetchAir, Mohammed Arif/Skybridge, AMSTAT demos x2, Flightworks, Ayomide Josiah African market, JetNet x2, SkyAccess/AirAlsie) — non-matching. No file edits, no commit."
 }
