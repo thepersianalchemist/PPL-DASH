@@ -815,9 +815,9 @@
     },
     {
       "id": "gl6-2026-05-12",
-      "title": "Ground Lesson 6 \u2014 Airworthiness, Documents, Inspections & FAR 91.205",
+      "title": "Ground Lesson 6 \u2014 Airworthiness, Inspections, Airspace & FAR 91.205 & 91.155",
       "lessonDate": "2026-05-12",
-      "source": "Fireflies: Ground Lesson 6",
+      "source": "Fireflies: Ground Lesson 6 (full 2h 25m: airworthiness + airspace continuation)",
       "passingScore": 80,
       "questions": [
         {
@@ -963,18 +963,9 @@
           ],
           "correct": 1,
           "explanation": "Order matters. MEL (Part 121/135 + type-rated; Part 91 doesn't require) \u2192 TCDS ('birth certificate') \u2192 KOEL (POH Sec 2) \u2192 CEL (POH Sec 6 with R/S/O/A suffixes) \u2192 FAR 91.205 plus ADs/STCs/ICAs. Then DO: disable, INOP-placard, PEDS log. DECIDE: go/no-go."
-        }
-      ]
-    },
-    {
-      "id": "gl6b-2026-05-12",
-      "title": "Ground Lesson 6 (continued) \u2014 KSNA Airspace & FAR 91.155 VFR Weather Minimums",
-      "lessonDate": "2026-05-12",
-      "source": "Fireflies: Ground Lesson 6 continued",
-      "passingScore": 80,
-      "questions": [
+        },
         {
-          "id": "q1",
+          "id": "q13",
           "question": "Basic VFR weather minimums for Class C (and B/D/E below 10,000)?",
           "options": [
             "1 SM, clear of clouds",
@@ -986,7 +977,7 @@
           "explanation": "3 SM \u00b7 1,000 above \u00b7 500 below \u00b7 2,000 horizontal. Same day and night. Mnemonic cadence: '3-1-5-2.' Also applies to Class B, D, and E below 10,000 MSL."
         },
         {
-          "id": "q2",
+          "id": "q14",
           "question": "Basic VFR weather mins for Class G DAY, at or below 1,200 ft AGL?",
           "options": [
             "1 SM \u00b7 1,000 above \u00b7 500 below \u00b7 2,000 horizontal",
@@ -998,7 +989,7 @@
           "explanation": "1 SM visibility \u00b7 CLEAR OF CLOUDS. The horizontal slot has no feet entry \u2014 judgment-based distance. Practical: not IN a cloud, but you can be right above or below one."
         },
         {
-          "id": "q3",
+          "id": "q15",
           "question": "Basic VFR weather mins for Class G NIGHT (below 10,000)?",
           "options": [
             "1 SM \u00b7 clear of clouds",
@@ -1010,7 +1001,7 @@
           "explanation": "3 SM \u00b7 500 below \u00b7 1,000 above \u00b7 2,000 horizontal. Class G night is more restrictive than day \u2014 that's why the burger-trapped-at-night scenario works as a DPE question."
         },
         {
-          "id": "q4",
+          "id": "q16",
           "question": "Basic VFR weather mins ABOVE 10,000 MSL (Echo and Golf)?",
           "options": [
             "5 SM \u00b7 1,000 above \u00b7 1,000 below \u00b7 1 STATUTE MILE horizontal",
@@ -1022,7 +1013,7 @@
           "explanation": "5 SM \u00b7 1,000 above \u00b7 1,000 below \u00b7 1 STATUTE MILE horizontal \u2014 the only place the horizontal slot flips from FEET to MILES. Mnemonic cadence: '5-1-1-1.'"
         },
         {
-          "id": "q5",
+          "id": "q17",
           "question": "What does 'clear of clouds' literally mean in 91.155?",
           "options": [
             "At least 2,000 ft from any visible cloud",
@@ -1034,7 +1025,7 @@
           "explanation": "Literally not IN a cloud. No specific feet \u2014 judgment-based. Just don't get yourself into IMC. Mental yardstick: 1 statute mile \u2248 5,280 ft from your wing if you need a number."
         },
         {
-          "id": "q6",
+          "id": "q18",
           "question": "How is 1 statute mile measured?",
           "options": [
             "Approximately 5,280 ft",
@@ -1046,7 +1037,7 @@
           "explanation": "1 statute mile \u2248 5,280 ft. (1 nautical mile \u2248 6,076 ft \u2014 weather is reported in STATUTE miles, distance in NAUTICAL miles.) Useful mental yardstick for 'clear of clouds' judgment."
         },
         {
-          "id": "q7",
+          "id": "q19",
           "question": "KSNA airspace stack \u2014 Class Charlie altitudes?",
           "options": [
             "Surface to 4,000 ft",
@@ -1058,7 +1049,7 @@
           "explanation": "Class Charlie at KSNA = 3,500 to 4,400 ft. Sectional altitudes are written in HUNDREDS \u2014 '35/44' = 3,500/4,400. Must be talking to John Wayne Tower inside; handoff to SoCal exits the shelf."
         },
         {
-          "id": "q8",
+          "id": "q20",
           "question": "At KSNA, where does Class E start in the magenta-shaded areas?",
           "options": [
             "Surface",
@@ -1070,7 +1061,7 @@
           "explanation": "700 ft AGL in the shaded magenta. Below 700 is Class G (surface to 699). Outside the shaded magenta, Class E by default below 18,000 MSL."
         },
         {
-          "id": "q9",
+          "id": "q21",
           "question": "5 SM visibility AND 1 SM horizontal cloud clearance above 10,000 \u2014 don't those cancel?",
           "options": [
             "Yes \u2014 only the more restrictive number applies",
@@ -1082,7 +1073,7 @@
           "explanation": "Different requirements stacking. 5 SM = overall visibility minimum. 1,000/1,000/1 SM = separation FROM clouds. At altitude there are no stacked cloud layers, so the clearance numbers grow to give pilots maneuvering room."
         },
         {
-          "id": "q10",
+          "id": "q22",
           "question": "DPE scenario: 'You're at a Class G airport getting dinner. Metar reports 2 SM visibility, broken at 2,000 ft. It's now nighttime. Can you depart?'",
           "options": [
             "Yes \u2014 1 SM clear of clouds is enough",

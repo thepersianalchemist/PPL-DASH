@@ -919,8 +919,7 @@
           <!-- AUTO_INGEST_SPARKNOTES_CHIPS_START -->
           <button class="spark-chip" data-spark="gl4-metars-incursions">GL4 · METARs · Hazardous Attitudes · Incursions</button>
           <button class="spark-chip" data-spark="gl5-stalls-spins">GL5 · Stalls · Spins · PARE</button>
-          <button class="spark-chip" data-spark="gl6-airworthiness">GL6 · Airworthiness · Docs · Inspections · 91.205</button>
-          <button class="spark-chip" data-spark="gl6b-airspace-vfr-mins">GL6 cont · Airspace · 91.155 VFR Mins</button>
+          <button class="spark-chip" data-spark="gl6-airworthiness">GL6 · Airworthiness · Inspections · Airspace · 91.205 &amp; 91.155</button>
           <!-- AUTO_INGEST_SPARKNOTES_CHIPS_END -->
         </div>
 
@@ -2358,22 +2357,24 @@
           </section>
         </article>
 
-        <!-- ========== GL6 · Airworthiness · Docs · Inspections · FAR 91.205 ========== -->
+        <!-- ========== GL6 · Airworthiness, Inspections, Airspace, 91.205 & 91.155 (merged) ========== -->
         <article class="spark-article hidden" data-article="gl6-airworthiness">
           <header class="spark-head">
             <span class="chip">GL6 · 2026-05-12</span>
-            <h1>Airworthiness, Aircraft Documents, Inspections & the 5-Check / 3-Do / 1-Decide — Sparknotes</h1>
-            <p class="spark-sub">What makes the plane legal to fly, what makes it safe to fly, and the difference. The verbatim mnemonics — SPARROW, IM SAFE, AAV1ATE/88, A-TOMATO-FLAMES, FLAPS, PEDS.</p>
+            <h1>Airworthiness, Documents, Inspections, Airspace & VFR Weather Minimums — Sparknotes</h1>
+            <p class="spark-sub">The full 2h 25m Lesson 6: what makes the plane legal to fly, the verbatim mnemonics (SPARROW, IM SAFE, AAV1ATE/88, A-TOMATO-FLAMES, FLAPS, PEDS), and the KSNA airspace stack + FAR 91.155 VFR weather minimums.</p>
           </header>
 
           <div class="spark-callout info">
-            <div class="sc-title">The gist — 5 bullets</div>
+            <div class="sc-title">The gist — 7 bullets</div>
             <ul>
               <li><b>Airworthiness = 3 prongs ALL must hold:</b> (1) meets approved type design, (2) in condition for safe flight, (3) all maintenance/inspections/directives done. <b>Owner maintains; PIC decides.</b></li>
               <li><b>SPARROW</b> in the plane, <b>photo ID + medical + pilot certificate</b> on you. Say "certificate" — never "license."</li>
               <li><b>AAV1ATE/88</b> intervals: Annual 12 mo (A&P-IA) · 100-hr (tach, for hire) · VOR 30 days IFR · Altimeter/Transponder 24 mo · ELT 12 mo / half batt / 1 hr · Static.</li>
               <li><b>Inop equipment = 5 CHECK · 3 DO · 1 DECIDE.</b> MEL → TCDS → KOEL → CEL → FAR 91.205 (+ADs/STCs/ICAs). Disable, INOP-placard, PEDS log. Go or no-go.</li>
               <li><b>FAR 91.205(b) VFR Day = A-TOMATO-FLAMES.</b> 91.205(c) VFR Night adds <b>FLAPS</b>.</li>
+              <li><b>KSNA stack:</b> Class C 3,500–4,400 ft · Class E from 700 AGL in magenta · Class G surface to 699 in shaded zones.</li>
+              <li><b>91.155 cadence:</b> "3-1-5-2" for C/D/E/B below 10,000 · "1 SM clear-of-clouds" for G day ≤ 1,200 · "3-5-1-2" for G night · "5-1-1-1" for above 10,000 (the only place feet flips to miles).</li>
             </ul>
           </div>
 
@@ -2566,6 +2567,60 @@
           <h3 class="spark-h3">The 1 Decision</h3>
           <div class="spark-formula">GO or NO-GO</div>
 
+          <h2 class="spark-h2">KSNA Local Airspace Stack (Part 2)</h2>
+          <p>The second half of Lesson 6 (after airworthiness) covered the airspace stack at John Wayne and FAR 91.155 because today's planned flight was cancelled for a 3,200-ft cloud layer over the coast — the ground absorbed the airborne pre-brief.</p>
+          <p>Sectional altitudes are written in <b>HUNDREDS</b> — "35/44" means 3,500 / 4,400 ft.</p>
+          <div class="spark-kv">
+            <div><b>Class CHARLIE</b><span>3,500 to 4,400 ft. MUST be talking to John Wayne Tower inside. Hand off to SoCal = you exit the shelf; re-entering requires a new clearance.</span></div>
+            <div><b>Class ECHO</b><span>Starts at 700 ft AGL in the magenta shading. Everywhere outside the magenta is Class E by default below 18,000.</span></div>
+            <div><b>Class GOLF</b><span>Surface to 699 ft inside the shaded zones.</span></div>
+          </div>
+
+          <h2 class="spark-h2">FAR 91.155 — Basic VFR Weather Minimums</h2>
+          <p>Visibility in <b>statute miles</b>. Cloud clearance in <b>feet</b> unless noted otherwise. Layout: <b>[vis] · [above] · [below] · [horizontal]</b>.</p>
+
+          <h3 class="spark-h3">Class C (and B/D/E below 10,000 MSL)</h3>
+          <div class="spark-formula">3 SM · 1,000 above · 500 below · 2,000 horizontal — day AND night</div>
+
+          <h3 class="spark-h3">Class G (below 10,000 MSL)</h3>
+          <div class="spark-kv">
+            <div><b>Day · ≤ 1,200 ft AGL</b><span>1 SM · <b>CLEAR OF CLOUDS</b> (no feet entry)</span></div>
+            <div><b>Day · &gt; 1,200 ft AGL</b><span>1 SM · 1,000 above · 500 below · 2,000 horizontal</span></div>
+            <div><b>Night</b><span>3 SM · 500 below · 1,000 above · 2,000 horizontal</span></div>
+          </div>
+
+          <h3 class="spark-h3">Echo & Golf ABOVE 10,000 MSL — the WEIRD ONE</h3>
+          <div class="spark-formula">5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal</div>
+          <p>The only place the horizontal clearance flips from FEET to MILES. Mental yardstick: 1 statute mile ≈ <b>5,280 ft</b> from your wing.</p>
+
+          <div class="spark-callout warn">
+            <div class="sc-title">"Clear of clouds" — literal meaning</div>
+            <p>Not <em>IN</em> a cloud, but you can be right above or right below one. The standard has no fixed feet entry — judgment-based distance. Just don't get yourself an IMC.</p>
+          </div>
+
+          <h3 class="spark-h3">The 5-vs-1 Puzzle (Aryan's question)</h3>
+          <p>At above 10,000 MSL you need 5 SM visibility AND 1 SM horizontal cloud clearance. Don't they cancel? No — the 5 SM is your <b>overall visibility minimum</b>. The 1,000/1,000/1-mile is your <b>separation from clouds</b>. At altitude there are no cloud "rollers" or stacked layers like at low altitude — you have room, so the clearance numbers grow.</p>
+
+          <h3 class="spark-h3">Reading the Layout Fast</h3>
+          <div class="spark-kv">
+            <div><b>"3-1-5-2"</b><span>Class C/E/D below 10,000: 3 SM · 1,000 above · 500 below · 2,000 horizontal</span></div>
+            <div><b>"5-1-1-1"</b><span>Above 10,000 MSL: 5 SM · 1,000 above · 1,000 below · 1 SM horizontal</span></div>
+            <div><b>"1 SM · COC"</b><span>Class G day ≤ 1,200 AGL: 1 SM, clear of clouds</span></div>
+            <div><b>"3-5-1-2 (night G)"</b><span>Class G night: 3 SM · 500 below · 1,000 above · 2,000 horizontal</span></div>
+          </div>
+
+          <div class="spark-callout info">
+            <div class="sc-title">Today's real-world no-go (good example)</div>
+            <p>TAF/METAR reported a cloud layer at ~<b>3,200 ft</b> over the coast → ceiling drop expected. To stay legal in G/E we'd be capped at <b>2,800 ft</b> (500 below the layer). Can't climb through clouds. Plus an IFR-over-the-coast SIGMET added margin. Net learning would be 600–700 ft of climb/descent practice — not worth the risk. <b>Flight cancelled, converted to ground.</b></p>
+          </div>
+
+          <h3 class="spark-h3">DPE scenario format</h3>
+          <p><b>Q:</b> "You're at a Class G airport getting a burger during the day — what's your visibility requirement?" <br>
+          <b>A:</b> "1 statute mile, clear of clouds."</p>
+          <p><b>Q follow-up:</b> "Dinner runs late — Metar reports 2 SM, broken at 2,000 ft. Can you depart?" <br>
+          <b>A:</b> "No. At night Class G changes to 3 SM + clearance, so I'd be trapped there until conditions improve."</p>
+          <p class="muted" style="text-align:center; margin-top:-6px;">DPE is testing situational <b>AWARENESS</b>, not trivia. Read the layout in context.</p>
+
           <h2 class="spark-h2">Bottom-Line Takeaways</h2>
           <ol class="spark-list">
             <li><b>Airworthy ≠ Safe to fly today.</b> Owner maintains; PIC has the final call.</li>
@@ -2577,6 +2632,11 @@
             <li><b>FAR 43 Appendix A Paragraph C</b> scripted answer — memorize verbatim.</li>
             <li><b>POH = tail-specific. PIM = generic.</b> We have a POH.</li>
             <li><b>5 check · 3 do · 1 decide.</b> MEL → TCDS → KOEL → CEL → 91.205. A-TOMATO-FLAMES + FLAPS. PEDS log. Go/no-go.</li>
+            <li><b>Sectional altitudes are in HUNDREDS</b> — "35/44" = 3,500/4,400.</li>
+            <li><b>3-1-5-2</b> for Class C/B/D/E below 10,000 — day and night.</li>
+            <li><b>Class G day ≤ 1,200 AGL = 1 SM, clear of clouds.</b> Night G = 3-5-1-2.</li>
+            <li><b>Above 10,000 MSL = 5-1-1-1.</b> Horizontal jumps from feet to miles — the only place this happens.</li>
+            <li><b>1 statute mile = 5,280 ft</b> — useful mental yardstick.</li>
           </ol>
 
           <!-- Flashcards -->
@@ -2584,7 +2644,7 @@
             <div class="flash-head">
               <div class="flash-title">
                 <h2>Flashcards</h2>
-                <span class="tag">12 cards</span>
+                <span class="tag">22 cards</span>
               </div>
               <div class="flash-controls">
                 <span class="flash-progress"></span>
@@ -2665,144 +2725,40 @@
                   <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>FLAPS:</b> <b>F</b>uses/Circuit breakers (N51840 has CBs) · <b>L</b>anding light (if for hire) · <b>A</b>nti-collision · <b>P</b>osition lights · <b>S</b>ource of electrical power. <br><b>PEDS:</b> <b>P</b>lace · <b>E</b>rror · <b>D</b>ate · <b>S</b>ignature.</div></div>
                 </div>
               </div>
-            </div>
-          </section>
-        </article>
-
-        <!-- ========== GL6 cont · Airspace · FAR 91.155 VFR Weather Minimums ========== -->
-        <article class="spark-article hidden" data-article="gl6b-airspace-vfr-mins">
-          <header class="spark-head">
-            <span class="chip">GL6 cont · 2026-05-12</span>
-            <h1>KSNA Airspace & FAR 91.155 VFR Weather Minimums — Sparknotes</h1>
-            <p class="spark-sub">The 15-minute follow-on: airspace stack at John Wayne, and the exact visibility/cloud-clearance numbers for every Class + day/night + altitude combination.</p>
-          </header>
-
-          <div class="spark-callout info">
-            <div class="sc-title">The gist — 5 bullets</div>
-            <ul>
-              <li><b>KSNA stack:</b> Class C 3,500–4,400 ft · Class E from 700 AGL in magenta · Class G surface to 699 in shaded zones.</li>
-              <li><b>Class C (and B/D/E below 10,000):</b> 3 SM · 1,000 above · 500 below · 2,000 horizontal. Day and night, same.</li>
-              <li><b>Class G day ≤ 1,200 AGL:</b> 1 SM · CLEAR OF CLOUDS. Above 1,200 day: 1 SM · 1,000/500/2,000.</li>
-              <li><b>Class G night:</b> 3 SM · 500 below · 1,000 above · 2,000 horizontal (more restrictive than day).</li>
-              <li><b>Above 10,000 MSL (E and G):</b> 5 SM · 1,000 above · 1,000 below · <b>1 STATUTE MILE</b> horizontal — the only place feet flips to miles.</li>
-            </ul>
-          </div>
-
-          <h2 class="spark-h2">KSNA Local Airspace Stack</h2>
-          <p>Sectional altitudes are written in <b>HUNDREDS</b> — "35/44" means 3,500 / 4,400 ft.</p>
-          <div class="spark-kv">
-            <div><b>Class CHARLIE</b><span>3,500 to 4,400 ft. MUST be talking to John Wayne Tower inside. Hand off to SoCal = you exit the shelf; re-entering requires a new clearance.</span></div>
-            <div><b>Class ECHO</b><span>Starts at 700 ft AGL in the magenta shading. Everywhere outside the magenta is Class E by default below 18,000.</span></div>
-            <div><b>Class GOLF</b><span>Surface to 699 ft inside the shaded zones.</span></div>
-          </div>
-
-          <h2 class="spark-h2">FAR 91.155 — Basic VFR Weather Minimums</h2>
-          <p>Visibility in <b>statute miles</b>. Cloud clearance in <b>feet</b> unless noted otherwise. Layout: <b>[vis] · [above] · [below] · [horizontal]</b>.</p>
-
-          <h3 class="spark-h3">Class C (and B/D/E below 10,000 MSL)</h3>
-          <div class="spark-formula">3 SM · 1,000 above · 500 below · 2,000 horizontal — day AND night</div>
-
-          <h3 class="spark-h3">Class G (below 10,000 MSL)</h3>
-          <div class="spark-kv">
-            <div><b>Day · ≤ 1,200 ft AGL</b><span>1 SM · <b>CLEAR OF CLOUDS</b> (no feet entry)</span></div>
-            <div><b>Day · &gt; 1,200 ft AGL</b><span>1 SM · 1,000 above · 500 below · 2,000 horizontal</span></div>
-            <div><b>Night</b><span>3 SM · 500 below · 1,000 above · 2,000 horizontal</span></div>
-          </div>
-
-          <h3 class="spark-h3">Echo & Golf ABOVE 10,000 MSL — the WEIRD ONE</h3>
-          <div class="spark-formula">5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal</div>
-          <p>The only place the horizontal clearance flips from FEET to MILES. Mental yardstick: 1 statute mile ≈ <b>5,280 ft</b> from your wing.</p>
-
-          <div class="spark-callout warn">
-            <div class="sc-title">"Clear of clouds" — literal meaning</div>
-            <p>Not <em>IN</em> a cloud, but you can be right above or right below one. The standard has no fixed feet entry — judgment-based distance. Just don't get yourself an IMC.</p>
-          </div>
-
-          <h2 class="spark-h2">The 5-vs-1 Puzzle (Aryan's question)</h2>
-          <p>At above 10,000 MSL you need 5 SM visibility AND 1 SM horizontal cloud clearance. Don't they cancel? No — the 5 SM is your <b>overall visibility minimum</b>. The 1,000/1,000/1-mile is your <b>separation from clouds</b>. At altitude there are no cloud "rollers" or stacked layers like at low altitude — you have room, so the clearance numbers grow.</p>
-
-          <h2 class="spark-h2">Reading the Layout Fast</h2>
-          <p>Desireé's cadence (pick a consistent reading order and stick with it):</p>
-          <div class="spark-kv">
-            <div><b>"3-1-5-2"</b><span>Class C/E/D below 10,000: 3 SM · 1,000 above · 500 below · 2,000 horizontal</span></div>
-            <div><b>"5-1-1-1"</b><span>Above 10,000 MSL: 5 SM · 1,000 above · 1,000 below · 1 SM horizontal</span></div>
-            <div><b>"1 SM · COC"</b><span>Class G day ≤ 1,200 AGL: 1 SM, clear of clouds</span></div>
-            <div><b>"3-5-1-2 (night G)"</b><span>Class G night: 3 SM · 500 below · 1,000 above · 2,000 horizontal</span></div>
-          </div>
-
-          <h2 class="spark-h2">Today's Real-World No-Go (good example)</h2>
-          <p>TAF/METAR reported a cloud layer at ~<b>3,200 ft</b> over the coast → ceiling drop expected. To stay legal in G/E we'd be capped at <b>2,800 ft</b> (500 below the layer). Can't climb through clouds. Plus an IFR-over-the-coast SIGMET added margin. Net learning would be 600–700 ft of climb/descent practice — not worth the risk. <b>Flight cancelled, converted to ground.</b> Both options were legal-marginal — the decision was a judgment call, not a rules call.</p>
-
-          <h2 class="spark-h2">DPE Scenario Format</h2>
-          <div class="spark-callout info">
-            <div class="sc-title">Pattern: real-world scenario → read the layout off the chart</div>
-            <p><b>Q:</b> "You're at a Class G airport getting a burger during the day — what's your visibility requirement?"<br>
-            <b>A:</b> "1 statute mile, clear of clouds."</p>
-            <p><b>Q follow-up:</b> "Dinner runs late — Metar reports 2 SM, broken at 2,000 ft. Can you depart?"<br>
-            <b>A:</b> "No. At night Class G changes to 3 SM + clearance, so I'd be trapped there until conditions improve."</p>
-            <p>DPE is testing situational <b>AWARENESS</b>, not trivia. Read the layout in context.</p>
-          </div>
-
-          <h2 class="spark-h2">Bottom-Line Takeaways</h2>
-          <ol class="spark-list">
-            <li><b>Sectional altitudes are in HUNDREDS</b> — "35/44" = 3,500/4,400.</li>
-            <li><b>3-1-5-2</b> for Class C/B/D/E below 10,000 — day and night.</li>
-            <li><b>Class G day ≤ 1,200 AGL = 1 SM, clear of clouds.</b> No feet entry on the horizontal.</li>
-            <li><b>Class G night = 3-5-1-2.</b> More restrictive than day at the same altitude.</li>
-            <li><b>Above 10,000 MSL = 5-1-1-1.</b> Horizontal jumps from feet to miles — the only place this happens.</li>
-            <li><b>1 statute mile = 5,280 ft</b> — useful mental yardstick.</li>
-            <li><b>"Clear of clouds"</b> = not IN a cloud; no fixed feet; use judgment.</li>
-            <li><b>Drill it until you can read any (class · day/night · altitude) off the chart in real time.</b></li>
-          </ol>
-
-          <!-- Flashcards -->
-          <section class="flash-section">
-            <div class="flash-head">
-              <div class="flash-title">
-                <h2>Flashcards</h2>
-                <span class="tag">10 cards</span>
-              </div>
-              <div class="flash-controls">
-                <span class="flash-progress"></span>
-                <button class="flash-shuffle">🔀 Shuffle</button>
-                <button class="flash-reset">↺ Reset</button>
-              </div>
-            </div>
-            <div class="flash-grid">
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">VFR weather minimums for Class C (and B/D/E below 10,000)?</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>3 SM</b> visibility · <b>1,000 ft above</b> · <b>500 ft below</b> · <b>2,000 ft horizontal</b>. Day and night the same.</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>3 SM</b> visibility · <b>1,000 ft above</b> · <b>500 ft below</b> · <b>2,000 ft horizontal</b>. Day and night the same. Mnemonic: "3-1-5-2."</div></div>
                 </div>
               </div>
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">VFR weather mins for Class G day at or below 1,200 ft AGL?</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1 SM visibility · CLEAR OF CLOUDS</b>. No feet entry on the horizontal — judgment-based distance from the cloud.</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1 SM visibility · CLEAR OF CLOUDS</b>. No feet entry on the horizontal — judgment-based distance.</div></div>
                 </div>
               </div>
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">VFR weather mins for Class G day ABOVE 1,200 ft AGL?</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1 SM · 1,000 above · 500 below · 2,000 horizontal</b>. (Same separation as Class C, but only 1 SM visibility.)</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1 SM · 1,000 above · 500 below · 2,000 horizontal</b>. (Same cloud separation as Class C, but only 1 SM visibility.)</div></div>
                 </div>
               </div>
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">VFR weather mins for Class G NIGHT (below 10,000)?</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>3 SM · 500 below · 1,000 above · 2,000 horizontal</b>. More restrictive than day at the same altitude.</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>3 SM · 500 below · 1,000 above · 2,000 horizontal</b>. Mnemonic: "3-5-1-2." More restrictive than day at the same altitude.</div></div>
                 </div>
               </div>
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">VFR weather mins ABOVE 10,000 MSL (Echo and Golf)?</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal</b>. The only place the horizontal clearance flips from feet to miles.</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal</b>. The only place the horizontal clearance flips from feet to miles. Mnemonic: "5-1-1-1."</div></div>
                 </div>
               </div>
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
                   <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">What does "clear of clouds" actually mean?</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Literally not <b>IN</b> a cloud, but you can be right above or right below one. No fixed feet entry — judgment-based distance from the cloud. Just don't get yourself an IMC.</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Literally not <b>IN</b> a cloud, but you can be right above or right below one. No fixed feet entry — judgment-based distance. Just don't get yourself an IMC.</div></div>
                 </div>
               </div>
               <div class="flash-card" tabindex="0">
@@ -2825,8 +2781,8 @@
               </div>
               <div class="flash-card" tabindex="0">
                 <div class="flash-inner">
-                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">DPE: "You're at a Class G airport getting lunch during the day. Visibility requirement?"</div><div class="flash-hint">Tap to flip ↻</div></div>
-                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a"><b>1 statute mile, clear of clouds.</b> Follow-up: at night Class G changes to <b>3 SM + 500 below / 1,000 above / 2,000 horizontal</b> — so if conditions drop you'd be trapped until they improve.</div></div>
+                  <div class="flash-front"><div class="flash-label">Question</div><div class="flash-q">DPE: "Class G airport, lunch, daytime — visibility requirement? And follow-up if you stay past dark?"</div><div class="flash-hint">Tap to flip ↻</div></div>
+                  <div class="flash-back"><div class="flash-label">Answer</div><div class="flash-a">Day: <b>1 SM, clear of clouds.</b> Night follow-up: at night Class G changes to <b>3 SM + 500 below / 1,000 above / 2,000 horizontal</b> — if conditions drop you'd be trapped until they improve.</div></div>
                 </div>
               </div>
             </div>
@@ -4540,6 +4496,19 @@ function addGroundLessonOnce(lessonKey, entry, homeworkTexts, source) {
 }
 
 function runAutoIngestedLessons() {
+  // One-shot migration (2026-05-13): merge split GL6 + GL6 continued into a single Lesson 6.
+  // Removes both prior fireflies_id entries from state.ground and clears 'GL6'/'GL6B' from
+  // ppl_seeded_lessons so the merged GL6 below can seed cleanly. Runs once per user.
+  try {
+    const _seeded = STORE.get('ppl_seeded_lessons', []);
+    if (!_seeded.includes('GL6_MERGE_2026_05_13')) {
+      const _oldFFIds = ['01KRFAB18R5HQ57M1SNB39Y5QW', '01KRFHTP5EXPETC68P2469DECC'];
+      state.ground = state.ground.filter(g => !_oldFFIds.includes(g.fireflies_id));
+      const _newSeeded = _seeded.filter(k => k !== 'GL6' && k !== 'GL6B').concat('GL6_MERGE_2026_05_13');
+      STORE.set('ppl_seeded_lessons', _newSeeded);
+      persist();
+    }
+  } catch (e) { console.warn('GL6 merge migration failed:', e); }
   /* AUTO_INGEST_LESSONS_START */
   addGroundLessonOnce('GL4', {
     date: '2026-04-24',
@@ -4968,9 +4937,9 @@ Source: Fireflies transcript "Ground lesson 5 May 05, 05:41 PM" (~108 min). Full
   addGroundLessonOnce('GL6', {
     date: '2026-05-12',
     lesson: 6,
-    duration: 2.17,
+    duration: 2.42,
     cost: 0,
-    topics: `AIRWORTHINESS, AIRCRAFT DOCUMENTS, INSPECTIONS, FAR 91.205, INOPERATIVE EQUIPMENT FRAMEWORK — Cessna 172 N51840 (CFI Desireé · 2 hr 10 min · transcript-sourced)
+    topics: `AIRWORTHINESS, AIRCRAFT DOCUMENTS, INSPECTIONS, FAR 91.205, INOPERATIVE EQUIPMENT FRAMEWORK, KSNA AIRSPACE STACK, FAR 91.155 VFR WEATHER MINIMUMS — Cessna 172 N51840 (CFI Desireé · 2 hr 25 min total: 2h 10m airworthiness + 15m airspace · transcript-sourced)
 
 — PILOT DOCUMENTS YOU MUST CARRY —
 • Government-issued PHOTO ID
@@ -5009,7 +4978,7 @@ Source: Fireflies transcript "Ground lesson 5 May 05, 05:41 PM" (~108 min). Full
 • Example: bald spots on tires + wet runway = airworthy but PIC says no-go.
 
 — HOW LONG IS AIRWORTHINESS VALID —
-INDEFINITELY — for the lifetime of the plane, as long as required inspections remain current. (Aryan's wrong answer on the ramp earlier: "12 or 24 months." Correct: lifetime.)
+INDEFINITELY — for the lifetime of the plane, as long as required inspections remain current.
 
 — AAV1ATE / AV1ATE-88 (inspection mnemonic — pick what fits your brain) —
 A — Annual: 12 CALENDAR MONTHS · only an A&P-IA can sign it off
@@ -5020,88 +4989,63 @@ A — Altimeter: 24 CALENDAR MONTHS
 T — Transponder: 24 CALENDAR MONTHS
 E — ELT: 12 CALENDAR MONTHS, OR HALF BATTERY LIFE, OR 1 HOUR CUMULATIVE USE
 S — Static source (or "Alternative" — same item, different mnemonic letter)
-The "88" version: trailing 8 = ELT, second 8 = static source.
 
 — A&P vs A&P-IA (one credential, not two) —
 • A&P = Airframe & Powerplant mechanic — can do 100-hour
 • A&P-IA = A&P WITH Inspection Authorization — can do ANNUAL
-• "AMP" is not a separate person from "IA" — A&P-IA is ONE credential.
 • Annual OVERRIDES 100-hour. You can do both at once. You can NEVER substitute a 100-hour for an annual.
 
 — TACH vs HOBBS —
-• TACH = engine rotations per minute; counts harder when engine works harder (full throttle vs idle)
+• TACH = engine rotations per minute; counts harder when engine works harder
 • HOBBS = wall-clock time engine is running
 • 100-hour interval is measured against TACH hours.
 
 — CHECKRIDE-DAY 100-HOUR GOTCHA —
 • During the checkride the APPLICANT is PIC; the DPE is just a passenger/examiner. Not "for hire" → 100-hour NOT strictly required.
-• BUT — ACI keeps 100-hour current anyway because one specific DPE won't fly unless 100-hour is current (in case he takes the controls, which would technically be "for hire").
+• BUT — ACI keeps 100-hour current anyway because one specific DPE won't fly unless 100-hour is current.
 
 — SPECIAL FLIGHT PERMIT (Ferry Permit) —
 • Allows exceeding the 100-hour by UP TO 10 HOURS to reposition the plane for maintenance.
-• Hurricane-evac scenario: 2 hours of 100-hour left, but the nearest safe field is 5 hours away → request a Special Flight Permit.
 • Issued by the FSDO — Flight Standards District Office (NOT "Flight Service" — Desireé caught herself).
-• Our office: Long Beach FSDO. Phone: 562-377-5400. Hours M-F 7:30 a.m. – 4 p.m.
-• FSDO also handles: IACRA, student-cert issues, local aviation queries.
+• Long Beach FSDO. Phone: 562-377-5400. Hours M-F 7:30 a.m. – 4 p.m.
 
 — ADs vs SBs (sisters) —
-• AD (Airworthiness Directive) — issued by the FAA — MANDATORY compliance. Example: replace seat screws every 75 flight-hours.
+• AD (Airworthiness Directive) — issued by the FAA — MANDATORY compliance.
 • SB (Service Bulletin) — issued by the MANUFACTURER (Textron/Cessna) — RECOMMENDATION ONLY. NOT mandatory unless the FAA later wraps it into an AD.
-• "If Textron just says 'hey, this might be better,' you don't need to comply." SB = "the sister of an AD."
 
 — PREVENTATIVE MAINTENANCE — 14 CFR PART 43, APPENDIX A —
 • Pilots may legally perform items listed under PARAGRAPH C only (preventative maintenance — NOT major repairs/alterations).
-• Items include: removal/installation/repair of landing-gear tires; replacing elastic shock cords; servicing shock struts (oil/air); servicing wheel bearings; replacing defective safety wiring/cotter keys; lubrication not requiring disassembly; simple fabric patches (no rib stitching); replenishing hydraulic reservoir fluid; refinishing decorative items. ~30 items total in Paragraph C.
-• Logging required if you do prev. mx: maintenance log entry with LOCATION · DATE · YOUR NAME · YOUR CERTIFICATE NUMBER · WHAT YOU DID. Also squawk it in scheduling for the next pilot.
-★ Checkride scripted answer (Desireé got this on her own ride): "Tires look flat — could you replace it?" Correct answer: "Per FAR Part 43 Appendix A under preventative maintenance, I can. I don't know how to do it so I never would do it without help. But legally I can." THAT'S how you answer.
+• Items include: tires; shock cords; shock struts; wheel bearings; safety wiring/cotter keys; lubrication not requiring disassembly; simple fabric patches; replenishing hydraulic reservoir fluid; refinishing decorative items.
+• Logging required: maintenance log entry with LOCATION · DATE · YOUR NAME · YOUR CERTIFICATE NUMBER · WHAT YOU DID.
+★ Checkride scripted answer: "Per FAR Part 43 Appendix A under preventative maintenance, I can. I do not know how to do it so I never would do it without help. But legally I can."
 
 — POH vs PIM (know the difference) —
 • POH (Pilot Operating Handbook) — TAIL-SPECIFIC; thick (~360 pages); newer airplanes.
 • PIM (Pilot Information Manual) — GENERIC to the model series; thin pamphlet; older airplanes (60s/70s).
-• N51840 (1981) technically came with a PIM. ACI reached out to the FAA to get the actual POH and rebound it.
 • Checkride answer: "The operating handbook for our plane is the POH."
-• POH section order (8 sections): General · Limitations · Emergency · Normal · Performance · Weight & Balance · Systems · Servicing/Supplements. There's an acronym Desireé gestured at — confirm from POH index.
 
 — DEFINITIONS OF "NIGHT" (three of them — DPE will pick one) —
 • Logging NIGHT LANDINGS — from 1 HOUR AFTER SUNSET to 1 HOUR BEFORE SUNRISE
 • Logging NIGHT FLIGHT TIME — from END of EVENING CIVIL TWILIGHT to BEGINNING of MORNING CIVIL TWILIGHT
 • Use of POSITION/NAV LIGHTS (Operation Lights On AC) — from SUNSET to SUNRISE
-• Practical: sunset 7:43 → log night time from 7:43, but night landings only after 8:43.
 • N51840 has ADS-B wired to the nav light — generally leave nav on regardless.
 
-— CATEGORY / CLASS / TYPE (added at the end) —
+— CATEGORY / CLASS / TYPE —
 • Category — airplane vs rotorcraft (helicopter)
 • Class — single-engine vs multi-engine
 • Type — specific make/model (Cessna 172, Gulfstream G550)
 • Type rating REQUIRED when: aircraft is OVER 12,500 LB, OR when the FAA specifically requires it.
-• Type ratings are aircraft-specific and DO NOT transfer between models. (Desireé's brother: B-757 + G550, separately.)
+• Type ratings are aircraft-specific and DO NOT transfer between models.
 
 — INOPERATIVE EQUIPMENT FRAMEWORK — "5 CHECK · 3 DO · 1 DECIDE" —
 (Reference: PHAK Chapter 9, starting around 9-6.)
 
 THE 5 THINGS TO CHECK (in order):
-1. MEL — Minimum Equipment List
-   • Items on the MEL = items you DON'T need (can fly without them)
-   • Common in Part 121 (airline) and Part 135 (charter); required for type-rated aircraft over 12,500 lb
-   • Part 91 doesn't require one — ACI doesn't have one but could
-2. TCDS — Type Certificate Data Sheet
-   • "Birth certificate for the airplane" — manufacturer-issued
-   • Lists approved prop (McCauley, 74.5–76 inches for 172P — you can shave for nicks), aileron travel (up 20° / down 14°), Va, max weight
-   • N51840 = 172P model; TCDS is 31 pages in the 51840 ForeFlight binder
-3. KOEL — Kinds of Operation Equipment List (POH Section 2)
-   • Tells you which equipment is required for which kind of operation (VFR Day/Night/IFR)
-   • N51840 doesn't have a KOEL — only a CEL. Same idea, different format
-4. CEL — Comprehensive Equipment List (POH Section 6)
-   • Suffix letters: R = Required for FAA certification · S = Standard · O = Optional replacing required/standard · A = Optional in addition
-   • Prefix letter = descriptive group (e.g., A = power plant & accessories)
-   • Walk-through: oil cooler insulation labeled A17R → R = required → CANNOT FLY without it
-5. FAR 91.205 — required equipment by operation
-   • 91.205(b) — VFR DAY: A-TOMATO-FLAMES
-   • 91.205(c) — VFR NIGHT: A-TOMATO-FLAMES + FLAPS
-   • 91.205(d) — IFR (doesn't apply to PPL VFR)
-   Plus ADs / STCs / ICAs:
-   • STC — Supplemental Type Certificate — FAA approval for a major alteration (e.g., adding a 50 lb air conditioner)
-   • ICA — Instructions for Continued Airworthiness — how to maintain the modified component
+1. MEL — Minimum Equipment List (items you can fly WITHOUT). Common in Part 121/135; required for >12,500 lb. Part 91 doesn't require one.
+2. TCDS — Type Certificate Data Sheet. "Birth certificate" for the airplane. N51840 = 172P model; TCDS is 31 pages.
+3. KOEL — Kinds of Operation Equipment List (POH Section 2). N51840 doesn't have one — only a CEL.
+4. CEL — Comprehensive Equipment List (POH Section 6). Suffix letters: R = Required · S = Standard · O = Optional replacing · A = Optional in addition.
+5. FAR 91.205 — required equipment by operation. Plus ADs / STCs / ICAs.
 
 A-TOMATO-FLAMES (VFR DAY, 91.205(b)) — VERBATIM:
 A — Airspeed indicator
@@ -5113,126 +5057,149 @@ T — Temperature gauge (each liquid-cooled engine)
 O — Oil temp gauge (each air-cooled engine)
 F — Fuel gauges
 L — Landing gear position (if retractable)
-A — Anti-collision lights (for aircraft certified after 3/11/1996)
+A — Anti-collision lights (post 3/11/1996)
 M — Magnetic compass
 E — ELT (Emergency Locator Transmitter)
 S — Safety belts / seat belts
 
 FLAPS (VFR NIGHT additions, 91.205(c)) — VERBATIM:
-F — Fuses (or Circuit breakers — N51840 has CBs, hence the "(C)" Desireé noted)
+F — Fuses (or Circuit breakers — N51840 has CBs, hence the "(C)")
 L — Landing light (only if for hire)
 A — Anti-collision lights
 P — Position lights
 S — Source of electrical power
 
-THE 3 THINGS TO DO (when you find inop equipment):
+THE 3 THINGS TO DO:
 1. DISABLE or DEACTIVATE the item
-2. MARK IT INOP — print/place an INOP sticker; that's its new placard
-3. LOG IT in the maintenance log using PEDS:
-   • P — Place (which item, where)
-   • E — Error (description of issue)
-   • D — Date
-   • S — Signature
+2. MARK IT INOP (sticker = new placard)
+3. LOG IT in the maintenance log using PEDS: Place · Error · Date · Signature
 
 THE 1 DECISION: GO or NO-GO.
 
-— DOCUMENT LOCATIONS in N51840 —
-• Airworthiness certificate — bottom-left pocket, visible to passengers (most important)
-• Registration — right next to airworthiness
-• Radio operator license — skipped (international only)
-• ELT battery expiration — tail compartment (Desireé to send a photo)
+— KSNA LOCAL AIRSPACE STACK (Part 2 — 15-min continuation after airworthiness) —
+• Class CHARLIE — 3,500 to 4,400 ft (sectional in HUNDREDS — "35/44" = 3500/4400)
+• Inside Charlie you MUST be talking to John Wayne Tower
+• Class ECHO — starts at 700 ft AGL in the shaded magenta area
+• Class GOLF — surface to 699 ft inside the shaded zones
+• Above 10,000 MSL — different rules (today's lesson stayed below 10,000 since cruise was 5,056 ft)
 
-— TYPE-RATING THRESHOLD —
-• OVER 12,500 LB max gross weight → type rating required
-• OR if the FAA specifically requires it (e.g., the FAA could in theory wake up and require a type rating for the 172)
-• Type ratings DO NOT transfer between aircraft (B-757 type ≠ G550 type)
+— FAR 91.155 — BASIC VFR WEATHER MINIMUMS (verbatim) —
+Visibility in STATUTE MILES. Cloud clearance in FEET unless noted. Layout: "[vis] · [above] · [below] · [horizontal]"
 
-KEYWORDS: Airworthiness (3-prong) · Owner vs PIC · IM SAFE · SPARROW · POH vs PIM · AAV1ATE/88 · A&P vs A&P-IA · Annual 12 cal mo · 100-hour 100 tach hrs · VOR 30 days · Altimeter/Xpdr 24 mo · ELT 12 mo/half batt/1 hr · Pitot-static 24 mo · Registration 7 years · Tach vs Hobbs · Special Flight Permit · FSDO Long Beach 562-377-5400 · AD (FAA mandatory) vs SB (mfg recommendation) · STC · ICA · FAR Part 43 App A para C · PEDS maintenance log · MEL · TCDS · KOEL · CEL (R/S/O/A) · 91.205(b)(c)(d) · A-TOMATO-FLAMES · FLAPS · Night landings (sunset+1 / sunrise-1) · Night logging (civil twilight) · Position lights sunset-sunrise · Category/Class/Type · Type rating > 12,500 lb · 5 check / 3 do / 1 decide.`,
+Class CHARLIE (and B, D, E below 10,000 MSL):
+• Day AND Night: 3 SM · 1,000 above · 500 below · 2,000 horizontal ("3-1-5-2")
+
+Class GOLF (below 10,000 MSL):
+• DAY, ≤ 1,200 ft AGL: 1 SM · "CLEAR OF CLOUDS" (no feet entry)
+• DAY, > 1,200 ft AGL: 1 SM · 1,000 above · 500 below · 2,000 horizontal
+• NIGHT: 3 SM · 500 below · 1,000 above · 2,000 horizontal ("3-5-1-2")
+
+Class ECHO & GOLF ABOVE 10,000 MSL — THE WEIRD ONE:
+• 5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal ("5-1-1-1")
+• Only place feet flips to miles. 1 statute mile ≈ 5,280 ft.
+
+"CLEAR OF CLOUDS" = not IN a cloud, but you can be right above or right below one. Just don't get yourself an IMC.
+
+DPE scenario format: "You're at a Class G airport getting a burger during the day — what's your visibility?" → "1 SM, clear of clouds." Follow-up: "It's night now and Metar reports 2 SM, broken at 2,000?" → "No, Class G night needs 3 SM + 500/1000/2000 — I'd be trapped." Testing situational AWARENESS, not trivia.
+
+KEYWORDS: Airworthiness (3-prong) · Owner vs PIC · IM SAFE · SPARROW · POH vs PIM · AAV1ATE/88 · A&P vs A&P-IA · Annual 12 cal mo · 100-hour 100 tach hrs · VOR 30 days · Altimeter/Xpdr 24 mo · ELT 12 mo/half batt/1 hr · Registration 7 years · Tach vs Hobbs · Special Flight Permit · FSDO Long Beach 562-377-5400 · AD (FAA mandatory) vs SB (mfg recommendation) · STC · ICA · FAR Part 43 App A para C · PEDS · MEL · TCDS · KOEL · CEL (R/S/O/A) · 91.205(b)(c) · A-TOMATO-FLAMES · FLAPS · Night (3 definitions) · Type rating > 12,500 lb · 5 check / 3 do / 1 decide · KSNA Charlie 3500-4400 · Echo from 700 AGL · Golf surface-699 · 91.155 · 3-1-5-2 · 1 SM clear of clouds · 3-5-1-2 (night G) · 5-1-1-1 (above 10,000) · 1 statute mile = 5,280 ft.`,
     notes: `**Overview**
-2 hr 10 min ground at KSNA with Desireé (N51840). Big airworthiness lesson — what makes a plane legal to fly, what makes it safe to fly, and the difference. Heavy on aircraft & pilot documents (SPARROW + photo ID/medical/pilot cert), the AAV1ATE/88 inspection mnemonic with exact intervals, A&P vs A&P-IA, the 100-hour/annual rules and the checkride 100-hour gotcha, the 14 CFR Part 43 Appendix A preventative-maintenance script, the POH-vs-PIM distinction, the three definitions of "night," and the full 5-check / 3-do / 1-decide framework for inoperative equipment (MEL → TCDS → KOEL → CEL → FAR 91.205 with A-TOMATO-FLAMES and FLAPS verbatim).
+Full 2 hr 25 min Lesson 6 at KSNA with Desireé (N51840) — covered in two segments back-to-back. First 2h 10m on airworthiness, documents, and inspections. Then 15 min on KSNA airspace + FAR 91.155 VFR weather minimums after the planned flight was cancelled for a 3,200-ft cloud layer over the coast.
 
 **Pilot vs aircraft documents**
-Carry on YOU: photo ID, medical certificate, pilot CERTIFICATE (never "license" — DPE trap). Carry IN the aircraft: SPARROW.
-
-SPARROW — Supplements (FAA-approved upgrades that change capability or weight/CG — AV-30C digital gyros in N51840, AC unit in N369 adding ~50 lb, G1000 retrofit in N249/369; like-for-like replacement parts like new exhaust or filter are NOT supplements; removed items are NOT tracked). Placards (POH Section 2 Limitations; faded = squawk). Airworthiness certificate (bottom-left pocket, visible to passengers). Registration (next to airworthiness; valid 7 years, bumped from 2 post-COVID). Radio operator license (international only — the one we skip). Operating handbook (POH for our plane). Weight & balance sheet (separate worksheet from the POH section).
+Carry on YOU: photo ID, medical certificate, pilot CERTIFICATE (never "license" — DPE trap). Carry IN the aircraft: SPARROW — Supplements · Placards · Airworthiness · Registration · Radio license · Operating handbook (POH) · Weight & balance sheet.
 
 **Airworthiness — verbatim 3-prong definition**
-"The aircraft is fit and safe for operation to fly." Three prongs ALL must hold: (1) meets approved type design, (2) in condition for safe flight, (3) all maintenance/inspections/directives done. Just because maintenance is done doesn't make it airworthy. Owner maintains; PIC has final authority on whether to fly TODAY. Bald-tire-on-wet-runway example: airworthy but not safe.
+"The aircraft is fit and safe for operation to fly." Three prongs ALL must hold: (1) meets approved type design, (2) in condition for safe flight, (3) all maintenance/inspections/directives done. Owner maintains; PIC has final authority on whether to fly TODAY. Bald-tire-on-wet-runway example: airworthy but not safe.
 
 **How long is airworthiness valid**
-INDEFINITELY for the lifetime of the plane, as long as required inspections remain current. (Aryan had said "12 or 24 months" earlier — corrected.)
+INDEFINITELY for the lifetime of the plane, as long as required inspections remain current.
 
 **AAV1ATE / AV1ATE-88 — exact intervals**
-A Annual (12 cal mo, A&P-IA only) · A Airworthiness Directives (as published) · V VOR check (30 days, IFR only — N/A to PPL) · 1 100-hour (100 TACH hrs, A&P, only if for hire) · A Altimeter (24 cal mo) · T Transponder (24 cal mo) · E ELT (12 cal mo OR half battery life OR 1 hr cumulative use) · S Static source. The "88" version puts ELT at the trailing 8 and static at the second 8.
+A Annual (12 cal mo, A&P-IA only) · A Airworthiness Directives (as published) · V VOR check (30 days, IFR only) · 1 100-hour (100 TACH hrs, A&P, only if for hire) · A Altimeter (24 cal mo) · T Transponder (24 cal mo) · E ELT (12 cal mo OR half battery life OR 1 hr cumulative use) · S Static source.
 
 **A&P vs A&P-IA — one credential, not two**
-A&P (Airframe & Powerplant) can do 100-hour. A&P-IA (A&P WITH Inspection Authorization) can do annual. Annual OVERRIDES 100-hour; never substitute 100-hour for annual. Aryan initially thought "AMP" and "IA" were two different people — corrected.
+A&P (Airframe & Powerplant) can do 100-hour. A&P-IA (A&P WITH Inspection Authorization) can do annual. Annual OVERRIDES 100-hour; never substitute 100-hour for annual.
 
 **Tach vs Hobbs**
 Tach counts engine revs (harder when engine works harder); Hobbs is wall-clock running time. 100-hour is measured against TACH.
 
-**Checkride 100-hour technicality**
-During checkride the APPLICANT is PIC and the DPE is just a passenger — not "for hire," so 100-hour technically not required. ACI keeps it current anyway because one specific DPE won't fly without it.
-
 **Special Flight Permit & FSDO**
-Can exceed 100-hour by up to 10 HOURS to reposition for maintenance under a Special Flight Permit. Get it from the FSDO — Flight Standards District Office (Desireé first said "Flight Service" then corrected). Long Beach FSDO is ours: 562-377-5400, M-F 7:30-4. FSDO also handles IACRA, student-cert questions, local aviation issues.
+Can exceed 100-hour by up to 10 HOURS to reposition for maintenance under a Special Flight Permit. Get it from the FSDO — Flight Standards District Office. Long Beach FSDO: 562-377-5400, M-F 7:30-4.
 
 **ADs vs SBs**
-AD (Airworthiness Directive) = FAA-issued, MANDATORY. SB (Service Bulletin) = manufacturer-issued (Textron/Cessna), RECOMMENDATION ONLY unless FAA later folds it into an AD. SB = "sister of an AD."
+AD (Airworthiness Directive) = FAA-issued, MANDATORY. SB (Service Bulletin) = manufacturer-issued, RECOMMENDATION ONLY unless FAA folds it into an AD.
 
 **Preventative maintenance — FAR Part 43, Appendix A, Paragraph C**
-Pilots may perform Paragraph C items (~30 items: tires, shock cords, shock struts, wheel bearings, safety wiring, simple lubrication, fabric patches, hydraulic top-off, decorative refinishing). Logging: maintenance log entry with location, date, name, certificate number, what you did. Squawk it in scheduling so the next pilot knows. Desireé did prev mx exactly once and decided "yeah, that's not me."
+Pilots may perform Paragraph C items (~30 of them: tires, shock cords, shock struts, wheel bearings, safety wiring, simple lubrication, fabric patches, hydraulic top-off, decorative refinishing). Logging: maintenance log entry with location, date, name, certificate number, what you did.
 
-★ Scripted DPE answer (Desireé got this on her checkride): "Tires look flat — could you replace it?" → "Per FAR Part 43 Appendix A under preventative maintenance, I can. I don't know how to do it, so I never would do it without help. But legally I can." THAT'S the script.
+★ Scripted DPE answer: "Tires look flat — could you replace it?" → "Per FAR Part 43 Appendix A under preventative maintenance, I can. I do not know how to do it, so I never would do it without help. But legally I can."
 
 **POH vs PIM**
-POH = tail-specific, thick (~360 pages). PIM = generic to model series, thin. N51840 came with a PIM in 1981; ACI reached out to the FAA for the real POH. ForeFlight's "POH" PDF for N51840 may actually combine PIM + POH content (Aryan flagged float-plane content through page 186) — Desireé to verify.
-
-POH section order (8): General · Limitations · Emergency · Normal · Performance · Weight & Balance · Systems · Servicing/Supplements. There's a memorable acronym she gestured at — confirm from POH index.
+POH = tail-specific, thick (~360 pages). PIM = generic to model series, thin. N51840 came with a PIM in 1981; ACI got the real POH from the FAA. Checkride answer: "The operating handbook for our plane is the POH."
 
 **Three definitions of "night"**
 1. Logging NIGHT LANDINGS — sunset+1 hr to sunrise-1 hr
 2. Logging NIGHT FLIGHT TIME — end of evening civil twilight to beginning of morning civil twilight
 3. Use of POSITION/NAV LIGHTS (per Operation Lights On AC) — sunset to sunrise
-N51840 has ADS-B wired to the nav light, so leave nav on regardless.
 
 **Category / Class / Type**
-Category = airplane vs rotorcraft. Class = single-engine vs multi-engine. Type = specific make/model. Type rating required when aircraft is OVER 12,500 lb OR when FAA specifically requires it. Type ratings DO NOT transfer between models.
+Category = airplane vs rotorcraft. Class = single vs multi-engine. Type = make/model. Type rating required when aircraft is OVER 12,500 lb OR when FAA requires it. Type ratings DO NOT transfer between models.
 
 **The 5-check / 3-do / 1-decide inoperative-equipment framework**
 Reference: PHAK Chapter 9 (around 9-6).
 
-5 to check in order:
-1. MEL (items you can fly WITHOUT). Required for Part 121/135 + type-rated >12,500 lb. Part 91 doesn't require it (ACI doesn't have one).
-2. TCDS — "birth certificate" — manufacturer-issued, lists prop range (McCauley 74.5–76" for 172P), aileron travel (up 20°/down 14°), Va, max weight. N51840 TCDS is 31 pages.
-3. KOEL (POH Section 2). N51840 doesn't have one — uses CEL instead.
-4. CEL (POH Section 6). Suffix R/S/O/A — R = Required. Example: oil cooler insulation A17R = required → cannot fly.
-5. FAR 91.205 — equipment required by operation. Plus ADs / STCs / ICAs.
+5 to check in order: MEL · TCDS · KOEL · CEL · FAR 91.205 (plus ADs/STCs/ICAs).
 
 A-TOMATO-FLAMES (VFR Day, 91.205(b)): Airspeed · Tachometer · Oil pressure · Manifold pressure · Altimeter · Temperature (liquid-cooled) · Oil temp (air-cooled) · Fuel gauge · Landing gear position (retractable) · Anti-collision (post-3/11/96) · Magnetic compass · ELT · Safety belts.
 
 FLAPS (VFR Night additions, 91.205(c)): Fuses (or Circuit breakers — N51840 has CBs) · Landing light (if for hire) · Anti-collision · Position lights · Source of electrical power.
 
-3 to DO when you find an inop item:
-1. Disable/deactivate the item
-2. Mark it INOP (sticker = new placard)
-3. Log in maintenance log using PEDS — Place · Error · Date · Signature
+3 to DO: Disable/deactivate · Mark INOP · Log using PEDS (Place · Error · Date · Signature).
 
 1 to DECIDE: GO or NO-GO.
 
+**Part 2 — KSNA airspace stack (15-min continuation)**
+After the airworthiness lesson, Desireé pulled out the airspace VFR-mins card because the planned flight had been cancelled for a 3,200-ft cloud layer. The ground absorbed what would have been the airborne pre-brief.
+
+Class Charlie — 3,500 to 4,400 ft (sectional altitudes in hundreds). Inside Charlie you must be talking to John Wayne Tower; once handed off to SoCal you exit, re-entering requires a new clearance. Class Echo — starts at 700 ft AGL in magenta shading. Class Golf — surface to 699 ft inside the shaded zones.
+
+**FAR 91.155 — basic VFR weather minimums**
+Visibility in statute miles; cloud clearance in feet unless noted.
+
+Class C (and B/D/E below 10,000): 3 SM · 1,000 above · 500 below · 2,000 horizontal — day and night ("3-1-5-2").
+
+Class G (below 10,000):
+- Day ≤ 1,200 AGL: 1 SM · CLEAR OF CLOUDS (no feet entry)
+- Day > 1,200 AGL: 1 SM · 1,000 above · 500 below · 2,000 horizontal
+- Night: 3 SM · 500 below · 1,000 above · 2,000 horizontal ("3-5-1-2")
+
+Above 10,000 MSL (Echo and Golf): 5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal ("5-1-1-1"). The horizontal slot flips from FEET to MILES — the only place this happens. 1 statute mile ≈ 5,280 ft.
+
+"Clear of clouds" = not IN a cloud, but you can be right above or below. No fixed feet — judgment-based distance. Don't get yourself IMC.
+
+**The 5-vs-1 puzzle**
+Aryan asked: at >10,000 MSL we have 5 SM visibility but only 1 SM horizontal cloud clearance — don't they cancel? They don't. The 5 SM is your overall visibility requirement; the 1,000/1,000/1-SM clearance is your separation from clouds. At altitude there are no cloud "rollers," you have room.
+
+**Today's no-go reasoning (good real-world example)**
+TAF/METAR reported a cloud layer ~3,200 ft over the coast → to stay 500 below in G/E we'd be capped at 2,800 ft. Can't climb through clouds. Plus IFR-over-the-coast SIGMET. Net learning would be 600–700 ft of climb/descent practice — not worth the risk. Flight cancelled, converted to ground.
+
+**DPE scenario format (testable)**
+"You're at a Class G airport getting a burger during the day — what's your visibility?" → "1 SM, clear of clouds." Follow-up: "Dinner runs late — Metar reports 2 SM, broken at 2,000. Depart?" → "No. At night Class G is 3 SM + clearance, so I'd be trapped." DPE is testing AWARENESS, not trivia.
+
 **Aryan-specific context**
-Aryan recited IM SAFE cleanly first try. Knew document locations cold (airworthiness bottom-left, registration next to it). Got A&P-IA corrected (thought AMP and IA were two separate mechanics — one credential). Got airworthiness validity corrected on second pass (lifetime, not 12/24 months). Guessed registration as 24 mo, 12 mo, 5 yr, 15 yr, 25 yr, lifetime — all wrong; correct is 7 yr. Said "Electronic" Locator Transmitter — corrected to "Emergency." Couldn't fully recite A-TOMATO-FLAMES. Caught the float-plane content in N51840's "POH" PDF and flagged it might be a PIM/POH combination — good catch. Grasped AD vs SB cleanly the first time. Independently suggested "in case of emergency" before the hurricane scenario was laid out for Special Flight Permits. Read the 30 Paragraph C items aloud (Desireé didn't realize there were 30).
+Aryan recited IM SAFE cleanly first try. Knew document locations cold (airworthiness bottom-left, registration next to it). Got A&P-IA corrected (thought AMP and IA were two separate mechanics — one credential). Got airworthiness validity corrected on second pass (lifetime, not 12/24 months). Guessed registration as 24 mo, 12 mo, 5 yr, 15 yr, 25 yr, lifetime — all wrong; correct is 7 yr. Said "Electronic" Locator Transmitter — corrected to "Emergency." Couldn't fully recite A-TOMATO-FLAMES. Caught the float-plane content in N51840's "POH" PDF and flagged it might be a PIM/POH combination. Grasped AD vs SB cleanly the first time. Read the 30 Paragraph C items aloud. In Part 2, asked the right meta-question (5 SM vs 1 SM horizontal — don't they cancel?) and spotted the only weird-units flip (the horizontal "1" being miles not feet).
 
 **Reading assignment (pre next lesson)**
-PHAK Chapter 9 around page 9-6 — inoperative equipment / aircraft documents. Run through it again. Confirm the POH-section-order acronym from the POH index. Look up where the ELT battery expiration date is in N51840's tail compartment (Desireé to send photo).
+PHAK Chapter 9 around page 9-6 — inoperative equipment / aircraft documents. Drill FAR 91.155 VFR weather minimums until you can recite any (class · day/night · altitude) combination cold. Confirm the POH-section-order acronym from the POH index.
 
-Source: Fireflies transcript "Ground lesson 6 May 12, 05:03 PM" (~130 min). Full verbatim mining.`,
+Source: Fireflies transcripts "Ground lesson 6 May 12, 05:03 PM" (~130 min, id 01KRFAB18R5HQ57M1SNB39Y5QW) + "Ground lesson 6 continued May 12, 07:14 PM" (~15 min, id 01KRFHTP5EXPETC68P2469DECC). Full verbatim mining of both.`,
     fireflies_id: '01KRFAB18R5HQ57M1SNB39Y5QW'
   }, [
     'Bring pilot certificate + medical certificate + photo ID to every ground lesson going forward (technically required)',
     'Save Long Beach FSDO number in phone: 562-377-5400 (M-F 7:30-4)',
     'Read PHAK Chapter 9 around page 9-6 — Inoperative Equipment / aircraft documents — before next ground',
-    'Memorize PEDS for maintenance log entries: Place · Error · Date · Signature — "live it, love it"',
+    'Memorize PEDS for maintenance log entries: Place · Error · Date · Signature',
     'Memorize verbatim: IM SAFE — Illness · Medicine · Stress · Alcohol · Fatigue · Emotions · Eating',
     'Memorize verbatim: SPARROW — Supplements · Placards · Airworthiness · Registration · Radio op license · Operating handbook · Weight & balance',
     'Memorize verbatim: AAV1ATE/88 — Annual 12 cal mo · ADs · VOR 30 days IFR · 100-hr (tach, for hire) · Altimeter 24 mo · Transponder 24 mo · ELT 12 mo/half battery/1 hr · Static',
@@ -5248,7 +5215,7 @@ Source: Fireflies transcript "Ground lesson 6 May 12, 05:03 PM" (~130 min). Full
     'Memorize: AD (FAA) = mandatory; SB (manufacturer) = recommendation only unless folded into an AD',
     'Memorize the PART 43 APPENDIX A PARAGRAPH C scripted DPE answer verbatim: "Per FAR Part 43 Appendix A under preventative maintenance, I can. I do not know how to do it so I never would do it without help. But legally I can."',
     'Memorize the maintenance log entry requirements if you DO prev mx: location · date · YOUR name · YOUR certificate number · what you did',
-    'Memorize POH vs PIM distinction — POH tail-specific (~360 pages); PIM generic to model series (thin pamphlet). Our plane has a POH',
+    'Memorize POH vs PIM distinction — POH tail-specific (~360 pages); PIM generic to model series. Our plane has a POH',
     'Look up the POH section-order acronym (8 sections: General · Limitations · Emergency · Normal · Performance · W&B · Systems · Servicing/Supplements)',
     'Memorize 3 definitions of NIGHT: (1) landings = sunset+1 to sunrise-1 (2) flight time = civil twilight (3) nav lights AC = sunset to sunrise',
     'Memorize Category/Class/Type and the type-rating trigger: >12,500 lb OR FAA-specified',
@@ -5257,126 +5224,17 @@ Source: Fireflies transcript "Ground lesson 6 May 12, 05:03 PM" (~130 min). Full
     'Memorize STC vs ICA: STC = FAA approval for major alteration; ICA = how to maintain the modified part',
     'Verify in ForeFlight whether the N51840 "POH" PDF actually contains PIM + POH content (float-plane section through ~p.186) — flag to Desireé',
     'Locate ELT battery expiration date in N51840 tail compartment (Desireé to send a photo when she finds it)',
-    'Find the school maintenance log book and look at sample entries — get the format in your head before the checkride'
-  ], 'Ground L6 · 2026-05-12');
-
-  addGroundLessonOnce('GL6B', {
-    date: '2026-05-12',
-    lesson: 6,
-    duration: 0.25,
-    cost: 0,
-    topics: `AIRSPACE CLASSES (C/E/G) AT KSNA · FAR 91.155 BASIC VFR WEATHER MINIMUMS — Cessna 172 N51840 (CFI Desireé · 15 min continuation · transcript-sourced)
-
-— KSNA LOCAL AIRSPACE STACK —
-• Class CHARLIE — 3,500 to 4,400 ft (altitudes on the sectional are written in HUNDREDS; "35/44" = 3500/4400)
-• Inside Charlie you MUST be talking to John Wayne Tower; once handed off to SoCal you exit the Charlie shelf and re-entering requires another clearance ("you can't go in and out of airspaces" without comms)
-• Class ECHO — starts at 700 ft AGL in the shaded magenta area; everywhere outside the magenta below 18,000 MSL is Class E ABOVE 10,000 MSL by default (here it's the layer above 700 around KSNA)
-• Class GOLF — surface to 699 ft inside the shaded zones (everything below 700 AGL where Echo doesn't reach the deck)
-• Above 10,000 MSL — different rules: Echo and Golf both exist, with separate weather mins (today's lesson stayed below 10,000 since cruise was 5,056 ft)
-
-— FAR 91.155 — BASIC VFR WEATHER MINIMUMS (memorize the layout) —
-Visibility is in STATUTE MILES. Cloud clearance is in FEET unless noted otherwise. Layout: "[VIS] · [above] · [below] · [horizontal]"
-
-Class CHARLIE (and B, D, E below 10,000 MSL):
-• Day: 3 SM · 1,000 above · 500 below · 2,000 horizontal
-• Night: same — 3 SM · 1,000 / 500 / 2,000
-
-Class GOLF (below 10,000 MSL):
-• DAY, ≤ 1,200 ft AGL: 1 SM · "CLEAR OF CLOUDS" (no specific feet)
-• DAY, > 1,200 ft AGL: 1 SM · 1,000 above · 500 below · 2,000 horizontal
-• NIGHT, ≤ 1,200 ft AGL: 3 SM · 500 below · 1,000 above · 2,000 horizontal
-• NIGHT, > 1,200 ft AGL: 3 SM · 500 below · 1,000 above · 2,000 horizontal
-
-Class ECHO & GOLF ABOVE 10,000 MSL:
-• 5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal (the WEIRD ONE — horizontal jumps to a MILE because at altitude there are no cloud "rollers" and you have room)
-
-— "CLEAR OF CLOUDS" — what it really means —
-Literally not IN a cloud, but you can be RIGHT above or right below one. Just don't get yourself an IMC. Practical: keep some distance using your judgment — Desireé references roughly "5,280 ft from your wing" as a usable mental yardstick (1 statute mile).
-
-— THE 5-vs-1 PUZZLE (above 10,000 MSL) —
-Aryan asked: "How does the visibility (5 SM) and the horizontal (1 SM) not cancel each other out?"
-• Desireé's framing: you need 5 SM visibility AT MINIMUM. The 1,000/1,000/1-mile clearance is in addition — keep distance from clouds.
-• Theory: at altitude (>10,000) there are no cloud "rollers"/layers like at low altitude, so the clearance numbers get larger. Above-the-layer or below-the-layer at altitude is wide open.
-
-— READING THE TRIANGLE ON THE SECTIONAL —
-• The visual on the airspace card / chart uses triangles to summarize: top number = visibility (SM); left = above; right = below or horizontal arrangement (varies by class)
-• Echo and Golf above 10,000: the "1" in the horizontal slot is statute MILES, not feet — the only place feet flips to miles
-• Class G day: clear of clouds means there's no feet entry — just visibility + "remain clear"
-
-— GO/NO-GO JUDGMENT (Desireé's real example for today's lesson) —
-• TAF and METAR were reporting cloud layer at ~3,200 ft over the coast → ceiling drop expected
-• To stay legal in G/E that means staying at or below 2,800 ft (500 below the layer)
-• Can't climb through (can't go through clouds)
-• Plus the IFR-over-the-coast SIGMET — adds risk margin
-• Conclusion: would only get 600–700 ft of climb/descent practice, not enough learning to be worth the risk → today's flight cancelled and converted to ground
-
-— CHECKRIDE-STYLE Q&A FORMAT —
-DPE example Desireé walked through: "You're at a Class Golf airport getting a burger during the day — what's your visibility requirement?" → "1 statute mile, clear of clouds. Or if you remember the format: 1·1·5·2."
-Follow-up: "Dinner runs late — Metar reports 2 SM, broken at 2,000 ft. Can you depart?" → "No. At night, Class G changes to 3 statute miles + clearance, so I'd be trapped."
-Pattern: DPE gives a real-life scenario, you read the requirement off the layout. They're testing situational AWARENESS, not trivia.
-
-— PHRASING ON RADIO (per Desireé) —
-You can say it in any consistent order, but the cadence she uses: "3-152" = 3 SM visibility, 1,000 above, 500 below, 2,000 horizontal. Or "5-111" = 5 SM, 1,000 above, 1,000 below, 1 SM horizontal. Pick a consistent reading and stick with it.
-
-— LESSON CONTEXT —
-This 15-minute follow-on was a continuation of GL6 — Desireé pulled out the airspace VFR-mins reference card after the airworthiness lesson and walked Aryan through it because today's planned flight was cancelled for the cloud layer. So the ground time absorbed what would have been the airborne lesson's pre-brief on local airspace.
-
-KEYWORDS: 91.155 · VFR weather mins · Class C (3 SM · 1000/500/2000) · Class E below 10,000 (same as C) · Class G day ≤ 1200 AGL (1 SM · clear of clouds) · Class G day > 1200 AGL (1 SM · 1000/500/2000) · Class G night (3 SM · 500/1000/2000) · Above 10,000 MSL (5 SM · 1000/1000/1 SM horizontal — the WEIRD ONE) · 1 statute mile = 5,280 ft · "clear of clouds" literal definition · KSNA Charlie 3,500-4,400 · Echo from 700 AGL · Golf surface-699 · Today's no-go: 3,200 layer over coast · DPE scenario style: situational awareness not trivia.`,
-    notes: `**Overview**
-15-minute continuation of GL6 — after the airworthiness deep dive, Desireé pulled out the airspace VFR-mins card and walked Aryan through 91.155 because today's planned flight had been cancelled for a 3,200-ft cloud layer over the coast. The ground absorbed what would have been the airborne pre-brief on local airspace.
-
-**KSNA airspace stack (numbers on the sectional are in hundreds)**
-Class Charlie — 3,500 to 4,400 ft. Inside Charlie you must be talking to John Wayne Tower; once handed off to SoCal you exit the shelf and re-entering requires a new clearance. Class Echo — starts at 700 ft AGL in the magenta shading; everywhere outside the magenta below 18,000 MSL is Class E by default. Class Golf — surface to 699 ft inside the shaded zones. Cruise today at 5,056 ft = below 10,000 MSL, so the standard low-altitude weather mins apply.
-
-**FAR 91.155 — basic VFR weather minimums**
-Visibility in statute miles; cloud clearance in feet unless noted.
-
-Class C (and B/D/E below 10,000): 3 SM · 1,000 above · 500 below · 2,000 horizontal — day and night.
-
-Class G (below 10,000):
-- Day ≤ 1,200 AGL: 1 SM · CLEAR OF CLOUDS (no feet entry)
-- Day > 1,200 AGL: 1 SM · 1,000 above · 500 below · 2,000 horizontal
-- Night (any altitude in Golf below 10,000): 3 SM · 500 below · 1,000 above · 2,000 horizontal
-
-Above 10,000 MSL (Echo and Golf): 5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal. The horizontal slot flips from FEET to MILES — the only place this happens. Mental yardstick: 1 statute mile ≈ 5,280 ft from your wing.
-
-**"Clear of clouds" — literal meaning**
-Not IN a cloud, but you can be right above or below one. Just don't get yourself an IMC. The "feel" is keep some judgment-based distance — you don't have a fixed number.
-
-**The 5-vs-1 puzzle**
-Aryan asked the right question: at >10,000 MSL we have 5 SM visibility but only 1 SM horizontal cloud clearance — don't they cancel? They don't. The 5 SM is your overall visibility requirement; the 1,000/1,000/1-SM clearance is your separation from clouds. At altitude there are no cloud "rollers," you have room. Below 10,000 the clearance gets tighter because the airspace is busier and the cloud structure is more variable.
-
-**Reading the layout fast**
-Desireé's cadence: "3-152" for Class C/E/D below 10,000 = 3 SM · 1,000 above · 500 below · 2,000 horizontal. "5-111" for above 10,000 = 5 SM · 1,000 above · 1,000 below · 1 SM horizontal. Pick a consistent reading order and stick with it.
-
-**Today's no-go reasoning (good real-world example)**
-TAF/METAR reported a cloud layer ~3,200 ft over the coast → to stay 500 below in G/E we'd be capped at 2,800 ft. Can't climb through clouds. Plus IFR-over-the-coast SIGMET. We'd get maybe 600–700 ft of climb/descent practice — not enough learning to be worth the risk. Flight cancelled, converted to ground. Decision was a judgment call, not a rules call — both were legal-marginal.
-
-**DPE scenario format (testable)**
-Example: "You're at a Class G airport getting a burger during the day — what's your visibility requirement?" → "1 SM, clear of clouds." Follow-up: "Dinner runs late — Metar reports 2 SM, broken at 2,000. Depart?" → "No. At night, Class G is 3 SM + clearance, so I'd be trapped." DPE is testing AWARENESS, not trivia. Read the layout off the chart in context.
-
-**Aryan-specific context**
-Aryan asked the right meta-question (5 SM vs 1 SM horizontal — don't they cancel?). Caught Desireé's mid-page hunt for 91.155 (she initially looked at 91.115). Took a phone picture of the airspace card. Spotted the only weird-units flip (the horizontal "1" being miles not feet) — Desireé confirmed this is the trip-up. Comfortable with the Charlie/Echo/Golf stack at KSNA.
-
-**Reading assignment (carry-forward from GL6 main + new)**
-Drill the 91.155 chart until you can recite ANY class + day/night + altitude combination cold. DPE will give you a real-world airport-scenario and expect you to read the requirement off in context.
-
-Source: Fireflies transcript "Ground lesson 6 continued May 12, 07:14 PM" (~15 min). Full verbatim mining.`,
-    fireflies_id: '01KRFHTP5EXPETC68P2469DECC'
-  }, [
     'Drill FAR 91.155 VFR weather minimums until you can recite any (class + day/night + altitude) combination cold',
-    'Memorize Class C (and B/D/E below 10,000) — 3 SM · 1,000 above · 500 below · 2,000 horizontal — day and night',
+    'Memorize Class C (and B/D/E below 10,000) — 3 SM · 1,000 above · 500 below · 2,000 horizontal — day and night ("3-1-5-2")',
     'Memorize Class G day ≤ 1,200 AGL — 1 SM · CLEAR OF CLOUDS (no feet entry)',
     'Memorize Class G day > 1,200 AGL — 1 SM · 1,000 above · 500 below · 2,000 horizontal',
-    'Memorize Class G night — 3 SM · 500 below · 1,000 above · 2,000 horizontal',
-    'Memorize Echo/Golf ABOVE 10,000 MSL — 5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal (the only place feet flips to miles)',
+    'Memorize Class G night — 3 SM · 500 below · 1,000 above · 2,000 horizontal ("3-5-1-2")',
+    'Memorize Echo/Golf ABOVE 10,000 MSL — 5 SM · 1,000 above · 1,000 below · 1 STATUTE MILE horizontal ("5-1-1-1") — only place feet flips to miles',
     'Memorize "clear of clouds" literal meaning — not IN a cloud, but you can be right above/below; judgment-based distance, no fixed feet',
     'Memorize 1 statute mile ≈ 5,280 ft — useful mental yardstick for "clear of clouds" judgment',
-    'Memorize KSNA local airspace stack — Charlie 3,500-4,400 (sectional in hundreds) · Echo from 700 AGL in magenta shading · Golf surface-699 in shaded zones',
-    'Memorize the rule that inside Charlie you must be talking to John Wayne Tower — once handed off to SoCal you exit; re-entering requires a new clearance',
-    'Practice DPE scenario format — given a real-world airport + day/night + altitude scenario, recite the visibility and clearance off the layout in context',
-    'Practice a consistent reading cadence — e.g., "3-152" for Class C/E/D below 10,000 and "5-111" for above 10,000 — pick one and stick with it'
-  ], 'Ground L6 cont · 2026-05-12');
+    'Memorize KSNA local airspace stack — Charlie 3,500-4,400 (sectional in hundreds) · Echo from 700 AGL in magenta · Golf surface-699 in shaded zones',
+    'Practice DPE scenario format — given a real-world airport + day/night + altitude scenario, recite the visibility and clearance off the layout in context'
+  ], 'Ground L6 · 2026-05-12');
   /* AUTO_INGEST_LESSONS_END */
 }
 
