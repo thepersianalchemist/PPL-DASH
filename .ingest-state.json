@@ -3,16 +3,19 @@
   "schemaVersion": 1,
   "ingestedFirefliesIds": [
     "01KQ11RQGTTD1TVDJNDZ3TXQMZ",
-    "01KQXBR03YYE6NRPPFGDRHERG1"
+    "01KQXBR03YYE6NRPPFGDRHERG1",
+    "01KRFAB18R5HQ57M1SNB39Y5QW",
+    "01KRFHTP5EXPETC68P2469DECC"
   ],
   "ingestedLessonNumbers": [
     1,
     2,
     3,
     4,
-    5
+    5,
+    6
   ],
-  "lastRun": "2026-05-13T03:50:44.000Z",
-  "lastRunStatus": "no-new",
-  "lastRunMessage": "No new ground lessons matching the regex '^Ground lesson \\d+\\b' since last run. Window scanned: 14 days from 2026-04-28, 17 transcripts retrieved (mine=true, limit=50). ZERO strict title matches. HOWEVER — two solo-Aryan recordings from May 12 look strongly like un-retitled ground lessons and were SKIPPED per the regex guardrail: (1) id 01KRFAB18R5HQ57M1SNB39Y5QW 'May 12, 05:03 PM' — 2h 10m, single participant aryan@skyaccess.com, summary covers airworthiness inspections, IM SAFE / SPARROW / AVIATES/88 mnemonics, FAR 91.205 VFR equipment (TOMATO FLAMES), POH vs PIM, KOEL, MEL, Type Certificate Data Sheet, Service Bulletins vs ADs, preventative maintenance under FAR Part 43 Appendix A — action items addressed to 'Student Pilot'. Would be GL6. (2) id 01KRFHTP5EXPETC68P2469DECC 'May 12, 07:14 PM' — 14m 47s, single participant aryan@skyaccess.com, immediately follows the prior session, covers Class C/E/G airspace altitude ranges + comm requirements, VFR weather minimums (visibility + cloud clearance day vs night), staying below cloud layers to avoid IMC. Would be GL7. ACTION FOR ARYAN: in Fireflies, rename these two recordings to 'Ground lesson 6 May 12, 05:03 PM' and 'Ground lesson 7 May 12, 07:14 PM' (or similar) — next nightly sync will pick them up and generate seeds + sparknotes + flashcards + quiz. Remaining 15 transcripts are SkyAccess work meetings (Cutter Aviation x2, Aryan Aggarwal intern check-in, SkyAccess/Altivion onboarding, May 08 trade-secrets call, SkyAccess & AMSTAT, Yarrow Kubrin sales leadership, JETNET/SKYACCESS Aerodex deal, Michael Kennedy/FetchAir, Mohammed Arif/Skybridge, AMSTAT demo, AMSTAT & Jet Access, Flightworks, Ayomide Josiah African market) — non-matching. No file edits, no commit."
+  "lastRun": "2026-05-13T04:00:00.000Z",
+  "lastRunStatus": "ingested",
+  "lastRunMessage": "Ingested GL6 + GL6 continued (user-triggered sync overriding regex guardrail). The two May 12 solo-Aryan recordings flagged by the prior nightly sync (01KRFAB18R5HQ57M1SNB39Y5QW and 01KRFHTP5EXPETC68P2469DECC) were processed despite their non-standard Fireflies titles, because the user explicitly requested ingest. GL6 main (2h 10m) covers airworthiness 3-prong definition, SPARROW + IM SAFE + AAV1ATE/88 mnemonics, A&P vs A&P-IA, tach vs Hobbs, Special Flight Permit/FSDO, ADs vs SBs, FAR Part 43 App A Para C preventative-maintenance script, POH vs PIM, 3 definitions of night, category/class/type + type-rating threshold, and the 5-check/3-do/1-decide inop-equipment framework with A-TOMATO-FLAMES + FLAPS + PEDS. GL6 continued (15 min) covers KSNA airspace stack (Charlie 3500-4400 / Echo from 700 AGL / Golf surface-699) and FAR 91.155 basic VFR weather minimums for all classes, day/night, and above/below 10,000 MSL. Generated: 2 lesson seeds (addGroundLessonOnce GL6 and GL6B, both lesson:6), 2 sparknotes chapters with 12 + 10 flashcards, 2 quizzes (12 + 10 questions). SW cache bumped v19 → v20. JS validated with node --check (clean)."
 }
